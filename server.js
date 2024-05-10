@@ -11,6 +11,8 @@ const cookieParser = require('cookie-parser')
 const app = express()
 
 // connect to database
+const connection= require("./config/db")
+connection()
 
 // routes
 
@@ -26,6 +28,9 @@ app.use(cookieParser())
 
 
 // mount routes
+app.get('/',(req,res)=>{
+    res.render('index')
+})
 
 // error middleware
 
