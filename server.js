@@ -26,7 +26,6 @@ app.set('view engine', 'ejs')
 app.use(cookieParser())
 
 
-
 // mount routes
 app.get('/',(req,res)=>{
     res.render('index')
