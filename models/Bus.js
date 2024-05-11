@@ -1,12 +1,13 @@
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
+const { deflate } = require('zlib');
 
 const busSchema = new mongoose.Schema({
-    driver:{
+    driver: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
-        required:true
+        required: true
     },
     name: {
         type: String,
@@ -24,13 +25,21 @@ const busSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    seat: [
+    seats: [
         {
             type: Number,
         }
     ],
-    cover:String,
-    pictures:[{type:String}]
+    cover: String,
+    pictures: [{ type: String }],
+    isActive: {
+        type: Boolean,
+        default: true,
+        required: true
+    },
+    features: [
+        { type: String }
+    ]
 });
 
 
