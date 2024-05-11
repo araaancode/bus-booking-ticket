@@ -16,6 +16,7 @@ connection()
 
 // routes
 const authRoutes = require("./routes/auth")
+const userRoutes = require("./routes/users")
 
 // middlewares
 app.use(express.json())
@@ -27,8 +28,9 @@ app.set('view engine', 'ejs')
 app.use(cookieParser())
 
 
-// mount routes
-app.use('/api/v1/auth',authRoutes)
+// mount users routes
+app.use('/api/v1/users/auth',authRoutes)
+app.use('/api/v1/users',userRoutes)
 
 app.get('/', (req, res) => {
     res.render('index')
