@@ -4,21 +4,22 @@ require("dotenv").config()
 // ext libs
 const express = require("express")
 const colors = require("colors")
-const path=require("path")
+const path = require("path")
 const cookieParser = require('cookie-parser')
 
 // app init
 const app = express()
 
 // connect to database
-const connection= require("./config/db")
+const connection = require("./config/db")
 connection()
 
 // routes
+const authRoutes = require("./routes/auth")
 
 // middlewares
 app.use(express.json())
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({ extended: false }))
 app.use(express.static('public'))
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -27,9 +28,12 @@ app.use(cookieParser())
 
 
 // mount routes
-app.get('/',(req,res)=>{
+app.use('/api/v1/auth',authRoutes)
+
+app.get('/', (req, res) => {
     res.render('index')
 })
+
 
 // error middleware
 
