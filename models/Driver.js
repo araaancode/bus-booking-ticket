@@ -3,10 +3,12 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
-const userSchema = new mongoose.Schema({
+const driverSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'Please tell us your name!']
+        required: [true, 'Please tell us your name!'],
+        maxlength: [30, 'driver name must have less or equal then 30 characters'],
+        minlength: [6, 'driver name must have more or equal then 6 characters']
     },
     phone: {
         type: String,
@@ -25,6 +27,7 @@ const userSchema = new mongoose.Schema({
         minlength: 8,
         select: false
     },
+
     passwordConfirm: {
         type: String,
         required: [true, 'Please confirm your password'],
@@ -40,10 +43,29 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
         select: false
-    }
+    },
+    arrival: {
+        type: Boolean,
+        default: false
+    },
+    isArrived: {
+        type: Boolean,
+        default: false
+    },
+    cities: [{
+        type: String,
+    }],
+    movingDate: {
+        type: Date,
+        default: Date.now()
+    },
+    hour: {
+        type: Date,
+        default: Date.now()
+    },
 });
 
-userSchema.pre('save', async function (next) {
+driverSchema.pre('save', async function (next) {
     // Only run this function if password was actually modified
     if (!this.isModified('password')) return next();
 
@@ -55,28 +77,28 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-userSchema.pre('save', function (next) {
+driverSchema.pre('save', function (next) {
     if (!this.isModified('password') || this.isNew) return next();
 
     this.passwordChangedAt = Date.now() - 1000;
     next();
 });
 
-userSchema.pre(/^find/, function (next) {
+driverSchema.pre(/^find/, function (next) {
     // this points to the current query
     this.find({ active: { $ne: false } });
     next();
 });
 
-userSchema.methods.correctPassword = async function (
+driverSchema.methods.correctPassword = async function (
     candidatePassword,
-    userPassword
+    diverPassword
 ) {
-    return await bcrypt.compare(candidatePassword, userPassword);
+    return await bcrypt.compare(candidatePassword, diverPassword);
 };
 
 
 
-const User = mongoose.model('User', userSchema);
+const Driver = mongoose.model('Driver', driverSchema);
 
-module.exports = User;
+module.exports = Driver;
