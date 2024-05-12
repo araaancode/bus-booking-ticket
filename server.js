@@ -42,5 +42,5 @@ app.get('/', (req, res) => {
 // server setup
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
-    console.log(`Server is up and running -> listening at PORT ${PORT}`.blue);
+    console.log(`Server is up and running -> listening at PORT ${PORT}`.bgBlue);
 })
