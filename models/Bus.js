@@ -6,7 +6,7 @@ const { deflate } = require('zlib');
 const busSchema = new mongoose.Schema({
     driver: {
         type: mongoose.Schema.ObjectId,
-        ref: 'User',
+        ref: 'Driver',
         required: true
     },
     name: {
@@ -31,7 +31,7 @@ const busSchema = new mongoose.Schema({
         }
     ],
     cover: String,
-    pictures: [{ type: String }],
+    images: [{ type: String }],
     isActive: {
         type: Boolean,
         default: true,

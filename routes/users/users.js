@@ -2,10 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
-const userControllers = require("../controllers/users/users")
+const userControllers = require("../../controllers/users/users")
 
 // middlewares
-const middleware = require("../middlewares/auth")
+const middleware = require("../../middlewares/auth")
 
 router.get('/me',middleware.authUser,userControllers.getMe)
 router.put('/update-profile/:userId',userControllers.updateProfile)

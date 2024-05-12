@@ -19,8 +19,12 @@ const connection = require("./config/db")
 connection()
 
 // routes
-const authRoutes = require("./routes/auth")
-const userRoutes = require("./routes/users")
+const authUsersRoutes = require("./routes/users/auth")
+const userRoutes = require("./routes/users/users")
+
+const authDriversRoutes = require("./routes/drivers/auth")
+const driverRoutes = require("./routes/drivers/drivers")
+
 
 // middlewares
 app.use(express.json())
@@ -34,9 +38,15 @@ app.use(cookieParser())
 
 
 // mount users routes
-app.use('/api/v1/users/auth',authRoutes)
+app.use('/api/v1/users/auth',authUsersRoutes)
 app.use('/api/v1/users',userRoutes)
 
+// mount drivers routes
+app.use('/api/v1/drivers/auth',authDriversRoutes)
+app.use('/api/v1/drivers',driverRoutes)
+
+
+// pages routes
 app.get('/', (req, res) => {
     res.render('index')
 })

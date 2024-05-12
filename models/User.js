@@ -40,6 +40,11 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
         select: false
+    },
+    role:{
+        type:String,
+        default:'user',
+        required:true
     }
 });
 

@@ -44,6 +44,11 @@ const driverSchema = new mongoose.Schema({
         default: true,
         select: false
     },
+    role:{
+        type:String,
+        default:'driver',
+        required:true
+    },
     arrival: {
         type: Boolean,
         default: false

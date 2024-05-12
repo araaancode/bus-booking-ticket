@@ -1,17 +1,20 @@
 const User = require('../models/User')
+const Driver = require('../models/Driver')
 const jwt = require('jsonwebtoken')
 
 // auth user
-const authUser = async (req, res, next) => {
+exports.authUser = async (req, res, next) => {
   let token = req.cookies.jwt
 
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
       let user = await User.findById(decoded.id).select('-password')
-      req.user = user
-      res.locals.user = user
-      next()
+      if(user.role === 'user'){
+        req.user = user
+        res.locals.user = user
+        next()
+      }
     } catch (error) {
       res.status(403).json({
         msg: 'authorized has error',
@@ -28,7 +31,7 @@ const authUser = async (req, res, next) => {
 }
 
 // user pages
-const isLogin = async (req, res, next) => {
+exports.isLogin = async (req, res, next) => {
   let token = req.cookies.jwt
 
   if (token) {
@@ -48,7 +51,7 @@ const isLogin = async (req, res, next) => {
   }
 }
 
-const forwardAuth = async (req, res, next) => {
+exports.forwardAuth = async (req, res, next) => {
   const token = req.cookies.jwt
 
   if (token) {
@@ -67,8 +70,77 @@ const forwardAuth = async (req, res, next) => {
   }
 }
 
+
+// auth driver
+exports.authDriver = async (req, res, next) => {
+  let token = req.cookies.jwt
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      let driver = await Driver.findById(decoded.id).select('-password')
+      if(driver.role === 'driver'){
+        req.driver = driver
+        res.locals.driver = driver
+        next()
+      }
+    } catch (error) {
+      res.status(403).json({
+        msg: 'authorized has error',
+        error,
+      })
+    }
+  }
+
+  if (!token) {
+    res.status(403).json({
+      msg: 'no token provided',
+    })
+  }
+}
+
+// driver pages
+exports.isLoginDriver = async (req, res, next) => {
+  let token = req.cookies.jwt
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      let driver = await Driver.findById(decoded.id).select('-password')
+      req.driver = driver
+      res.locals.driver = driver
+      next()
+    } catch (error) {
+      res.redirect('/login')
+    }
+  }
+
+  if (!token) {
+    res.redirect('/login')
+  }
+}
+
+exports.forwardAuthDriver = async (req, res, next) => {
+  const token = req.cookies.jwt
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+      if (err) {
+        next()
+      } else {
+        let driver = await Driver.findById(decoded.id).select('-password')
+        req.driver = driver
+        res.locals.driver = driver
+        res.redirect('/profile')
+      }
+    })
+  } else {
+    next()
+  }
+}
+
 // auth admin
-const authAdmin = (req, res, next) => {
+exports.authAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next()
   } else {
@@ -77,7 +149,7 @@ const authAdmin = (req, res, next) => {
 }
 
 // admin pages
-const isLoginAdmin = async (req, res, next) => {
+exports.isLoginAdmin = async (req, res, next) => {
   let token = req.cookies.jwt
 
   if (token) {
@@ -104,7 +176,7 @@ const isLoginAdmin = async (req, res, next) => {
   }
 }
 
-const forwardAuthAdmin = async (req, res, next) => {
+exports.forwardAuthAdmin = async (req, res, next) => {
   const token = req.cookies.jwt
 
   if (token) {
@@ -127,11 +199,3 @@ const forwardAuthAdmin = async (req, res, next) => {
   }
 }
 
-module.exports = {
-  authUser,
-  isLogin,
-  forwardAuth,
-  authAdmin,
-  isLoginAdmin,
-  forwardAuthAdmin
-}

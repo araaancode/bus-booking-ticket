@@ -11,8 +11,8 @@ const signToken = id => {
     });
 };
 
-const createSendToken = (user, statusCode, req, res) => {
-    const token = signToken(user._id);
+const createSendToken = (driver, statusCode, req, res) => {
+    const token = signToken(driver._id);
 
     console.log(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000);
 
@@ -25,26 +25,26 @@ const createSendToken = (user, statusCode, req, res) => {
     });
 
     // Remove password from output
-    user.password = undefined;
+    driver.password = undefined;
 
     res.status(statusCode).json({
         status: 'success',
         token,
         data: {
-            user
+            driver
         }
     });
 };
 
 exports.register = catchAsync(async (req, res, next) => {
-    const newUser = await User.create({
+    const newDriver = await Driver.create({
         name: req.body.name,
         phone: req.body.phone,
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm
     });
 
-    createSendToken(newUser, 201, req, res);
+    createSendToken(newDriver, 201, req, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -54,15 +54,15 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!phone || !password) {
     return next(new AppError('Please provide phone and password!', 400));
   }
-  // 2) Check if user exists && password is correct
-  const user = await User.findOne({ phone }).select('+password');
+  // 2) Check if driver exists && password is correct
+  const driver = await Driver.findOne({ phone }).select('+password');
 
-  if (!user || !(await user.correctPassword(password, user.password))) {
+  if (!driver || !(await driver.correctPassword(password, driver.password))) {
     return next(new AppError('Incorrect phone or password', 401));
   }
 
   // 3) If everything ok, send token to client
-  createSendToken(user, 200, req, res);
+  createSendToken(driver, 200, req, res);
 });
 
 exports.logout = (req, res) => {
