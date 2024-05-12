@@ -2,6 +2,7 @@ const catchAsync = require('../../middlewares/catchAsync');
 const AppError = require('../../middlewares/appError');
 
 // User model
+const Ticket = require('../../models/Ticket');
 const User = require('../../models/User');
 
 
@@ -83,5 +84,5 @@ exports.searchTickets = catchAsync(async (req, res) => {
 // # description -> HTTP VERB -> Accesss
 // # book ticket -> POST -> user
 exports.bookTicket = catchAsync(async (req, res) => {
-    res.send("book ticket")
+   
 })
