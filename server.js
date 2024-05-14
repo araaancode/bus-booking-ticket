@@ -19,13 +19,16 @@ const connection = require("./config/db")
 connection()
 
 // routes
-const authUsersRoutes = require("./routes/users/auth")
+const authUserRoutes = require("./routes/users/auth")
 const userRoutes = require("./routes/users/users")
 
-const authDriversRoutes = require("./routes/drivers/auth")
+const authDriverRoutes = require("./routes/drivers/auth")
 const driverRoutes = require("./routes/drivers/drivers")
 
 const busRoutes = require("./routes/buses/buses")
+
+const authAdminRoutes = require("./routes/admins/auth")
+const adminRoutes = require("./routes/admins/admins")
 
 
 // middlewares
@@ -38,13 +41,17 @@ app.set('view engine', 'ejs')
 app.use(cookieParser())
 
 
+// mount admins routes
+app.use('/api/v1/admins/auth',authAdminRoutes)
+app.use('/api/v1/admins',adminRoutes)
+
 
 // mount users routes
-app.use('/api/v1/users/auth',authUsersRoutes)
+app.use('/api/v1/users/auth',authUserRoutes)
 app.use('/api/v1/users',userRoutes)
 
 // mount drivers and bus routes
-app.use('/api/v1/drivers/auth',authDriversRoutes)
+app.use('/api/v1/drivers/auth',authDriverRoutes)
 app.use('/api/v1/drivers',driverRoutes)
 app.use('/api/v1/buses',busRoutes)
 
