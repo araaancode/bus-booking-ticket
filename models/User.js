@@ -41,6 +41,7 @@ const userSchema = new mongoose.Schema({
         default: true,
         select: false
     },
+    avatar:String,
     role:{
         type:String,
         default:'user',

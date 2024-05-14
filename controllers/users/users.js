@@ -53,7 +53,27 @@ exports.updateProfile = catchAsync(async (req, res) => {
 // # description -> HTTP VERB -> Accesss
 // # update user avatar -> PUT -> user
 exports.updateAvatar = catchAsync(async (req, res) => {
-    res.send("update avatar")
+    await User.findByIdAndUpdate(
+        req.params.userId,
+        {
+            avatar: req.file.filename,
+        },
+        { new: true }
+    ).then((user) => {
+        if (user) {
+            res.status(200).json({
+                msg: 'آواتار کاربر ویرایش شد',
+                user,
+            })
+        }
+    }).catch(err => {
+        console.log(err)
+        res.status(403).json({
+            msg: 'آواتار کاربر ویرایش نشد',
+            err,
+        })
+    })
+
 })
 
 // # description -> HTTP VERB -> Accesss
@@ -84,5 +104,5 @@ exports.searchTickets = catchAsync(async (req, res) => {
 // # description -> HTTP VERB -> Accesss
 // # book ticket -> POST -> user
 exports.bookTicket = catchAsync(async (req, res) => {
-   
+
 })
