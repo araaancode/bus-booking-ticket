@@ -25,6 +25,8 @@ const userRoutes = require("./routes/users/users")
 const authDriversRoutes = require("./routes/drivers/auth")
 const driverRoutes = require("./routes/drivers/drivers")
 
+const busRoutes = require("./routes/buses/buses")
+
 
 // middlewares
 app.use(express.json())
@@ -41,9 +43,10 @@ app.use(cookieParser())
 app.use('/api/v1/users/auth',authUsersRoutes)
 app.use('/api/v1/users',userRoutes)
 
-// mount drivers routes
+// mount drivers and bus routes
 app.use('/api/v1/drivers/auth',authDriversRoutes)
 app.use('/api/v1/drivers',driverRoutes)
+app.use('/api/v1/buses',busRoutes)
 
 
 // pages routes

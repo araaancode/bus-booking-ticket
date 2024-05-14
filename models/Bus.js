@@ -7,7 +7,8 @@ const busSchema = new mongoose.Schema({
     driver: {
         type: mongoose.Schema.ObjectId,
         ref: 'Driver',
-        required: true
+        required: true,
+        unique: true,
     },
     name: {
         type: String,
@@ -28,13 +29,14 @@ const busSchema = new mongoose.Schema({
     seats: [
         {
             type: Number,
+            default:0
         }
     ],
     cover: String,
     images: [{ type: String }],
     isActive: {
         type: Boolean,
-        default: true,
+        default: false,
         required: true
     },
     features: [
