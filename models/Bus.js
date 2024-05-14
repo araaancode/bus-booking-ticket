@@ -40,7 +40,7 @@ const busSchema = new mongoose.Schema({
     features: [
         { type: String }
     ]
-});
+},{ timestamps: true });
 
 
 const Bus = mongoose.model('Bus', busSchema);

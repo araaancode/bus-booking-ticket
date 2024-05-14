@@ -53,7 +53,7 @@ const adminSchema = new mongoose.Schema({
         default:'assistant',
         required:true
     }
-});
+},{ timestamps: true });
 
 adminSchema.pre('save', async function (next) {
     // Only run this function if password was actually modified

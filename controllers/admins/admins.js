@@ -92,7 +92,7 @@ exports.bookTicket = catchAsync(async (req, res) => {
 // # description -> HTTP VERB -> Accesss
 // # get all drivers -> GET -> admin
 exports.getDrivers = catchAsync(async (req, res) => {
-    let drivers = await Bus.find({})
+    let drivers = await Driver.find({})
     if (drivers) {
         res.status(200).json({
             status: 'success',

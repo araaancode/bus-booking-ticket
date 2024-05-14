@@ -50,7 +50,7 @@ const driverSchema = new mongoose.Schema({
         required:true
     },
     arrival: {
-        type: Boolean,
+        type: String,
         default: false
     },
     isArrived: {
@@ -68,7 +68,7 @@ const driverSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-});
+},{ timestamps: true });
 
 driverSchema.pre('save', async function (next) {
     // Only run this function if password was actually modified

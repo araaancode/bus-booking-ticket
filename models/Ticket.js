@@ -45,7 +45,7 @@ const ticketSchema = new mongoose.Schema({
     seatNumbers:[{
         type:Number
     }]
-});
+},{ timestamps: true });
 
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
