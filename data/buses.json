@@ -1,0 +1,62 @@
+[
+    {
+        "driver":"664348ee91f5784a8a9860b6",
+        "name":"Scania 1",
+        "model":"1978",
+        "color":"red"
+    },
+    {
+        "driver":"664348ee91f5784a8a9860b7",
+        "name":"Scania 2",
+        "model":"1980",
+        "color":"red"
+    },
+    {
+        "driver":"664348ee91f5784a8a9860b8",
+        "name":"Scania 3",
+        "model":"1981",
+        "color":"blue"
+    },
+    {
+        "driver":"664348ee91f5784a8a9860b9",
+        "name":"Volvo 1",
+        "model":"1974",
+        "color":"blue"
+    },
+    {
+        "driver":"664348ee91f5784a8a9860ba",
+        "name":"Volvo 2",
+        "model":"1986",
+        "color":"black"
+    },
+    {
+        "driver":"664348ee91f5784a8a9860bb",
+        "name":"Volvo 3",
+        "model":"1986",
+        "color":"black"
+    },
+    {
+        "driver":"664348ee91f5784a8a9860bc",
+        "name":"Benz 1",
+        "model":"1986",
+        "color":"yellow"
+    },
+    {
+        "driver":"664348ee91f5784a8a9860bd",
+        "name":"Benz 2",
+        "model":"1986",
+        "color":"red"
+    },
+    {
+        "driver":"664348ee91f5784a8a9860be",
+        "name":"Benz 3",
+        "model":"1986",
+        "color":"blue"
+    },
+    {
+        "driver":"664348ee91f5784a8a9860bf",
+        "name":"Tangara 1",
+        "model":"1990",
+        "color":"blue"
+    }
+]

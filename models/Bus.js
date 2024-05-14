@@ -26,12 +26,10 @@ const busSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    seats: [
-        {
-            type: Number,
-            default:0
-        }
-    ],
+    seats:{
+        type: Number,
+        default: 10
+    },
     cover: String,
     images: [{ type: String }],
     isActive: {

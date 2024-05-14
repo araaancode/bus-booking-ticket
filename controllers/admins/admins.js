@@ -4,6 +4,8 @@ const AppError = require('../../middlewares/appError');
 // User model
 const Ticket = require('../../models/Ticket');
 const User = require('../../models/User');
+const Bus = require('../../models/Bus');
+const Driver = require('../../models/Driver');
 
 
 // # description -> HTTP VERB -> Accesss
@@ -84,5 +86,23 @@ exports.searchTickets = catchAsync(async (req, res) => {
 // # description -> HTTP VERB -> Accesss
 // # book ticket -> POST -> user
 exports.bookTicket = catchAsync(async (req, res) => {
-   
+    res.send("book ticket")
+})
+
+// # description -> HTTP VERB -> Accesss
+// # get all drivers -> GET -> admin
+exports.getDrivers = catchAsync(async (req, res) => {
+    let drivers = await Bus.find({})
+    if (drivers) {
+        res.status(200).json({
+            status: 'success',
+            msg: 'drivers fetched',
+            count:drivers.length,
+            drivers,
+        })
+    } else {
+        res.status(403).json({
+            msg: 'can not fetch drivers',
+        })
+    }
 })

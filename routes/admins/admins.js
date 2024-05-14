@@ -5,8 +5,8 @@ const router = express.Router();
 // middlewares
 const middleware = require("../../middlewares/auth")
 
-router.get("/",(req,res)=>{
-    res.send('admin api')
-})
+const driverControlles=require("../../controllers/admins/admins")
+
+router.get("/drivers",driverControlles.getDrivers)
 
 module.exports = router;
