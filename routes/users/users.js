@@ -15,7 +15,7 @@ router.put('/update-avatar/:userId', middleware.authUser, upload.single('avatar'
 router.post('/send-message', middleware.authUser, userControllers.sendMessage)
 router.get('/my-tickets', middleware.authUser, userControllers.myTickets)
 router.put('/cancle-ticket/:ticketId', middleware.authUser, userControllers.cancleTicket)
-router.get('/search-ticket', middleware.authUser, userControllers.searchTickets)
+router.post('/search-ticket', middleware.authUser, userControllers.searchTickets)
 router.post('/book-ticket', middleware.authUser, userControllers.bookTicket)
 
 

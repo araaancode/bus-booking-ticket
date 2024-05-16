@@ -5,9 +5,9 @@
         "phone":"09383901130",
         "password":"12345678",
         "passwordConfirm":"12345678",
-        "arrival":"isfahan",
-        "cities":["isfahan","tehran"],
-        "movingDate":"1403/03/01"
+        "arrival":"rasht",
+        "cities":["isfahan","rasht"],
+        "movingDate":"2024-05-16"
     },
     {
         "_id":"664348ee91f5784a8a9860b7",
@@ -15,9 +15,9 @@
         "phone":"09383901131",
         "password":"12345678",
         "passwordConfirm":"12345678",
-        "arrival":"rasht",
-        "cities":["isfahan","rasht"],
-        "movingDate":"1403/03/05"
+        "arrival":"isfahan",
+        "cities":["isfahan","tehran"],
+        "movingDate":"2024-05-17"
     },
     {
         "_id":"664348ee91f5784a8a9860b8",
@@ -27,7 +27,7 @@
         "passwordConfirm":"12345678",
         "arrival":"tabriz",
         "cities":["isfahan","tabriz"],
-        "movingDate":"1403/03/06"
+        "movingDate":"2024-05-18"
     },
     {
         "_id":"664348ee91f5784a8a9860b9",
@@ -37,7 +37,7 @@
         "passwordConfirm":"12345678",
         "arrival":"isfahan",
         "cities":["tehran","isfahan"],
-        "movingDate":"1403/03/11"
+        "movingDate":"2024-05-20"
     },
     {
         "_id":"664348ee91f5784a8a9860ba",
@@ -47,7 +47,7 @@
         "passwordConfirm":"12345678",
         "arrival":"zahedan",
         "cities":["tehran","zahedan"],
-        "movingDate":"1403/03/12"
+        "movingDate":"2024-05-22"
     },
     {
         "_id":"664348ee91f5784a8a9860bb",
@@ -57,7 +57,7 @@
         "passwordConfirm":"12345678",
         "arrival":"isfahan",
         "cities":["zahedan","isfahan"],
-        "movingDate":"1403/03/10"
+        "movingDate":"2024-05-24"
     },
     {
         "_id":"664348ee91f5784a8a9860bc",
@@ -67,7 +67,7 @@
         "passwordConfirm":"12345678",
         "arrival":"mashhad",
         "cities":["zahedan","mashhad"],
-        "movingDate":"1403/03/15"
+        "movingDate":"2024-05-25"
     },
     {
         "_id":"664348ee91f5784a8a9860bd",
@@ -77,7 +77,7 @@
         "passwordConfirm":"12345678",
         "arrival":"zahedan",
         "cities":["zahedan","isfahan"],
-        "movingDate":"1403/03/18"
+        "movingDate":"2024-05-28"
     },
     {
         "_id":"664348ee91f5784a8a9860be",
@@ -87,7 +87,7 @@
         "passwordConfirm":"12345678",
         "arrival":"zahedan",
         "cities":["zahedan","tehran"],
-        "movingDate":"1403/03/22"
+        "movingDate":"2024-05-24"
     },
     {
         "_id":"664348ee91f5784a8a9860bf",
@@ -97,6 +97,6 @@
         "passwordConfirm":"12345678",
         "arrival":"tehran",
         "cities":["zahedan","tehran"],
-        "movingDate":"1403/03/28"
+        "movingDate":"2024-05-16"
     }
 ]

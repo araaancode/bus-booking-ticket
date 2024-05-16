@@ -37,12 +37,12 @@ const driverSchema = new mongoose.Schema({
                 return el === this.password;
             },
             message: 'Passwords are not the same!'
-        }
+        },
+        select: false
     },
     active: {
         type: Boolean,
         default: true,
-        select: false
     },
     role:{
         type:String,
