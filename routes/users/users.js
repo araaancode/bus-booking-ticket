@@ -19,4 +19,5 @@ router.post('/search-ticket', middleware.authUser, userControllers.searchTickets
 router.post('/book-ticket', middleware.authUser, userControllers.bookTicket)
 
 
+
 module.exports = router;

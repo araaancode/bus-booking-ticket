@@ -44,6 +44,10 @@ const driverSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
+    bus: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Bus',
+    },
     role:{
         type:String,
         default:'driver',
@@ -68,6 +72,10 @@ const driverSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
+    price:{
+        type:Number,
+        required:true
+    }
 },{ timestamps: true });
 
 driverSchema.pre('save', async function (next) {

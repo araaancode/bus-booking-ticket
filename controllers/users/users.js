@@ -192,7 +192,7 @@ exports.searchTickets = catchAsync(async (req, res) => {
         let driverArrival = drivers[i].driver.arrival
         let driverMovingDate = drivers[i].driver.movingDate.toISOString().split('T')[0]
 
-        if(firstCity === driverArrival &&(lastCity === driverFirstCity || lastCity === driverLastCity) && driverSeats >= seats ){
+        if (firstCity === driverArrival && (lastCity === driverFirstCity || lastCity === driverLastCity) && driverSeats > 0 && driverSeats >= seats) {
             console.log(drivers[i]);
             results.push(drivers[i])
         }
@@ -209,5 +209,49 @@ exports.searchTickets = catchAsync(async (req, res) => {
 // # description -> HTTP VERB -> Accesss
 // # book ticket -> POST -> user
 exports.bookTicket = catchAsync(async (req, res) => {
-  
+    let { driver, passengers, movingDate, hour, firstCity, lastCity, seats } = req.body
+    let findDriver = await Driver.findById(req.body.driver).populate('bus')
+    let price = 0
+    let newSeatNumbers = []
+
+    // calulate number seats
+    for (let i = 0; i < passengers.length; i++) {
+        newSeatNumbers.push(findDriver.bus.capicity >= findDriver.bus.seats ? (i + (findDriver.bus.capicity - findDriver.bus.seats) + 1) : (i + 1))
+    }
+
+
+    // calulate price 
+    price = passengers.length * findDriver.price
+
+    // handle bus ticket booking
+    let findBus = await Bus.findById({ _id: findDriver.bus._id })
+    findBus.seats = findDriver.bus.seats - (passengers.length)
+
+    await findBus.save()
+
+
+    // handle ticket booking
+    dateSplitted = movingDate.split("-"),
+        jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
+    convertMovingDate = jD[0] + "-" + jD[1] + "-" + jD[2];
+
+    let newTicket = await Ticket.create({
+        driver,
+        passengers,
+        bus: findDriver.bus,
+        movingDate:convertMovingDate,
+        hour: new Date().now,
+        firstCity,
+        lastCity,
+        seatNumbers: newSeatNumbers,
+        ticketPrice: price,
+
+    })
+
+    res.json({
+        msg: "ticket booked",
+        ticket: newTicket
+    })
 })
+
+

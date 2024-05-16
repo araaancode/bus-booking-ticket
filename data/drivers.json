@@ -7,7 +7,9 @@
         "passwordConfirm":"12345678",
         "arrival":"rasht",
         "cities":["isfahan","rasht"],
-        "movingDate":"2024-05-16"
+        "bus":"6644aade4602b26d484f73f9",
+        "movingDate":"2024-05-16",
+        "price":"1000"
     },
     {
         "_id":"664348ee91f5784a8a9860b7",
@@ -17,7 +19,9 @@
         "passwordConfirm":"12345678",
         "arrival":"isfahan",
         "cities":["isfahan","tehran"],
-        "movingDate":"2024-05-17"
+        "bus":"6644aade4602b26d484f73fa",
+        "movingDate":"2024-05-17",
+        "price":"1000"
     },
     {
         "_id":"664348ee91f5784a8a9860b8",
@@ -27,7 +31,9 @@
         "passwordConfirm":"12345678",
         "arrival":"tabriz",
         "cities":["isfahan","tabriz"],
-        "movingDate":"2024-05-18"
+        "bus":"6644aade4602b26d484f73fb",
+        "movingDate":"2024-05-18",
+        "price":"1000"
     },
     {
         "_id":"664348ee91f5784a8a9860b9",
@@ -37,7 +43,9 @@
         "passwordConfirm":"12345678",
         "arrival":"isfahan",
         "cities":["tehran","isfahan"],
-        "movingDate":"2024-05-20"
+        "bus":"6644aade4602b26d484f73fc",
+        "movingDate":"2024-05-20",
+        "price":"1000"
     },
     {
         "_id":"664348ee91f5784a8a9860ba",
@@ -47,7 +55,9 @@
         "passwordConfirm":"12345678",
         "arrival":"zahedan",
         "cities":["tehran","zahedan"],
-        "movingDate":"2024-05-22"
+        "bus":"6644aade4602b26d484f73fd",
+        "movingDate":"2024-05-22",
+        "price":"1000"
     },
     {
         "_id":"664348ee91f5784a8a9860bb",
@@ -57,7 +67,9 @@
         "passwordConfirm":"12345678",
         "arrival":"isfahan",
         "cities":["zahedan","isfahan"],
-        "movingDate":"2024-05-24"
+        "bus":"6644aade4602b26d484f73fe",
+        "movingDate":"2024-05-24",
+        "price":"1000"
     },
     {
         "_id":"664348ee91f5784a8a9860bc",
@@ -67,7 +79,9 @@
         "passwordConfirm":"12345678",
         "arrival":"mashhad",
         "cities":["zahedan","mashhad"],
-        "movingDate":"2024-05-25"
+        "bus":"6644aade4602b26d484f73ff",
+        "movingDate":"2024-05-25",
+        "price":"1000"
     },
     {
         "_id":"664348ee91f5784a8a9860bd",
@@ -77,7 +91,9 @@
         "passwordConfirm":"12345678",
         "arrival":"zahedan",
         "cities":["zahedan","isfahan"],
-        "movingDate":"2024-05-28"
+        "bus":"6644aade4602b26d484f7400",
+        "movingDate":"2024-05-28",
+        "price":"1000"
     },
     {
         "_id":"664348ee91f5784a8a9860be",
@@ -87,7 +103,9 @@
         "passwordConfirm":"12345678",
         "arrival":"zahedan",
         "cities":["zahedan","tehran"],
-        "movingDate":"2024-05-24"
+        "bus":"6644aade4602b26d484f7401",
+        "movingDate":"2024-05-24",
+        "price":"1000"
     },
     {
         "_id":"664348ee91f5784a8a9860bf",
@@ -97,6 +115,8 @@
         "passwordConfirm":"12345678",
         "arrival":"tehran",
         "cities":["zahedan","tehran"],
-        "movingDate":"2024-05-16"
+        "bus":"6644aade4602b26d484f7402",
+        "movingDate":"2024-05-16",
+        "price":"1000"
     }
 ]

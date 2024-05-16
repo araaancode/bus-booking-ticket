@@ -26,6 +26,10 @@ const busSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    capicity:{
+        type: Number,
+        default: 10
+    },
     seats:{
         type: Number,
         default: 10
