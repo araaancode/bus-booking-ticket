@@ -20,8 +20,13 @@ const ticketSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'Bus',
         required: true
-    }
-    ,
+    },
+    user: // ticket owner
+    {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
+    },
     movingDate: {
         type: Date,
         default: Date.now()
@@ -30,22 +35,27 @@ const ticketSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    firstCity:{
-        type:String,
-        required:true
+    firstCity: {
+        type: String,
+        required: true
     },
-    lastCity:{
-        type:String,
-        required:true
+    lastCity: {
+        type: String,
+        required: true
     },
-    ticketPrice:{
-        type:Number,
-        required:true
+    ticketPrice: {
+        type: Number,
+        required: true
     },
-    seatNumbers:[{
-        type:Number
-    }]
-},{ timestamps: true });
+    seatNumbers: [{
+        type: Number
+    }],
+    isCancled: {
+        type: Boolean,
+        default: false,
+        required: true
+    }
+}, { timestamps: true });
 
 
 const Ticket = mongoose.model('Ticket', ticketSchema);

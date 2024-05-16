@@ -151,7 +151,22 @@ exports.sendMessage = catchAsync(async (req, res) => {
 // # description -> HTTP VERB -> Accesss
 // # my tickets -> GET -> user
 exports.myTickets = catchAsync(async (req, res) => {
-    res.send("my tickets")
+    let tickets = await Ticket.find({}).populate('user')
+    let findMyTickets=[]
+
+
+    for (let i = 0; i < tickets.length; i++) {
+        if(req.user.id === tickets[i].user.id){
+            findMyTickets.push(tickets[i])
+        }
+    }
+
+
+    res.send({
+        count:findMyTickets.length,
+        msg:"my tickets",
+        myTickets:findMyTickets
+    })
 })
 
 
@@ -214,6 +229,8 @@ exports.bookTicket = catchAsync(async (req, res) => {
     let price = 0
     let newSeatNumbers = []
 
+    let user = await User.findById(req.user.id)
+
     // calulate number seats
     for (let i = 0; i < passengers.length; i++) {
         newSeatNumbers.push(findDriver.bus.capicity >= findDriver.bus.seats ? (i + (findDriver.bus.capicity - findDriver.bus.seats) + 1) : (i + 1))
@@ -238,6 +255,7 @@ exports.bookTicket = catchAsync(async (req, res) => {
     let newTicket = await Ticket.create({
         driver,
         passengers,
+        user:req.user.id,
         bus: findDriver.bus,
         movingDate:convertMovingDate,
         hour: new Date().now,
