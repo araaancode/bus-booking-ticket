@@ -42,7 +42,7 @@ const driverSchema = new mongoose.Schema({
     },
     active: {
         type: Boolean,
-        default: true,
+        default: false,
     },
     bus: {
         type: mongoose.Schema.ObjectId,

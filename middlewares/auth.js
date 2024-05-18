@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const Driver = require('../models/Driver')
+const Admin = require('../models/Admin')
 const jwt = require('jsonwebtoken')
 
 // auth user
@@ -10,7 +11,7 @@ exports.authUser = async (req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
       let user = await User.findById(decoded.id).select('-password')
-      if(user.role === 'user'){
+      if (user.role === 'user') {
         req.user = user
         res.locals.user = user
         next()
@@ -79,7 +80,7 @@ exports.authDriver = async (req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
       let driver = await Driver.findById(decoded.id).select('-password')
-      if(driver.role === 'driver'){
+      if (driver.role === 'driver') {
         req.driver = driver
         res.locals.driver = driver
         next()
@@ -140,11 +141,30 @@ exports.forwardAuthDriver = async (req, res, next) => {
 }
 
 // auth admin
-exports.authAdmin = (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
-    next()
-  } else {
-    res.status(401).send('Not authorized as an admin')
+exports.authAdmin = async(req, res, next) => {
+  let token = req.cookies.jwt
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      let admin = await Admin.findById(decoded.id).select('-password')
+      if (admin.role === 'admin' || admin.role === 'assistant') {
+        req.admin = admin
+        res.locals.admin = admin
+        next()
+      }
+    } catch (error) {
+      res.status(403).json({
+        msg: 'authorized has error',
+        error,
+      })
+    }
+  }
+
+  if (!token) {
+    res.status(403).json({
+      msg: 'no token provided',
+    })
   }
 }
 
@@ -156,16 +176,16 @@ exports.isLoginAdmin = async (req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
       let user = await User.findById(decoded.id).select('-password')
-      if(user.isAdmin){
+      if (user.isAdmin) {
         req.user = user
         res.locals.user = user
         next()
-      }else{
+      } else {
         res.render('admin/admin403')
       }
     } catch (error) {
       res.send({
-        msg:'خطایی وجود دارد',
+        msg: 'خطایی وجود دارد',
         error
       })
     }
@@ -185,11 +205,11 @@ exports.forwardAuthAdmin = async (req, res, next) => {
         next()
       } else {
         let user = await User.findById(decoded.id).select('-password')
-        if(user.isAdmin){
+        if (user.isAdmin) {
           req.user = user
           res.locals.user = user
           res.redirect('/admin')
-        }else{
+        } else {
           res.render('admin/admin403')
         }
       }
