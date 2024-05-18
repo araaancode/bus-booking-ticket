@@ -152,28 +152,45 @@ exports.sendMessage = catchAsync(async (req, res) => {
 // # my tickets -> GET -> user
 exports.myTickets = catchAsync(async (req, res) => {
     let tickets = await Ticket.find({}).populate('user')
-    let findMyTickets=[]
+    let findMyTickets = []
 
 
     for (let i = 0; i < tickets.length; i++) {
-        if(req.user.id === tickets[i].user.id){
+        if (req.user.id === tickets[i].user.id) {
             findMyTickets.push(tickets[i])
         }
     }
 
 
     res.send({
-        count:findMyTickets.length,
-        msg:"my tickets",
-        myTickets:findMyTickets
+        count: findMyTickets.length,
+        msg: "my tickets",
+        myTickets: findMyTickets
     })
 })
 
 
 // # description -> HTTP VERB -> Accesss
-// # cancle ticket -> PUT -> user
-exports.cancleTicket = catchAsync(async (req, res) => {
-    res.send("cancle ticket")
+// # cancel ticket -> PUT -> user
+exports.cancelTicket = catchAsync(async (req, res) => {
+    let ticket = await Ticket.findById(req.params.ticketId)
+
+    if(ticket && ticket.isCanceled === false){
+        let driver = await Driver.findById(ticket.driver)
+        let bus = await Bus.findById(ticket.bus)
+        let passengerCount = ticket.passengers.length
+        bus.seats += passengerCount
+        ticket.isCanceled = true
+
+        await bus.save()
+        await ticket.save()
+
+        res.send({
+            driver:driver,
+            bus:bus,
+            ticket:ticket
+        })
+    }
 })
 
 // # description -> HTTP VERB -> Accesss
@@ -255,9 +272,9 @@ exports.bookTicket = catchAsync(async (req, res) => {
     let newTicket = await Ticket.create({
         driver,
         passengers,
-        user:req.user.id,
+        user: req.user.id,
         bus: findDriver.bus,
-        movingDate:convertMovingDate,
+        movingDate: convertMovingDate,
         hour: new Date().now,
         firstCity,
         lastCity,

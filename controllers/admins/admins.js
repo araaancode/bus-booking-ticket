@@ -72,9 +72,9 @@ exports.myTickets = catchAsync(async (req, res) => {
 
 
 // # description -> HTTP VERB -> Accesss
-// # cancle ticket -> PUT -> user
-exports.cancleTicket = catchAsync(async (req, res) => {
-    res.send("cancle ticket")
+// # cancel ticket -> PUT -> user
+exports.cancelTicket = catchAsync(async (req, res) => {
+    res.send("cancel ticket")
 })
 
 // # description -> HTTP VERB -> Accesss

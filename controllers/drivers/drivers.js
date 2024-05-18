@@ -59,9 +59,9 @@ exports.getDriverPassengers=catchAsync(async(req,res)=>{
 })
 
 // # description -> HTTP VERB -> Accesss
-// # cancle travel -> PUT -> Driver
-exports.cancleTravel=catchAsync(async(req,res)=>{
-    res.send('cancle travel')
+// # cancel travel -> PUT -> Driver
+exports.cancelTravel=catchAsync(async(req,res)=>{
+    res.send('cancel travel')
 })
 
 // # description -> HTTP VERB -> Accesss
@@ -126,9 +126,9 @@ exports.myTickets = catchAsync(async (req, res) => {
 
 
 // # description -> HTTP VERB -> Accesss
-// # cancle ticket -> PUT -> Driver
-exports.cancleTicket = catchAsync(async (req, res) => {
-    res.send("cancle ticket")
+// # cancel ticket -> PUT -> Driver
+exports.cancelTicket = catchAsync(async (req, res) => {
+    res.send("cancel ticket")
 })
 
 // # description -> HTTP VERB -> Accesss
