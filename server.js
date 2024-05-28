@@ -11,8 +11,8 @@ const cookieParser = require('cookie-parser')
 const app = express()
 
 // internal libs
-const errorMiddleware=require("./middlewares/errors")
-const mongoErrorMiddleware=require("./middlewares/mongo_error")
+const errorMiddleware = require("./middlewares/errors")
+const mongoErrorMiddleware = require("./middlewares/mongo_error")
 
 // connect to database
 const connection = require("./config/db")
@@ -30,6 +30,7 @@ const busRoutes = require("./routes/buses/buses")
 const authAdminRoutes = require("./routes/admins/auth")
 const adminRoutes = require("./routes/admins/admins")
 
+const userIndexPages = require("./routes/pages/users/index")
 
 // middlewares
 app.use(express.json())
@@ -42,24 +43,22 @@ app.use(cookieParser())
 
 
 // mount admins routes
-app.use('/api/v1/admins/auth',authAdminRoutes)
-app.use('/api/v1/admins',adminRoutes)
+app.use('/api/v1/admins/auth', authAdminRoutes)
+app.use('/api/v1/admins', adminRoutes)
 
 
 // mount users routes
-app.use('/api/v1/users/auth',authUserRoutes)
-app.use('/api/v1/users',userRoutes)
+app.use('/api/v1/users/auth', authUserRoutes)
+app.use('/api/v1/users', userRoutes)
 
 // mount drivers and bus routes
-app.use('/api/v1/drivers/auth',authDriverRoutes)
-app.use('/api/v1/drivers',driverRoutes)
-app.use('/api/v1/buses',busRoutes)
+app.use('/api/v1/drivers/auth', authDriverRoutes)
+app.use('/api/v1/drivers', driverRoutes)
+app.use('/api/v1/buses', busRoutes)
 
 
 // pages routes
-app.get('/', (req, res) => {
-    res.render('index')
-})
+app.use('/', userIndexPages)
 
 // error middlewares
 app.use(errorMiddleware.handler404)

@@ -219,7 +219,7 @@ exports.getBuses = catchAsync(async (req, res) => {
 // # description -> HTTP VERB -> Accesss
 // # get single bus -> GET -> admin
 exports.getBus = catchAsync(async (req, res) => {
-    let bus = await Bus.findById(req.params.busId).select('-password -confirmPassword')
+    let bus = await Bus.findById(req.params.busId)
     if (bus) {
         res.status(200).json({
             status: 'success',
