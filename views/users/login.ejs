@@ -14,29 +14,46 @@
 </head>
 
 <body class="bg-white">
-    <div style="display: none;" id="first-phone-auth"
-        class="relative top-40 mx-auto rounded-md bg-white max-w-md border border-gray-300" style="padding: 2px;">
-        <div style="display: none;" class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <div class="bg-white py-8 px-4 sm:rounded-lg sm:px-10 text-center">
+    <div id="first-phone-auth" class="relative top-20 mx-auto rounded-md bg-white max-w-md border border-gray-300 shadow">
+        <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="bg-white py-4 px-4 sm:rounded-lg sm:px-10 text-center">
                 <span class="text-2xl block font-bold text-center"> ورود </span>
                 <br>
-                <span class="mt-12">برای ادامه شماره موبایل خود را وارد کنید.</span>
-                <form>
-                    <div>
-                        <label for="email" class="block text-sm font-medium leading-5 mt-8 text-gray-700">
-                            شماره همراه
+                <span class="mt-12">برای ادامه شماره موبایل یا ایمیل خود را وارد کنید.</span>
+                <form class="mb-2">
+                    <div class="mb-8">
+                        <label for="email"
+                            class="block text-right text-sm font-medium leading-5 mt-8 mb-2 text-gray-700">
+                            شماره همراه یا ایمیل
                         </label>
-                        <div class="mt-1 relative rounded-md shadow-sm mb-8">
-                            <input id="email" name="email" placeholder="0938xxxxxxxx" type="email" required="" value=""
-                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                            <div class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
+                        <input id="email" name="text" placeholder="09xxxxxxxxxx" type="email" required="" value=""
+                            class="appearance-none block w-full text-left p-6 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 focus:shadow-md">
+                        <!-- <label for="email"
+                            class="block text-right text-sm font-medium leading-5 mt-8 mb-2 text-gray-700">
+                            پسورد
+                        </label>
+                        <input id="email" name="email" placeholder="xxxxxxxxxxx" type="email" required="" value=""
+                            class="appearance-none block w-full text-right p-6 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 focus:shadow-md transition duration-150 ease-in-out sm:text-sm sm:leading-5"> -->
+
+                        <!-- Form Group -->
+                        <label class="font-medium text-right block mb-1 mt-6 text-gray-700" for="password">
+                            پسورد
+                        </label>
+                        <div dir="rtl" class="relative w-full">
+                         
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2">
+                                <input class="hidden js-password-toggle" id="toggle" type="checkbox" />
+                                <label
+                                    class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer js-password-label"
+                                    for="toggle"><i class="ri-eye-off-line"></i></label>
                             </div>
+                            <input
+                            class="appearance-none block w-full text-left p-6 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 focus:shadow-md transition duration-150 ease-in-out sm:text-sm sm:leading-5 font-mono js-password"
+                            id="password" type="password" autocomplete="off" />
+
                         </div>
+
+                        <!-- End Form Group -->
                     </div>
 
 
@@ -45,28 +62,32 @@
                         استفاده از سفیر به معنی پذیرش قوانین و مقررات این سرویس است.
                     </div>
 
-                    <div class="mt-12">
+                    <div class="mt-8 mb-6">
                         <span class="block w-full rounded-md shadow-sm">
                             <button type="submit"
-                                class="w-full flex justify-center py-2 px-4 border border-transparent text-white font-medium rounded-md text-black bg-blue-600 hover:bg-blue-800 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
+                                class="w-full flex font-bold justify-center p-3 border border-transparent text-white font-medium rounded-md text-black bg-blue-600 hover:bg-blue-800 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
                                 ورود
                             </button>
                         </span>
                     </div>
-
+                    حساب ندارید؟ <a class="hover:text-blue-500" href="/register">ثبت نام</a>
                 </form>
             </div>
         </div>
     </div>
-    <div id="second-phone-auth" class="max-w-md p-4 mx-auto max-w-sm mt-20 rounded border border-gray-300 ">
-        <form class="px-4 py-6">
-            <p class="text-right">
+    <div style="display: none;" id="second-phone-auth"
+        class="max-w-md p-6 mx-auto max-w-sm flex h-dvh items-center justify-center">
+        <form class="p-10 border border-gray-300 rounded">
+            <p class="text-right text-2xl font-bold p-2">
                 کد تایید را وارد کنید
             </p>
-            <p class="text-right">
+            <p class="text-right text-gray-700 mt-4 p-2">
                 کد تایید برای شماره ۰۹۳۸۳۹۰۱۱۴۶ پیامک شد
             </p>
-            <div class="flex justify-between gap-2 mb-6 mt-4">
+            <div class="flex justify-between gap-2 mb-4 mt-6">
+                <input
+                    class="w-12 h-12 text-center border rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="one-time-code" required>
                 <input
                     class="w-12 h-12 text-center border rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                     type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="one-time-code" required>
@@ -80,18 +101,44 @@
                     class="w-12 h-12 text-center border rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                     type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="one-time-code" required>
             </div>
+            <div class="mt-2 mb-6">
+                <a class="block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 mt-2" href="#">
+                    ارسال مجدد کد
+                </a>
+            </div>
             <div class="flex flex-col items-center justify-center">
+                <p class="mb-6">
+                    ۲۵ : ۰۲مانده تا دریافت مجدد کد
+                </p>
                 <button
                     class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     type="button">
                     تایید کد
                 </button>
-                <a class="block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 mt-2" href="#">
-                    ارسال مجدد کد
-                </a>
+
             </div>
         </form>
     </div>
+
+    <script>
+        const passwordToggle = document.querySelector('.js-password-toggle')
+
+        passwordToggle.addEventListener('change', function () {
+            const password = document.querySelector('.js-password'),
+                passwordLabel = document.querySelector('.js-password-label')
+
+            if (password.type === 'password') {
+                password.type = 'text'
+                passwordLabel.innerHTML = '<i class="ri-eye-off-line"></i>'
+            } else {
+                password.type = 'password'
+                passwordLabel.innerHTML = '<i class="ri-eye-line"></i>'
+            }
+
+            password.focus()
+        })
+
+    </script>
 </body>
 
 </html>

@@ -1,1 +1,240 @@
-<h1>Register </h1>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://majidh1.github.io/JalaliDatePicker/assets/demo.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <script type="text/javascript"
+        src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+</head>
+
+<body class="bg-white">
+    <!-- <div id="first-phone-auth" class="relative top-10 mx-auto rounded-md bg-white max-w-md border border-gray-300">
+        <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="bg-white py-4 px-4 sm:rounded-lg sm:px-10 text-center">
+                <span class="text-2xl block font-bold text-center"> ثبت نام </span>
+                <br>
+                <span class="mt-12">در زیر می توانید ثبت نام کنید</span>
+                <form class="mb-2">
+                    <div class="mb-8">
+                        <label for="email"
+                            class="block text-right text-sm font-medium leading-5 mt-8 mb-2 text-gray-700">
+                            نام و نام خانوادگی
+                        </label>
+                        <input id="email" name="email" placeholder="0938xxxxxxxx" type="email" required="" value=""
+                            class="appearance-none block p-6 w-full border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                        <label for="email"
+                            class="block text-right text-sm font-medium leading-5 mt-8 mb-2 text-gray-700">
+                            نام کاربری
+                        </label>
+                        <input id="email" name="email" placeholder="0938xxxxxxxx" type="email" required="" value=""
+                            class="appearance-none block p-6 w-full border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                        <label for="email"
+                            class="block text-right text-sm font-medium leading-5 mt-8 mb-2 text-gray-700">
+                            شماره همراه
+                        </label>
+                        <input id="email" name="email" placeholder="0938xxxxxxxx" type="email" required="" value=""
+                            class="appearance-none block p-6 w-full border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                        <label for="email"
+                            class="block text-right text-sm font-medium leading-5 mt-8 mb-2 text-gray-700">
+                            ایمیل
+                        </label>
+                        <input id="email" name="email" placeholder="0938xxxxxxxx" type="email" required="" value=""
+                            class="appearance-none block p-6 w-full border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                        <label class="font-medium text-right block mb-1 mt-2 text-gray-700" for="password">
+                            پسورد
+                        </label>
+                        <div dir="rtl" class="relative w-full">
+
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2">
+                                <input class="hidden js-password-toggle" id="toggle" type="checkbox" />
+                                <label
+                                    class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer js-password-label"
+                                    for="toggle"><i class="ri-eye-off-line"></i></label>
+                            </div>
+                            <input
+                                class="appearance-none block w-full text-left p-6 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 font-mono js-password"
+                                id="password" type="password" autocomplete="off" />
+
+                        </div>
+                        <label class="font-medium text-right block mb-1 mt-2 text-gray-700" for="password">
+                            تایید پسورد
+                        </label>
+                        <div dir="rtl" class="relative w-full">
+
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2">
+                                <input class="hidden js-password-toggle" id="toggle" type="checkbox" />
+                                <label
+                                    class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer js-password-label"
+                                    for="toggle"><i class="ri-eye-off-line"></i></label>
+                            </div>
+                            <input
+                                class="appearance-none block w-full text-left p-6 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 font-mono js-password"
+                                id="password" type="password" autocomplete="off" />
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="text-warning">
+                        <i class="ri-error-warning-line text-xl"></i>
+                        استفاده از سفیر به معنی پذیرش قوانین و مقررات این سرویس است.
+                    </div>
+
+                    <div class="mt-8 mb-6">
+                        <span class="block w-full rounded-md shadow-sm">
+                            <button type="submit"
+                                class="w-full flex justify-center p-3 border border-transparent text-white font-medium rounded-md text-black bg-blue-600 hover:bg-blue-800 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
+                                ثبت نام
+                            </button>
+                        </span>
+                    </div>
+                    حساب دارید؟ <a class="hover:text-blue-500" href="/login">ورود</a>
+                </form>
+            </div>
+        </div>
+    </div> -->
+
+
+    <div class="flex items-center justify-center py-10 px-12">
+        <div class="mx-auto w-full max-w-[650px] bg-white border rounded-lg border-gray-300 shadow py-2 px-10">
+            <span class="text-2xl block font-bold mt-8 text-center"> ثبت نام </span>
+            <br>
+            <span class="mt-12 text-center">در زیر می توانید ثبت نام کنید.</span>
+            <form>
+                <div class="mb-5 pt-3">
+                    <div class="-mx-3 flex flex-wrap">
+                        <div class="w-full px-3 sm:w-1/2">
+                            <div class="mb-5">
+                                <label class="font-medium text-right block mb-1 mt-2 text-gray-700" for="password">
+                                    نام و نام خانوادگی
+                                </label>
+                                <input type="text" name="name" id="name" placeholder="نام و نام خانوادگی"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white p-6 text-base font-medium text-[#6B7280] focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 focus:shadow-md" />
+                            </div>
+                        </div>
+                        <div class="w-full px-3 sm:w-1/2">
+                            <div class="mb-5">
+                                <label class="font-medium text-right block mb-1 mt-2 text-gray-700" for="password">
+                                    نام کاربری
+                                </label>
+                                <input type="text" name="username" id="username" placeholder="نام کاربری"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white p-6 text-base font-medium text-[#6B7280] focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 focus:shadow-md" />
+                            </div>
+                        </div>
+                        <div class="w-full px-3 sm:w-1/2">
+                            <div class="mb-5">
+                                <label class="font-medium text-right block mb-1 mt-2 text-gray-700" for="password">
+                                    ایمیل
+                                </label>
+                                <input type="email" name="email" id="email" placeholder="ایمیل"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white p-6 text-base font-medium text-[#6B7280] focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 focus:shadow-md" />
+                            </div>
+                        </div>
+                        <div class="w-full px-3 sm:w-1/2">
+                            <div class="mb-5">
+                                <label class="font-medium text-right block mb-1 mt-2 text-gray-700" for="password">
+                                    شماره همراه
+                                </label>
+                                <input type="text" name="phone" id="phone" placeholder="شماره همراه"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white p-6 text-base font-medium text-[#6B7280] focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 focus:shadow-md" />
+                            </div>
+                        </div>
+                        <div class="w-full px-3 sm:w-1/2">
+                            <div class="mb-5">
+                                <!-- <label class="font-medium text-right block mb-1 mt-2 text-gray-700" for="password">
+                                    پسورد
+                                </label>
+                                <input type="text" name="area" id="area" placeholder="پسورد"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white p-6 text-base font-medium text-[#6B7280] focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 focus:shadow-md" /> -->
+                                <label class="font-medium text-right block mb-1 mt-2 text-gray-700" for="password">
+                                    پسورد
+                                </label>
+                                <div dir="rtl" class="relative w-full">
+
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-2">
+                                        <input class="hidden js-password-toggle" id="toggle" type="checkbox" />
+                                        <label
+                                            class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer js-password-label"
+                                            for="toggle"><i class="ri-eye-off-line"></i></label>
+                                    </div>
+                                    <input
+                                        class="appearance-none block w-full text-left p-6 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 font-mono js-password"
+                                        id="password" name="password" type="password" autocomplete="off" />
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="w-full px-3 sm:w-1/2">
+                            <div class="mb-5">
+                                <label class="font-medium text-right block mb-1 mt-2 text-gray-700" for="password">
+                                    تایید پسورد
+                                </label>
+                                <div dir="rtl" class="relative w-full">
+
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-2">
+                                        <input class="hidden js-password-toggle" id="toggle" type="checkbox" />
+                                        <label
+                                            class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer js-password-label"
+                                            for="toggle"><i class="ri-eye-off-line"></i></label>
+                                    </div>
+                                    <input
+                                        class="appearance-none block w-full text-left p-6 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 font-mono js-password"
+                                        id="passwordConfirm" name="passwordConfirm" type="password" autocomplete="off" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-warning mt-6 text-center mb-6">
+                        <i class="ri-error-warning-line text-xl"></i>
+                        استفاده از سفیر به معنی پذیرش قوانین و مقررات این سرویس است.
+                    </div>
+
+                    <div class="mt-10 mb-6">
+                        <span class="block w-full rounded-md shadow-sm">
+                            <button id="register-btn" type="button"
+                                class="w-full flex font-bold justify-center p-3 border border-transparent text-white font-medium rounded-md text-black bg-blue-600 hover:bg-blue-800 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
+                                ثبت نام
+                            </button>
+                        </span>
+                    </div>
+                    <p>
+                        حساب دارید؟ <a class="hover:text-blue-500" href="/login">ورود</a>
+                    </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const passwordToggle = document.querySelector('.js-password-toggle')
+
+        passwordToggle.addEventListener('change', function () {
+            const password = document.querySelector('.js-password'),
+                passwordLabel = document.querySelector('.js-password-label')
+
+            if (password.type === 'password') {
+                password.type = 'text'
+                passwordLabel.innerHTML = '<i class="ri-eye-off-line"></i>'
+            } else {
+                password.type = 'password'
+                passwordLabel.innerHTML = '<i class="ri-eye-line"></i>'
+            }
+
+            password.focus()
+        })
+
+    </script>
+
+    <script src="../../javascripts/user/register.js"></script>
+</body>
+
+</html>
