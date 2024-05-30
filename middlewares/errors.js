@@ -4,7 +4,7 @@ const handler404 = (req, res) => {
   
 const handlerServerErrors = (err, req, res, next) => {
     console.error(err.stack)
-    res.status(500).render('serverError')
+    // res.status(500).render('serverError')
 }
   
 module.exports = {

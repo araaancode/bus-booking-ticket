@@ -11,7 +11,7 @@ const signToken = id => {
     });
 };
 
-const createSendToken = (user, statusCode, req, res) => {
+const createSendToken = (user, statusCode,msg, req, res) => {
     const token = signToken(user._id);
 
     res.cookie('jwt', token, {
@@ -27,6 +27,7 @@ const createSendToken = (user, statusCode, req, res) => {
 
     res.status(statusCode).json({
         status: 'success',
+        msg,
         token,
         data: {
             user
@@ -35,6 +36,12 @@ const createSendToken = (user, statusCode, req, res) => {
 };
 
 exports.register = catchAsync(async (req, res, next) => {
+  if(req.body.password !== req.body.passwordConfirm){
+    return res.status(400).json({
+      status:"failure",
+      msg:"پسوردها مطابقت ندارند !"
+    })
+  }
     const newUser = await User.create({
         name: req.body.name,
         username: req.body.username,
@@ -44,19 +51,21 @@ exports.register = catchAsync(async (req, res, next) => {
         passwordConfirm: req.body.passwordConfirm
     });
 
-    createSendToken(newUser, 201, req, res);
+    createSendToken(newUser, 201,'با موفقیت ثبت نام شدید!', req, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
   // 1) Check if phone and password exist
   if (!req.body.password) {
     return res.status(400).json({
+      status:"failure",
       msg:"پسورد را باید وارد کنید!"
     })
   }
 
   if (!req.body.phone && !req.body.email) {
     return res.status(400).json({
+      status:"failure",
       msg:" همه فیلدها را باید وارد کنید!"
     })
   }

@@ -12,3 +12,8 @@ exports.login=(req,res)=>{
 exports.register=(req,res)=>{
     res.render("users/register")
 }
+
+// profile page
+exports.profile=(req,res)=>{
+    res.render("users/profile")
+}
