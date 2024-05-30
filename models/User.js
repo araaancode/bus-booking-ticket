@@ -3,10 +3,23 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
+const validateEmail = function (email) {
+    const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email)
+};
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Please tell us your name!']
+    },
+    username: {
+        type: String,
+        required: [true, 'Please tell us your username!'],
+        unique: true,
+        min: 4,
+        max: 40,
+        trim: true
     },
     phone: {
         type: String,
@@ -18,6 +31,15 @@ const userSchema = new mongoose.Schema({
         },
         required: [true, "User phone number required"],
         unique: true,
+    },
+    email: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        unique: true,
+        required: 'Email address is required',
+        validate: [validateEmail, 'Please fill a valid email address'],
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
     password: {
         type: String,
@@ -41,13 +63,13 @@ const userSchema = new mongoose.Schema({
         default: true,
         select: false
     },
-    avatar:String,
-    role:{
-        type:String,
-        default:'user',
-        required:true
+    avatar: String,
+    role: {
+        type: String,
+        default: 'user',
+        required: true
     }
-},{ timestamps: true });
+}, { timestamps: true });
 
 userSchema.pre('save', async function (next) {
     // Only run this function if password was actually modified

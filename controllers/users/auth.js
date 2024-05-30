@@ -37,6 +37,8 @@ const createSendToken = (user, statusCode, req, res) => {
 exports.register = catchAsync(async (req, res, next) => {
     const newUser = await User.create({
         name: req.body.name,
+        username: req.body.username,
+        email: req.body.email,
         phone: req.body.phone,
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm
@@ -46,21 +48,29 @@ exports.register = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  const { phone, password } = req.body;
-
   // 1) Check if phone and password exist
-  if (!phone || !password) {
-    return next(new AppError('Please provide phone and password!', 400));
-  }
-  // 2) Check if user exists && password is correct
-  const user = await User.findOne({ phone }).select('+password');
-
-  if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError('Incorrect phone or password', 401));
+  if (!req.body.password) {
+    return res.status(400).json({
+      msg:"پسورد را باید وارد کنید!"
+    })
   }
 
-  // 3) If everything ok, send token to client
-  createSendToken(user, 200, req, res);
+  if (!req.body.phone && !req.body.email) {
+    return res.status(400).json({
+      msg:" همه فیلدها را باید وارد کنید!"
+    })
+  }
+
+  if(req.body.email){
+      // 2) Check if user exists && password is correct
+      const user = await User.findOne({ email:req.body.email }).select('+password');
+      createSendToken(user, 200, req, res);
+  }else if(req.body.phone){
+      // 2) Check if user exists && password is correct
+      const user = await User.findOne({ phone:req.body.phone }).select('+password');
+      createSendToken(user, 200, req, res);
+  }
+
 });
 
 exports.logout = (req, res) => {
