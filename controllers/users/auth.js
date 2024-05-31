@@ -73,11 +73,11 @@ exports.login = catchAsync(async (req, res, next) => {
   if(req.body.email){
       // 2) Check if user exists && password is correct
       const user = await User.findOne({ email:req.body.email }).select('+password');
-      createSendToken(user, 200, req, res);
+      createSendToken(user, 200,"با موفقیت وارد سایت شدید!", req, res);
   }else if(req.body.phone){
       // 2) Check if user exists && password is correct
       const user = await User.findOne({ phone:req.body.phone }).select('+password');
-      createSendToken(user, 200, req, res);
+      createSendToken(user, 200,"با موفقیت وارد سایت شدید!", req, res);
   }
 
 });
