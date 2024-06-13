@@ -14,17 +14,35 @@ const signToken = id => {
 };
 
 
-const sendOTP = async (phone, req, res) => {
+const sendOTPCode = async (phone, req, res) => {
   const code = randKey.generateDigits(5);
   let otp = await OTP.findOne({ phone })
+
 
   if (otp) {
     otp.code = code;
     otp.save().then((data) => {
-      res.status(200).send(data)
+      res.status(200).json(data)
     }).catch((error) => {
-      res.status(400).send(error)
+      res.status(400).json(error)
     })
+  }else{
+   let newOtp= await OTP.create({
+      phone:phone,
+      code
+    })
+
+    if(newOtp){
+      res.status(201).json({
+        msg:"otp code created",
+        code:newOtp
+      })
+    }else{
+      res.status(400).json({
+        msg:"otp code not created"
+      })
+    }
+
   }
 
 };
@@ -61,7 +79,7 @@ exports.register = catchAsync(async (req, res, next) => {
     })
   }
 
-  let findUser= await User.findOne({phone:req.body.phone})
+  let findUser= await User.findOne({phone:req.body.phone }) || await User.findOne({email:req.body.email }) || await User.findOne({username:req.body.username })
 
   if(!findUser){
     const newUser = await User.create({
@@ -163,7 +181,7 @@ exports.sendOtp = catchAsync(async (req, res) => {
   let user = await User.findOne({ phone })
 
   if (user) {
-    sendOTP(phone, req, res)
+    await sendOTPCode(phone, req, res)
   } else {
     res.status(404).json({
       msg: "user not found",

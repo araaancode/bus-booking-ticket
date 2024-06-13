@@ -14,6 +14,9 @@ let emailError = document.getElementById("email-error")
 let passwordError = document.getElementById("password-error")
 let passwordConfirmError = document.getElementById("password-confirm-error")
 
+let firstAuth = document.getElementById("first-auth")
+let secondAuth = document.getElementById("second-auth")
+
 
 // add event listener to register button
 registerBtn.addEventListener("click", register)
@@ -53,9 +56,18 @@ function register() {
                 // content: 'My toast notification description.',
                 style: 'success'
             });
+
+            
+            setTimeout(() => {
+                document.querySelector('.toast-notification').style.display = "none"
+            }, 2000)
+
+            firstAuth.style.display = "none";
+            secondAuth.style.display = "block";
         })
         .catch(function (error) {
-            let message = error.response.data.msg
+            console.log(error);
+            let message = error.response.data.msg || error
             const toasts = new Toasts({
                 offsetX: 20, // 20px
                 offsetY: 20, // 20px
@@ -68,7 +80,7 @@ function register() {
             });
 
             toasts.push({
-                title: message,
+                title: message ? message : 'خطایی وجود دارد',
                 // content: 'My toast notification description.',
                 style: 'error'
             });
