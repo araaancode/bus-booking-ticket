@@ -32,6 +32,28 @@ exports.authUser = async (req, res, next) => {
 }
 
 // user pages
+
+exports.setHomeJwt = async (req, res, next) => {
+  let token = req.cookies.jwt
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      let user = await User.findById(decoded.id).select('-password')
+      req.user = user
+      res.locals.user = user
+      next()
+    } catch (error) {
+      res.redirect('/')
+    }
+  }
+
+  if (!token) {
+    res.render('users/index')
+  }
+}
+
+
 exports.isLogin = async (req, res, next) => {
   let token = req.cookies.jwt
 
@@ -141,7 +163,7 @@ exports.forwardAuthDriver = async (req, res, next) => {
 }
 
 // auth admin
-exports.authAdmin = async(req, res, next) => {
+exports.authAdmin = async (req, res, next) => {
   let token = req.cookies.jwt
 
   if (token) {

@@ -1,97 +1,44 @@
 <!doctype html>
 <html dir="rtl">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://majidh1.github.io/JalaliDatePicker/assets/demo.css">
-    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3304/3304749.png" type="image/x-icon">
-    
-    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
-    <script type="text/javascript"
-        src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
-</head>
+<%-include("./const/pagesHead")%>
 
-<body>
-    <header class="bg-white drop-shadow-sm">
-        <nav class=" mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-            <div class="flex lg:flex-1">
-                <a href="/خانه" class="-m-1.5 p-1.5">
-                    <span class="sr-only"></span>
-                    <img class="h-10 w-auto" src="https://cdn-icons-png.flaticon.com/128/3304/3304749.png"
-                        alt="سفیر">
-                </a>
-            </div>
-            <div class="flex lg:hidden">
-                <button type="button"
-                    class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                </button>
-            </div>
-            <div class="hidden lg:flex lg:gap-x-12">
-                <a href="#" class="text-sm font-semibold leading-6 text-gray-900">خانه</a>
-                <a href="#" class="text-sm font-semibold leading-6 text-gray-900">درباره ما </a>
-                <a href="#" class="text-sm font-semibold leading-6 text-gray-900">تماس با ما</a>
-            </div>
-            <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                <!-- <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span
-                        aria-hidden="true">&rarr;</span></a> -->
-                <!-- <button class="rounded-md px-4 py-2 transition flex flex-row text-gray-700 items-center"
-                    onclick="openModal('modelConfirm')"
-                    >
-                    <i class="ri-user-line ml-2 text-xl"></i>
-                    ورود یا ثبت نام
-                </button> -->
-                <button class="rounded-md px-4 py-2 transition flex flex-row text-gray-700 items-center"
-                    id="auth-user-button">
-                    <i class="ri-user-line ml-2 text-xl"></i>
-                    <a href="/login">
-                        ورود یا ثبت نام
-                    </a>
-                </button>
-            </div>
-        </nav>
-    </header>
-    <main class="">
-        <!-- <div class="bg-cover bg-center w-full h-64"
+    <body>
+        <%-include("./const/header")%>
+
+            <main class="">
+                <!-- <div class="bg-cover bg-center w-full h-64"
             style="background-image: url('');">
         </div> -->
-        <div class="flex flex-col justify-center items-center mb-6 p-6">
-            <div class="flex">
-                <select style="width: 130px;" id="firstCity" class="bg-white mr-3 px-4 py-2 border rounded-md">
-                    <option selected>مبدا</option>
-                    <option value="isfahan">اصفهان</option>
-                    <option value="tehran">تهران</option>
-                    <option value="tabriz">تبریز</option>
-                    <option value="rasht">رشت</option>
-                </select>
-                <select style="width: 130px;" id="lastCity" class="bg-white mr-3 px-4 py-2 border rounded-md">
-                    <option selected>مقصد</option>
-                    <option value="isfahan">اصفهان</option>
-                    <option value="tehran">تهران</option>
-                    <option value="tabriz">تبریز</option>
-                    <option value="rasht">رشت</option>
-                </select>
-                <input style="width: 100px;" type="number" id="count" min="1" max="6"
-                    class="bg-white mr-3 px-4 py-2 border rounded-md" placeholder="نفرات">
-                <input style="width: 100px;" type="text" id="movingDate"
-                    class="bg-white mr-3 px-4 py-2 border rounded-md" data-jdp data-jdp-min-date="today"
-                    placeholder="تاریخ حرکت" />
-                <button style="width: 150px;height: 40px;"
-                    class="bg-yellow-400 mr-3 px-4 py-1 border hover:bg-yellow-300 rounded-md" id="search">
-                    جستجو
-                </button>
-            </div>
-            <div id="bus" class="flex flex-col justify-center items-center m-6">
-                <!-- start bus -->
-                <!-- <div class="border rounded-md shadow shadow-md bus grid grid-cols-2 gap-4 m-4">
+                <div class="flex flex-col justify-center items-center mb-6 p-6">
+                    <div class="flex">
+                        <select style="width: 130px;" id="firstCity" class="bg-white mr-3 px-4 py-2 border rounded-md">
+                            <option selected>مبدا</option>
+                            <option value="isfahan">اصفهان</option>
+                            <option value="tehran">تهران</option>
+                            <option value="tabriz">تبریز</option>
+                            <option value="rasht">رشت</option>
+                        </select>
+                        <select style="width: 130px;" id="lastCity" class="bg-white mr-3 px-4 py-2 border rounded-md">
+                            <option selected>مقصد</option>
+                            <option value="isfahan">اصفهان</option>
+                            <option value="tehran">تهران</option>
+                            <option value="tabriz">تبریز</option>
+                            <option value="rasht">رشت</option>
+                        </select>
+                        <input style="width: 100px;" type="number" id="count" min="1" max="6"
+                            class="bg-white mr-3 px-4 py-2 border rounded-md" placeholder="نفرات">
+                        <input style="width: 100px;" type="text" id="movingDate"
+                            class="bg-white mr-3 px-4 py-2 border rounded-md" data-jdp data-jdp-min-date="today"
+                            placeholder="تاریخ حرکت" />
+                        <button style="width: 150px;height: 40px;"
+                            class="bg-yellow-400 mr-3 px-4 py-1 border hover:bg-yellow-300 rounded-md" id="search">
+                            جستجو
+                        </button>
+                    </div>
+                    <div id="bus" class="flex flex-col justify-center items-center m-6">
+                        <!-- start bus -->
+                        <!-- <div class="border rounded-md shadow shadow-md bus grid grid-cols-2 gap-4 m-4">
                     <div style="width: 75%;">
                         <div class="px-6 py-4">
                             <div class="font-bold text-xl mb-2">
@@ -114,13 +61,13 @@
                             بلیط</button>
                     </div>
                 </div> -->
-                <!-- end bus -->
+                        <!-- end bus -->
 
-            </div>
-        </div>
-    </main>
+                    </div>
+                </div>
+            </main>
 
-    <!-- 
+            <!-- 
         <h1 style="text-align:center">jalali datePicker - دیت پیکر شمسی</h1>
         <input type="text" data-jdp placeholder="لطفا یک تاریخ وارد نمایید" />
         <input type="text" data-jdp data-jdp-min-date="today" placeholder="نمایش تاریخ از امروز" />
@@ -136,170 +83,170 @@
         <p> با انتخاب کنترل input پلاگین date picker فعال شده و می توانید تاریخ مورد نظر خود را انتخاب نمایید</p>
 
         <h1>persian date picker</h1> -->
-    </div>
+            </div>
 
 
 
 
-    <div id="modelConfirm"
-        class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full mb-10">
-        <div class="relative top-40 mx-auto rounded-md bg-white max-w-md" style="padding: 15px 50px;">
-            <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div class="bg-white py-8 px-4 sm:rounded-lg sm:px-10 text-center">
-                    <span class="text-2xl block font-bold text-center"> ورود یا ثبت‌نام</span>
-                    <br>
-                    <span class="mt-12">برای ادامه شماره موبایل خود را وارد کنید.</span>
-                    <form>
-                        <div>
-                            <label for="email" class="block text-sm font-medium leading-5 mt-8 text-gray-700">
-                                شماره همراه
-                            </label>
-                            <div class="mt-1 relative rounded-md shadow-sm mb-8">
-                                <input id="email" name="email" placeholder="0938xxxxxxxx" type="email" required=""
-                                    value=""
-                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                <div
-                                    class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
+            <div id="modelConfirm"
+                class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full mb-10">
+                <div class="relative top-40 mx-auto rounded-md bg-white max-w-md" style="padding: 15px 50px;">
+                    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                        <div class="bg-white py-8 px-4 sm:rounded-lg sm:px-10 text-center">
+                            <span class="text-2xl block font-bold text-center"> ورود یا ثبت‌نام</span>
+                            <br>
+                            <span class="mt-12">برای ادامه شماره موبایل خود را وارد کنید.</span>
+                            <form>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium leading-5 mt-8 text-gray-700">
+                                        شماره همراه
+                                    </label>
+                                    <div class="mt-1 relative rounded-md shadow-sm mb-8">
+                                        <input id="email" name="email" placeholder="0938xxxxxxxx" type="email"
+                                            required="" value=""
+                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                        <div
+                                            class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+
+
+                                <div class="text-warning">
+                                    <i class="ri-error-warning-line text-xl"></i>
+                                    استفاده از سفیر به معنی پذیرش قوانین و مقررات این سرویس است.
+                                </div>
+
+                                <div class="mt-12">
+                                    <span class="block w-full rounded-md shadow-sm">
+                                        <button type="submit"
+                                            class="w-full flex justify-center py-2 px-4 border border-transparent text-white font-medium rounded-md text-black bg-blue-600 hover:bg-blue-800 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
+                                            ورود
+                                        </button>
+                                    </span>
+                                </div>
+
+                            </form>
+
                         </div>
-
-
-                        <div class="text-warning">
-                            <i class="ri-error-warning-line text-xl"></i>
-                            استفاده از سفیر به معنی پذیرش قوانین و مقررات این سرویس است.
-                        </div>
-
-                        <div class="mt-12">
-                            <span class="block w-full rounded-md shadow-sm">
-                                <button type="submit"
-                                    class="w-full flex justify-center py-2 px-4 border border-transparent text-white font-medium rounded-md text-black bg-blue-600 hover:bg-blue-800 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
-                                    ورود
-                                </button>
-                            </span>
-                        </div>
-
-                    </form>
+                    </div>
 
                 </div>
             </div>
 
-        </div>
-    </div>
+            <script type="text/javascript">
+                window.openModal = function (modalId) {
+                    document.getElementById(modalId).style.display = 'block'
+                    document.getElementsByTagName('body')[0].classList.add('overflow-y-hidden')
+                }
 
-    <script type="text/javascript">
-        window.openModal = function (modalId) {
-            document.getElementById(modalId).style.display = 'block'
-            document.getElementsByTagName('body')[0].classList.add('overflow-y-hidden')
-        }
+                window.closeModal = function (modalId) {
+                    document.getElementById(modalId).style.display = 'none'
+                    document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
+                }
 
-        window.closeModal = function (modalId) {
-            document.getElementById(modalId).style.display = 'none'
-            document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
-        }
+                // Close all modals when press ESC
+                document.onkeydown = function (event) {
+                    event = event || window.event;
+                    if (event.keyCode === 27) {
+                        document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
+                        let modals = document.getElementsByClassName('modal');
+                        Array.prototype.slice.call(modals).forEach(i => {
+                            i.style.display = 'none'
+                        })
+                    }
+                };
+            </script>
+            <script>
+                jalaliDatepicker.startWatch({
+                    minDate: "attr",
+                    maxDate: "attr"
+                });
+                /* Below is a js demo | you don't need to use */
+                setTimeout(function () {
+                    var elm = document.getElementsByTagName("input")[0];
+                    elm.focus();
+                    jalaliDatepicker.hide();
+                    jalaliDatepicker.show(elm);
+                }, 1000);
+            </script>
+            <script>
+                let firstCity = document.getElementById("firstCity")
+                let lastCity = document.getElementById("lastCity")
+                let count = document.getElementById("count")
+                var movingDate = document.getElementById("movingDate")
+                let bus = document.getElementById("bus")
 
-        // Close all modals when press ESC
-        document.onkeydown = function (event) {
-            event = event || window.event;
-            if (event.keyCode === 27) {
-                document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
-                let modals = document.getElementsByClassName('modal');
-                Array.prototype.slice.call(modals).forEach(i => {
-                    i.style.display = 'none'
+                // data
+                drivers = [
+                    {
+                        "id": "1",
+                        "cities": ["isfahan", "rasht"],
+                        "arrival": "rasht",
+                        "movingDate": "1403/03/01",
+                        "bus": {
+                            "seats": 22
+                        },
+                        "image": "https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YnVzfGVufDB8fDB8fHww"
+                    },
+                    {
+                        "id": "2",
+                        "cities": ["isfahan", "tabriz"],
+                        "arrival": "tabriz",
+                        "movingDate": "1403/02/22",
+                        "bus": {
+                            "seats": 6
+                        },
+                        "image": "https://plus.unsplash.com/premium_photo-1674823610129-64e6c712fbe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnVzfGVufDB8fDB8fHww"
+                    },
+                    {
+                        "id": "3",
+                        "cities": ["isfahan", "tehran"],
+                        "arrival": "isfahan",
+                        "movingDate": "1403/02/26",
+                        "bus": {
+                            "seats": 2
+                        }
+                    },
+                    {
+                        "id": "4",
+                        "cities": ["isfahan", "tehran"],
+                        "arrival": "isfahan",
+                        "movingDate": "1403/03/24",
+                        "bus": {
+                            "seats": 8
+                        }
+                    }
+                ]
+
+                document.getElementById("search").addEventListener("click", search)
+
+                firstCity.addEventListener("change", (e) => {
+                    firstCity = e.target.value
                 })
-            }
-        };
-    </script>
-    <script>
-        jalaliDatepicker.startWatch({
-            minDate: "attr",
-            maxDate: "attr"
-        });
-        /* Below is a js demo | you don't need to use */
-        setTimeout(function () {
-            var elm = document.getElementsByTagName("input")[0];
-            elm.focus();
-            jalaliDatepicker.hide();
-            jalaliDatepicker.show(elm);
-        }, 1000);
-    </script>
-    <script>
-        let firstCity = document.getElementById("firstCity")
-        let lastCity = document.getElementById("lastCity")
-        let count = document.getElementById("count")
-        var movingDate = document.getElementById("movingDate")
-        let bus = document.getElementById("bus")
-
-        // data
-        drivers = [
-            {
-                "id": "1",
-                "cities": ["isfahan", "rasht"],
-                "arrival": "rasht",
-                "movingDate": "1403/03/01",
-                "bus": {
-                    "seats": 22
-                },
-                "image": "https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YnVzfGVufDB8fDB8fHww"
-            },
-            {
-                "id": "2",
-                "cities": ["isfahan", "tabriz"],
-                "arrival": "tabriz",
-                "movingDate": "1403/02/22",
-                "bus": {
-                    "seats": 6
-                },
-                "image": "https://plus.unsplash.com/premium_photo-1674823610129-64e6c712fbe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnVzfGVufDB8fDB8fHww"
-            },
-            {
-                "id": "3",
-                "cities": ["isfahan", "tehran"],
-                "arrival": "isfahan",
-                "movingDate": "1403/02/26",
-                "bus": {
-                    "seats": 2
-                }
-            },
-            {
-                "id": "4",
-                "cities": ["isfahan", "tehran"],
-                "arrival": "isfahan",
-                "movingDate": "1403/03/24",
-                "bus": {
-                    "seats": 8
-                }
-            }
-        ]
-
-        document.getElementById("search").addEventListener("click", search)
-
-        firstCity.addEventListener("change", (e) => {
-            firstCity = e.target.value
-        })
 
 
-        lastCity.addEventListener("change", (e) => {
-            lastCity = e.target.value
-        })
+                lastCity.addEventListener("change", (e) => {
+                    lastCity = e.target.value
+                })
 
 
-        movingDate.addEventListener("change", (e) => {
-            movingDate = e.target.value
-        })
+                movingDate.addEventListener("change", (e) => {
+                    movingDate = e.target.value
+                })
 
 
 
-        function search() {
-            if (firstCity && lastCity && count && movingDate) {
-                for (let i = 0; i < drivers.length; i++) {
-                    if (firstCity === drivers[i].cities[0] && lastCity === drivers[i].cities[1] && drivers[i].arrival === firstCity && drivers[i].bus.seats >= 1 && drivers[i].movingDate === movingDate) {
-                        bus.innerHTML += `
+                function search() {
+                    if (firstCity && lastCity && count && movingDate) {
+                        for (let i = 0; i < drivers.length; i++) {
+                            if (firstCity === drivers[i].cities[0] && lastCity === drivers[i].cities[1] && drivers[i].arrival === firstCity && drivers[i].bus.seats >= 1 && drivers[i].movingDate === movingDate) {
+                                bus.innerHTML += `
                <div class="border rounded-md shadow shadow-md bus grid grid-cols-2 gap-4 m-4">
                     <div style="width: 75%;">
                         <div class="px-6 py-4">
@@ -324,16 +271,16 @@
                     </div>
                 </div>
                `
+                            }
+                        }
+
+                        document.querySelectorAll('input').value = ""
+                    } else {
+                        alert("enter all fields")
                     }
                 }
 
-                document.querySelectorAll('input').value = ""
-            } else {
-                alert("enter all fields")
-            }
-        }
-
-    </script>
-</body>
+            </script>
+    </body>
 
 </html>

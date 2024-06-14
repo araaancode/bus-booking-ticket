@@ -1,11 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Profile</h1>
-</body>
+<!doctype html>
+<html dir="rtl">
+
+<%-include("./const/pagesHead")%>
+
+    <body>
+        <%-include("./const/header")%>
+
+            <div class="flex h-screen m-10">
+                <!-- Sidebar -->
+                <%-include("./const/profileSidebar")%>
+
+
+                    <!-- Main Content -->
+                    <div class="w-3/4 p-4 flex flex-col space-y-4 mr-4">
+                        <!-- Card 1 -->
+                        <div class="bg-white rounded-lg shadow p-6 flex justify-between">
+                            <div class="flex shrink-0 max-w-md gap-4 items-center">
+                                <img src="https://cdn.alibaba.ir/h2/desktop/assets/images/avatar-4c776756.svg"
+                                    alt="عکس پروفایل" data-src="" data-expand="0"
+                                    class="is-responsive is-animated rounded-full w-18 h-18 ls-is-cached lazyloaded">
+                                <div class="flex flex-col py-px overflow-hidden justify-center">
+                                    <span class="text-headline-sm text-grays-600 font-semibold">
+                                        <%=user.phone%>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col justify-start">
+                                <h2 class="text-gray-700 mb-3 ml-2">موجودی حساب</h2>
+                                <h2 class="mb-3">
+                                    <b class="font-semibold text-xl">0</b>
+                                    <span class="text-gray-600">ریال</span>
+                                </h2>
+                                <button class="text-blue-600">افزایش موجودی <i
+                                        class="ri-arrow-left-s-line"></i></button>
+                            </div>
+
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="bg-white rounded-lg shadow p-6 flex justify-between">
+                            <div class="flex flex-col mt-1">
+                                <h1 class="text-xl font-bold text-gray-600"> <i
+                                        class="ri-user-follow-line ml-2 text-xl"></i> اطلاعات حساب کاربری </h1>
+                                <!-- inner 1-->
+                                <div class="flex flex-row my-6 mx-8">
+                                    <p class="ml-6">شماره همراه</p>
+                                    <p class="ml-6">
+                                        <%=user.phone%>
+                                    </p>
+                                    <span
+                                        class="bg-green-100 text-green-800 me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300 ml-6">
+                                        <i class="ri-checkbox-circle-line text-green-600">تایید شده</i>
+                                    </span>
+                                    <button class="text-blue-600">ویرایش <i class="ri-pencil-fill"></i></button>
+                                </div>
+                                <!-- end inner 1 -->
+                                <!-- inner 2-->
+                                <div class="flex flex-row my-4 mx-8">
+                                    <p class="ml-6">ایمیل</p>
+                                    <p class="ml-6">
+                                        <%=user.email%>
+                                    </p>
+                                    <span
+                                        class="bg-green-100 text-green-800 me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300 ml-6">
+                                        <i class="ri-checkbox-circle-line text-green-600">تایید شده</i>
+                                    </span>
+                                    <button class="text-blue-600">ویرایش <i class="ri-pencil-fill"></i></button>
+                                </div>
+                                <!-- end inner 2 -->
+                            </div>
+
+                            <div class="flex flex-col justify-start">
+                                <h2 class="text-gray-700 mb-3 ml-2">موجودی حساب</h2>
+                                <button class="text-blue-600">افزایش موجودی <i
+                                        class="ri-arrow-left-s-line"></i></button>
+                            </div>
+
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <h3 class="text-xl font-semibold mb-2">Card 3</h3>
+                            <p class="text-gray-700">This is the content of card 3.</p>
+                        </div>
+                    </div>
+            </div>
+
+    </body>
+
 </html>
