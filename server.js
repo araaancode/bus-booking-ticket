@@ -50,16 +50,14 @@ app.use(cookieParser())
 app.use('/api/v1/admins/auth', authAdminRoutes)
 app.use('/api/v1/admins', adminRoutes)
 
-
-// mount users routes
-app.use('/api/v1/users/auth', authUserRoutes)
-app.use('/api/v1/users', userRoutes)
-
 // mount drivers and bus routes
 app.use('/api/v1/drivers/auth', authDriverRoutes)
 app.use('/api/v1/drivers', driverRoutes)
 app.use('/api/v1/buses', busRoutes)
 
+// mount users routes
+app.use('/api/v1/users/auth', authUserRoutes)
+app.use('/api/v1/users', userRoutes)
 
 // pages routes
 app.use('/', userIndexPages)

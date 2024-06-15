@@ -196,46 +196,58 @@ exports.cancelTicket = catchAsync(async (req, res) => {
 // # description -> HTTP VERB -> Accesss
 // # search ticket -> POST -> user
 exports.searchTickets = catchAsync(async (req, res) => {
-    let buses = await Bus.find({}).populate('driver')
-    let drivers = []
-    let results = []
-    let day = ""
+    // let buses = await Bus.find({}).populate('driver')
 
-    let { firstCity, lastCity, seats, movingDate } = req.body
+    let buses  = await Bus.find({})
+    let drivers = await Driver.find({})
 
-    buses.forEach((bus) => {
-        if (bus.driver.active) {
-            drivers.push({
-                driver: bus.driver,
-                bus
-            })
-        }
-    })
-
-    dateSplitted = movingDate.split("-"),
-        jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
-    convertMovingDate = jD[0] + "-" + jD[1] + "-" + jD[2];
-
-
-    for (let i = 0; i < drivers.length; i++) {
-        let driverFirstCity = drivers[i].driver.cities[i]
-        let driverLastCity = drivers[i].driver.cities[1]
-        let driverSeats = drivers[i].bus.seats
-        let driverArrival = drivers[i].driver.arrival
-        let driverMovingDate = drivers[i].driver.movingDate.toISOString().split('T')[0]
-
-        if (firstCity === driverArrival && (lastCity === driverFirstCity || lastCity === driverLastCity) && driverSeats > 0 && driverSeats >= seats) {
-            console.log(drivers[i]);
-            results.push(drivers[i])
-        }
+    if(buses){
+        res.send(buses)
+        console.log(drivers);
+    }else{
+        res.send("buses not found")
     }
 
-    res.json({
-        msg: "ticket find",
-        data: req.body,
-        countData: results.length,
-        search: results
-    })
+    // let drivers = []
+    // let results = []
+    // let day = ""
+
+    // let { firstCity, lastCity, seats, movingDate } = req.body
+
+    // buses.forEach((bus) => {
+    //     console.log(bus)
+    //     // if (bus.driver.active) {
+    //     //     drivers.push({
+    //     //         driver: bus.driver,
+    //     //         bus
+    //     //     })
+    //     // }
+    // })
+
+    // dateSplitted = movingDate.split("-"),
+    //     jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
+    // convertMovingDate = jD[0] + "-" + jD[1] + "-" + jD[2];
+
+
+    // for (let i = 0; i < drivers.length; i++) {
+    //     let driverFirstCity = drivers[i].driver.cities[i]
+    //     let driverLastCity = drivers[i].driver.cities[1]
+    //     let driverSeats = drivers[i].bus.seats
+    //     let driverArrival = drivers[i].driver.arrival
+    //     let driverMovingDate = drivers[i].driver.movingDate.toISOString().split('T')[0]
+
+    //     if (firstCity === driverArrival && (lastCity === driverFirstCity || lastCity === driverLastCity) && driverSeats > 0 && driverSeats >= seats) {
+    //         console.log(drivers[i]);
+    //         results.push(drivers[i])
+    //     }
+    // }
+
+    // res.json({
+    //     msg: "ticket find",
+    //     data: req.body,
+    //     countData: results.length,
+    //     search: results
+    // })
 })
 
 // # description -> HTTP VERB -> Accesss

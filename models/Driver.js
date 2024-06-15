@@ -44,14 +44,10 @@ const driverSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    bus: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Bus',
-    },
-    role:{
-        type:String,
-        default:'driver',
-        required:true
+    role: {
+        type: String,
+        default: 'driver',
+        required: true
     },
     arrival: {
         type: String,
@@ -72,11 +68,10 @@ const driverSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    price:{
-        type:Number,
-        required:true
+    price: {
+        type: Number,
     }
-},{ timestamps: true });
+}, { timestamps: true});
 
 driverSchema.pre('save', async function (next) {
     // Only run this function if password was actually modified

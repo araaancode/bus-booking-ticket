@@ -58,7 +58,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const driver = await Driver.findOne({ phone }).select('+password');
 
   if (!driver || !(await driver.correctPassword(password, driver.password))) {
-    return next(new AppError('Incorrect phone or password', 401));
+    return res.status(401).json({msg:'Incorrect phone or password'});
   }
 
   // 3) If everything ok, send token to client

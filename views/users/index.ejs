@@ -183,46 +183,49 @@
                 let bus = document.getElementById("bus")
 
                 // data
-                drivers = [
-                    {
-                        "id": "1",
-                        "cities": ["isfahan", "rasht"],
-                        "arrival": "rasht",
-                        "movingDate": "1403/03/01",
-                        "bus": {
-                            "seats": 22
-                        },
-                        "image": "https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YnVzfGVufDB8fDB8fHww"
-                    },
-                    {
-                        "id": "2",
-                        "cities": ["isfahan", "tabriz"],
-                        "arrival": "tabriz",
-                        "movingDate": "1403/02/22",
-                        "bus": {
-                            "seats": 6
-                        },
-                        "image": "https://plus.unsplash.com/premium_photo-1674823610129-64e6c712fbe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnVzfGVufDB8fDB8fHww"
-                    },
-                    {
-                        "id": "3",
-                        "cities": ["isfahan", "tehran"],
-                        "arrival": "isfahan",
-                        "movingDate": "1403/02/26",
-                        "bus": {
-                            "seats": 2
-                        }
-                    },
-                    {
-                        "id": "4",
-                        "cities": ["isfahan", "tehran"],
-                        "arrival": "isfahan",
-                        "movingDate": "1403/03/24",
-                        "bus": {
-                            "seats": 8
-                        }
-                    }
-                ]
+                // drivers = [
+                //     {
+                //         "id": "1",
+                //         "cities": ["isfahan", "rasht"],
+                //         "arrival": "rasht",
+                //         "movingDate": "1403/03/01",
+                //         "bus": {
+                //             "seats": 22
+                //         },
+                //         "image": "https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YnVzfGVufDB8fDB8fHww"
+                //     },
+                //     {
+                //         "id": "2",
+                //         "cities": ["isfahan", "tabriz"],
+                //         "arrival": "tabriz",
+                //         "movingDate": "1403/02/22",
+                //         "bus": {
+                //             "seats": 6
+                //         },
+                //         "image": "https://plus.unsplash.com/premium_photo-1674823610129-64e6c712fbe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnVzfGVufDB8fDB8fHww"
+                //     },
+                //     {
+                //         "id": "3",
+                //         "cities": ["isfahan", "tehran"],
+                //         "arrival": "isfahan",
+                //         "movingDate": "1403/02/26",
+                //         "bus": {
+                //             "seats": 2
+                //         }
+                //     },
+                //     {
+                //         "id": "4",
+                //         "cities": ["isfahan", "tehran"],
+                //         "arrival": "isfahan",
+                //         "movingDate": "1403/03/24",
+                //         "bus": {
+                //             "seats": 8
+                //         }
+                //     }
+                // ]
+
+
+
 
                 document.getElementById("search").addEventListener("click", search)
 
@@ -246,6 +249,7 @@
                     if (firstCity && lastCity && count && movingDate) {
                         for (let i = 0; i < drivers.length; i++) {
                             if (firstCity === drivers[i].cities[0] && lastCity === drivers[i].cities[1] && drivers[i].arrival === firstCity && drivers[i].bus.seats >= 1 && drivers[i].movingDate === movingDate) {
+                                console.log(drivers[i]);
                                 bus.innerHTML += `
                <div class="border rounded-md shadow shadow-md bus grid grid-cols-2 gap-4 m-4">
                     <div style="width: 75%;">
