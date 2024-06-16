@@ -7,6 +7,39 @@ const User = require('../../models/User');
 const Driver = require('../../models/Driver');
 const Bus = require('../../models/Bus');
 
+const { MongoClient } = require('mongodb');
+
+async function main() {
+    const uri = process.env.MONGO_URI;
+
+    const client = new MongoClient(uri);
+
+    try {
+        // Connect to the MongoDB cluster
+        await client.connect();
+
+        // Specify the database and collection
+        const database = client.db('safir');
+        const collection = database.collection('drivers');
+
+        // Query the collection (fetch data)
+        const query = {}; // Define your query here
+        const options = {
+            // Optionally, you can add options like sort, limit, etc.
+        };
+
+        const results = await collection.find(query, options).toArray();
+
+        return results
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    } finally {
+        await client.close();
+    }
+}
+
+
+
 
 // covert persian date to gregorian
 JalaliDate = {
@@ -175,7 +208,7 @@ exports.myTickets = catchAsync(async (req, res) => {
 exports.cancelTicket = catchAsync(async (req, res) => {
     let ticket = await Ticket.findById(req.params.ticketId)
 
-    if(ticket && ticket.isCanceled === false){
+    if (ticket && ticket.isCanceled === false) {
         let driver = await Driver.findById(ticket.driver)
         let bus = await Bus.findById(ticket.bus)
         let passengerCount = ticket.passengers.length
@@ -186,9 +219,9 @@ exports.cancelTicket = catchAsync(async (req, res) => {
         await ticket.save()
 
         res.send({
-            driver:driver,
-            bus:bus,
-            ticket:ticket
+            driver: driver,
+            bus: bus,
+            ticket: ticket
         })
     }
 })
@@ -198,56 +231,52 @@ exports.cancelTicket = catchAsync(async (req, res) => {
 exports.searchTickets = catchAsync(async (req, res) => {
     // let buses = await Bus.find({}).populate('driver')
 
-    let buses  = await Bus.find({})
-    let drivers = await Driver.find({})
+    let buses = await Bus.find({})
 
-    if(buses){
-        res.send(buses)
-        console.log(drivers);
-    }else{
-        res.send("buses not found")
-    }
+    main().then(async (drivers) => {
 
-    // let drivers = []
-    // let results = []
-    // let day = ""
+        let results = []
+        let day = ""
 
-    // let { firstCity, lastCity, seats, movingDate } = req.body
-
-    // buses.forEach((bus) => {
-    //     console.log(bus)
-    //     // if (bus.driver.active) {
-    //     //     drivers.push({
-    //     //         driver: bus.driver,
-    //     //         bus
-    //     //     })
-    //     // }
-    // })
-
-    // dateSplitted = movingDate.split("-"),
-    //     jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
-    // convertMovingDate = jD[0] + "-" + jD[1] + "-" + jD[2];
+        let { firstCity, lastCity, seats, movingDate } = req.body
 
 
-    // for (let i = 0; i < drivers.length; i++) {
-    //     let driverFirstCity = drivers[i].driver.cities[i]
-    //     let driverLastCity = drivers[i].driver.cities[1]
-    //     let driverSeats = drivers[i].bus.seats
-    //     let driverArrival = drivers[i].driver.arrival
-    //     let driverMovingDate = drivers[i].driver.movingDate.toISOString().split('T')[0]
+        dateSplitted = movingDate.split("-"),
+            jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
+        convertMovingDate = jD[0] + "-" + jD[1] + "-" + jD[2];
 
-    //     if (firstCity === driverArrival && (lastCity === driverFirstCity || lastCity === driverLastCity) && driverSeats > 0 && driverSeats >= seats) {
-    //         console.log(drivers[i]);
-    //         results.push(drivers[i])
-    //     }
-    // }
 
-    // res.json({
-    //     msg: "ticket find",
-    //     data: req.body,
-    //     countData: results.length,
-    //     search: results
-    // })
+        for (let i = 0; i < drivers.length; i++) {
+            findBus = await Bus.findById(drivers[i].bus)
+            let driverFirstCity = drivers[i].cities[i]
+            let driverLastCity = drivers[i].cities[1]
+            let driverSeats = findBus.seats
+            let driverArrival = drivers[i].arrival
+            let driverMovingDate = drivers[i].movingDate.toISOString().split('T')[0]
+
+            if (firstCity === driverArrival && (lastCity === driverFirstCity || lastCity === driverLastCity) && driverSeats > 0 && driverSeats >= seats) {
+
+                results.push(drivers[i])
+            }
+
+        }
+
+        if (results.length > 0) {
+            res.json({
+                msg: "ticket find",
+                data: req.body,
+                countData: results.length,
+                drivers: results
+            })
+        } else {
+            res.json({
+                msg: "بلیط پیدا نشد",
+            })
+        }
+    })
+
+
+
 })
 
 // # description -> HTTP VERB -> Accesss

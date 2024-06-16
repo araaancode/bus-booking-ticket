@@ -30,7 +30,7 @@ const driverSchema = new mongoose.Schema({
 
     passwordConfirm: {
         type: String,
-        required: [true, 'Please confirm your password'],
+        // required: [true, 'Please confirm your password'],
         validate: {
             // This only works on CREATE and SAVE!!!
             validator: function (el) {
@@ -70,7 +70,13 @@ const driverSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-    }
+    },
+    bus: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Bus',
+        required: true,
+        unique: true,
+    },
 }, { timestamps: true});
 
 driverSchema.pre('save', async function (next) {

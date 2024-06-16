@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const Driver = require('../models/Driver');
-const drivers = require("../data/drivers.json")
+const drivers = require("../data/drivers")
 const Bus = require('../models/Bus');
-const buses = require("../data/buses.json")
+const buses = require("../data/buses")
+
 
 const connectDB = require('./db');
 
