@@ -17,3 +17,8 @@ exports.register = (req, res) => {
 exports.profile = (req, res) => {
     res.render("users/profile", { title: "حساب کاربری" })
 }
+
+// searchTickets page
+exports.searchTickets = (req, res) => {
+    res.render("users/searchTickets", { title: "بلیط گرفتن" })
+}
