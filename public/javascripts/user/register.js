@@ -64,6 +64,8 @@ function register() {
 
             firstAuth.style.display = "none";
             secondAuth.style.display = "block";
+
+            localStorage.setItem("user",response.data.user._id)
         })
         .catch(function (error) {
             console.log(error);

@@ -177,6 +177,8 @@ function login(e) {
                     display = document.getElementById('two-sec');
                 startTimer(twoMinutes, display);
                 otp1.focus()
+
+                localStorage.setItem("user",response.data.user._id)
             })
             .catch(function (error) {
                 console.log(error);
