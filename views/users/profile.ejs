@@ -14,7 +14,7 @@
                     <!-- Main Content -->
                     <div class="w-3/4 p-4 flex flex-col space-y-4 mr-4">
                         <!-- Card 1 -->
-                        <div class="bg-white rounded-lg shadow p-6 flex justify-between">
+                        <div style="margin: 20px 0;" class="bg-white rounded-lg shadow p-6 flex justify-between">
                             <div class="flex shrink-0 max-w-md gap-4 items-center">
                                 <img src="https://cdn.alibaba.ir/h2/desktop/assets/images/avatar-4c776756.svg"
                                     alt="عکس پروفایل" data-src="" data-expand="0"
@@ -25,26 +25,29 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="flex flex-col justify-start">
+                            <div style="font-size: 18px;" class="flex flex-col justify-start ml-6">
                                 <h2 class="text-gray-700 mb-3 ml-2">موجودی حساب</h2>
                                 <h2 class="mb-3">
                                     <b class="font-semibold text-xl">0</b>
                                     <span class="text-gray-600">ریال</span>
                                 </h2>
-                                <button class="text-blue-600">افزایش موجودی <i
-                                        class="ri-arrow-left-s-line"></i></button>
+                                <button
+                                    class=" bg-transparent text-xl hover:bg-blue-600 text-blue-700 hover:text-white py-3 px-5 hover:border-transparent rounded">افزایش
+                                    موجودی <i class="ri-arrow-left-s-line"></i></button>
+
                             </div>
 
                         </div>
 
                         <!-- Card 2 -->
-                        <div class="bg-white rounded-lg shadow p-6 flex justify-between">
+                        <div style="margin: 20px 0;" class="bg-white rounded-lg shadow p-6 flex justify-between">
                             <div class="flex flex-col mt-1">
-                                <h1 class="text-xl font-bold text-gray-600"> <i
+                                <h1 style="margin-bottom: 30px;font-size: 25px;"
+                                    class="text-xl font-bold text-gray-600"> <i
                                         class="ri-user-follow-line ml-2 text-xl"></i> اطلاعات حساب کاربری </h1>
                                 <!-- inner 1-->
-                                <div class="flex flex-row my-6 mx-8">
-                                    <p class="ml-6">شماره همراه</p>
+                                <div style="font-size: 18px;" class="flex flex-row my-6 mx-8">
+                                    <p class="ml-6 text-gray-500">شماره همراه</p>
                                     <p class="ml-6">
                                         <%=user.phone%>
                                     </p>
@@ -56,8 +59,8 @@
                                 </div>
                                 <!-- end inner 1 -->
                                 <!-- inner 2-->
-                                <div class="flex flex-row my-4 mx-8">
-                                    <p class="ml-6">ایمیل</p>
+                                <div style="font-size: 18px;" class="flex flex-row my-4 mx-8">
+                                    <p class="ml-6 text-gray-500">ایمیل</p>
                                     <p class="ml-6">
                                         <%=user.email%>
                                     </p>
@@ -70,21 +73,117 @@
                                 <!-- end inner 2 -->
                             </div>
 
-                            <div class="flex flex-col justify-start">
-                                <h2 class="text-gray-700 mb-3 ml-2">موجودی حساب</h2>
-                                <button class="text-blue-600">افزایش موجودی <i
-                                        class="ri-arrow-left-s-line"></i></button>
+                            <div class="flex flex-col h-full ml-6">
+                                <div class="mt-auto">
+                                    <button
+                                        class="bg-transparent text-xl hover:bg-blue-600 text-blue-700 hover:text-white py-3 px-5 border border-blue-500 hover:border-transparent rounded">
+                                        <i class="ri-key-line"></i>
+                                        ویرایش کلمه عبور
+                                    </button>
+                                </div>
                             </div>
 
                         </div>
 
                         <!-- Card 3 -->
-                        <div class="bg-white rounded-lg shadow p-6">
-                            <h3 class="text-xl font-semibold mb-2">Card 3</h3>
-                            <p class="text-gray-700">This is the content of card 3.</p>
+                        <div style="margin: 20px 0;" class="bg-white rounded-lg shadow p-6">
+
+                            <div class="flex justify-between items-center p-4">
+
+                                <h1 style="margin-bottom: 30px;font-size: 25px;"
+                                    class="text-xl font-bold text-gray-600"> <i class="ri-user-3-fill"></i> اطلاعات شخصی
+                                </h1>
+                                <button
+                                    class="bg-transparent text-xl hover:bg-blue-600 text-blue-700 hover:text-white py-3 px-5 hover:border-transparent rounded">
+                                    <i class="ri-pencil-line"></i>
+                                    ویرایش اطلاعات
+                                </button>
+
+                            </div>
+
+                            <div class="flex flex-wrap mt-auto">
+                                <!-- row 1, col1 -->
+                                <div style="font-size: 18px;" class="basis-1/2 w-1/2 p-2">
+                                    <div class="p-4">
+                                        <div class="flex flex-row my-6 mx-8">
+                                            <p class="ml-6 text-gray-500">نام و نام خانوادگی</p>
+                                            <% if (user.name) { %>
+                                                <p class="ml-6">
+                                                    <%=user.name %>
+                                                </p>
+                                                <% } else { %>
+                                                    <!-- <p class="w-full text-gray-700">-</p> -->
+                                                    <p class="border-t border-gray-600 px-6 inline-block mt-2 mr-8"></p>
+                                                    <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- row 1, col2 -->
+                                <div style="font-size: 18px;" class="basis-1/2 w-1/2 p-2">
+                                    <div class="p-4">
+                                        <div class="flex flex-row my-6 mx-8">
+                                            <p class="ml-6 text-gray-500">شماره تلفن ضروری</p>
+                                            <% if (user.emergencyPhone) { %>
+                                                <p class="ml-6">
+                                                    <%=user.emergencyPhone %>
+                                                </p>
+                                                <% } else { %>
+                                                    <!-- <p class="w-full text-gray-700">-</p> -->
+                                                    <p class="border-t border-gray-600 px-6 inline-block mt-2 mr-8"></p>
+                                                    <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- row 2, col1 -->
+                                <div style="font-size: 18px;" class="basis-1/2 w-1/2 p-2">
+                                    <div class="p-4">
+                                        <div class="flex flex-row my-6 mx-8">
+                                            <p class="ml-6 text-gray-500"> کد ملی</p>
+                                            <% if (user.nationalCode) { %>
+                                                <p class="ml-6">
+                                                    <%=user.nationalCode %>
+                                                </p>
+                                                <% } else { %>
+                                                    <!-- <p class="w-full text-gray-700">-</p> -->
+                                                    <p class="border-t border-gray-600 px-6 inline-block mt-2 mr-8"></p>
+                                                    <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- row 2, col2 -->
+                                <div style="font-size: 18px;" class="basis-1/2 w-1/2 p-2">
+                                    <div class="p-4">
+                                        <div class="flex flex-row my-6 mx-8">
+                                            <p class="ml-6 text-gray-500">تاریخ تولد</p>
+                                            <% if (user.birthDay) { %>
+                                                <p class="ml-6">
+                                                    <%=user.birthDay %>
+                                                </p>
+                                                <% } else { %>
+                                                    <!-- <p class="w-full text-gray-700">-</p> -->
+                                                    <p class="border-t border-gray-600 px-6 inline-block mt-2 mr-8"></p>
+                                                    <% } %>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
+
+                    <!-- footer -->
+                   
+
             </div>
+
+
+
+
 
     </body>
 
