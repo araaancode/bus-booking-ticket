@@ -337,7 +337,7 @@ exports.bookTicket = catchAsync(async (req, res) => {
 // # fetch all drivers  -> GET -> user
 exports.getDrivers = catchAsync(async (req, res) => {
 
-    main().then(async (drivers) => {
+    await main().then(async (drivers) => {
         if (drivers) {
             res.status(200).json({
                 msg: "راننده ها پیدا شدند",
