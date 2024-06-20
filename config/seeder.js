@@ -4,8 +4,8 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const Driver = require('../models/Driver');
 const drivers = require("../data/drivers")
-const Bus = require('../models/Bus');
-const buses = require("../data/buses")
+// const Bus = require('../models/Bus');
+// const buses = require("../data/buses")
 
 
 const connectDB = require('./db');
@@ -18,7 +18,7 @@ connectDB()
 const importData = async () => {
   try {
     await Driver.deleteMany()
-    await Bus.deleteMany()
+    // await Bus.deleteMany()
 
     // import drivers
     const sampleDrivers = drivers.map((driver) => {
@@ -27,12 +27,12 @@ const importData = async () => {
 
     await Driver.insertMany(sampleDrivers)
 
-    // import buses
-    const sampleBuses = buses.map((bus) => {
-      return { ...bus }
-    })
+    // // import buses
+    // const sampleBuses = buses.map((bus) => {
+    //   return { ...bus }
+    // })
 
-    await Bus.insertMany(sampleBuses)
+    // await Bus.insertMany(sampleBuses)
 
 
     console.log('Data Imported!'.green.inverse)
@@ -46,7 +46,7 @@ const importData = async () => {
 // delete data => node importData.js -d
 const destroyData = async () => {
   try {
-    await Bus.deleteMany()
+    // await Bus.deleteMany()
     await Driver.deleteMany()
 
     console.log('Data Destroyed!'.red.inverse)

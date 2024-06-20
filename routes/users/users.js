@@ -9,6 +9,7 @@ const middleware = require("../../middlewares/auth")
 
 const upload = require("../../utils/upload")
 
+router.get('/all-drivers',userControllers.getDrivers)
 router.get('/me', middleware.authUser, userControllers.getMe)
 router.put('/update-profile/:userId', middleware.authUser, userControllers.updateProfile)
 router.put('/update-avatar/:userId', middleware.authUser, upload.single('avatar'), userControllers.updateAvatar)

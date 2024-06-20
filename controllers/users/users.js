@@ -238,41 +238,44 @@ exports.searchTickets = catchAsync(async (req, res) => {
         let results = []
         let day = ""
 
-        let { firstCity, lastCity, seats, movingDate } = req.body
+
+        console.log(drivers);
+
+        // let { firstCity, lastCity, seats, movingDate } = req.body
 
 
-        dateSplitted = movingDate.split("-"),
-            jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
-        convertMovingDate = jD[0] + "-" + jD[1] + "-" + jD[2];
+        // dateSplitted = movingDate.split("-"),
+        //     jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
+        // convertMovingDate = jD[0] + "-" + jD[1] + "-" + jD[2];
 
 
-        for (let i = 0; i < drivers.length; i++) {
-            findBus = await Bus.findById(drivers[i].bus)
-            let driverFirstCity = drivers[i].cities[i]
-            let driverLastCity = drivers[i].cities[1]
-            let driverSeats = findBus.seats
-            let driverArrival = drivers[i].arrival
-            let driverMovingDate = drivers[i].movingDate.toISOString().split('T')[0]
+        // for (let i = 0; i < drivers.length; i++) {
+        //     findBus = await Bus.findById(drivers[i].bus)
+        //     let driverFirstCity = drivers[i].cities[i]
+        //     let driverLastCity = drivers[i].cities[1]
+        //     let driverSeats = findBus.seats
+        //     let driverArrival = drivers[i].arrival
+        //     let driverMovingDate = drivers[i].movingDate.toISOString().split('T')[0]
 
-            if (firstCity === driverArrival && (lastCity === driverFirstCity || lastCity === driverLastCity) && driverSeats > 0 && driverSeats >= seats) {
+        //     if (firstCity === driverArrival && (lastCity === driverFirstCity || lastCity === driverLastCity) && driverSeats > 0 && driverSeats >= seats) {
 
-                results.push(drivers[i])
-            }
+        //         results.push(drivers[i])
+        //     }
 
-        }
+        // }
 
-        if (results.length > 0) {
-            res.json({
-                msg: "ticket find",
-                data: req.body,
-                countData: results.length,
-                drivers: results
-            })
-        } else {
-            res.json({
-                msg: "بلیط پیدا نشد",
-            })
-        }
+        // if (results.length > 0) {
+        //     res.json({
+        //         msg: "ticket find",
+        //         data: req.body,
+        //         countData: results.length,
+        //         drivers: results
+        //     })
+        // } else {
+        //     res.json({
+        //         msg: "بلیط پیدا نشد",
+        //     })
+        // }
     })
 
 
@@ -330,4 +333,25 @@ exports.bookTicket = catchAsync(async (req, res) => {
     })
 })
 
+// # description -> HTTP VERB -> Accesss
+// # fetch all drivers  -> GET -> user
+exports.getDrivers = catchAsync(async (req, res) => {
+
+    main().then(async (drivers) => {
+        if (drivers) {
+            res.status(200).json({
+                msg: "راننده ها پیدا شدند",
+                count:drivers.length,
+                drivers
+            })
+        } else {
+            res.status(401).json({
+                msg: "راننده ها پیدا شدند",
+            })
+        }
+
+    })
+
+
+})
 

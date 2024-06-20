@@ -34,12 +34,12 @@
                     <option value="ahvaz">اهواز</option>
                     <option value="elam">ایلام</option>
                     <option value="bognord">بجنورد</option>
-                    <option value="bandar-abbas">بندرعباس</option>
+                    <option value="bandar_abbas">بندرعباس</option>
                     <option value="bosher">بوشهر</option>
                     <option value="birgand">بیرجند</option>
                     <option value="tabriz">تبریز</option>
                     <option value="tehran">تهران</option>
-                    <option value="khoram-abad">خرم آباد</option>
+                    <option value="khoram_abad">خرم آباد</option>
                     <option value="rasht">رشت</option>
                     <option value="zahedan">زاهدان</option>
                     <option value="zanjan">زنجان</option>
@@ -57,7 +57,7 @@
                     <option value="mashhad">مشهد</option>
                     <option value="hamedan">همدان</option>
                     <option value="yasoj">یاسوج</option>
-                    <option value="yaz">یزد</option>
+                    <option value="yazd">یزد</option>
 
                 </select>
                 <select style="width: 180px;" id="lastCity" class="bg-white mr-6 px-4 py-2 border rounded-md">
@@ -70,7 +70,7 @@
                     <option value="elam">ایلام</option>
                     <option value="bognord">بجنورد</option>
                     <option value="bandar-abbas">بندرعباس</option>
-                    <option value="bosher">بوشهر</option>
+                    <option value="boshehr">بوشهر</option>
                     <option value="birgand">بیرجند</option>
                     <option value="tabriz">تبریز</option>
                     <option value="tehran">تهران</option>
@@ -92,7 +92,7 @@
                     <option value="mashhad">مشهد</option>
                     <option value="hamedan">همدان</option>
                     <option value="yasoj">یاسوج</option>
-                    <option value="yaz">یزد</option>
+                    <option value="yazd">یزد</option>
                 </select>
                 <input style="width: 200px;" type="number" id="count" min="1" max="6"
                     class="bg-white mr-6 px-4 py-6 border rounded-md" placeholder="نفرات">
@@ -100,66 +100,17 @@
                     class="bg-white mr-6 px-4 py-6 border rounded-md" data-jdp data-jdp-min-date="today"
                     placeholder="تاریخ حرکت" />
 
-                    <div class="mr-6 p-2">
-                        <button style="width: 200px;height: 50px;" class="bg-yellow-400 border border-yellow-500 hover:bg-yellow-300 rounded-md"
-                            id="search">
-                            جستجو
-                        </button>
-                    </div>
+                <div class="mr-6 p-2">
+                    <button style="width: 200px;height: 50px;"
+                        class="bg-yellow-400 border border-yellow-500 hover:bg-yellow-300 rounded-md" id="search">
+                        جستجو
+                    </button>
+                </div>
             </div>
 
 
-            <div id="bus" class="flex flex-col justify-center items-center m-6">
             <!-- start bus -->
-            <!-- <div class="border rounded-md shadow shadow-md bus grid grid-cols-2 gap-4 m-4">
-                    <div style="width: 75%;">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">
-                                <img class="m-4 rounded-md w-50 h-20 inline"
-                                    src="https://plus.unsplash.com/premium_photo-1674823610129-64e6c712fbe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnVzfGVufDB8fDB8fHww"
-                                    alt="Card image">
-                                <span class="ml-4" id="bus-title"> Card Title 1</span>
-                                <span class="ml-4">first city</span>
-                                <span class="ml-4">last city</span>
-                                <span class="ml-4">arriavl</span>
-                                <span class="ml-4">count</span>
-                                <span class="ml-4">moving date</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width: 25%;" class="border-r border-solid border-gray-300 p-4">
-                        <p>12500</p>
-                        <button
-                            class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">رزرو
-                            بلیط</button>
-                    </div>
-                </div>
-
-                <div class="border rounded-md shadow shadow-md bus grid grid-cols-2 gap-4 m-4">
-                    <div style="width: 75%;">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">
-                                <img class="m-4 rounded-md w-50 h-20 inline"
-                                    src="https://plus.unsplash.com/premium_photo-1674823610129-64e6c712fbe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnVzfGVufDB8fDB8fHww"
-                                    alt="Card image">
-                                <span class="ml-4" id="bus-title"> Card Title 1</span>
-                                <span class="ml-4">first city</span>
-                                <span class="ml-4">last city</span>
-                                <span class="ml-4">arriavl</span>
-                                <span class="ml-4">count</span>
-                                <span class="ml-4">moving date</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width: 25%;" class="border-r border-solid border-gray-300 p-4">
-                        <p>12500</p>
-                        <button
-                            class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">رزرو
-                            بلیط</button>
-                    </div>
-                </div>
-
-
+            <div id="bus" class="flex flex-col justify-center items-center m-6">
                 <div class="border rounded-md shadow shadow-md bus grid grid-cols-2 gap-4 m-4">
                     <div style="width: 75%;">
                         <div class="px-6 py-4">
@@ -206,10 +157,10 @@
                             class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">رزرو
                             بلیط</button>
                     </div>
-                </div> -->
-            <!-- end bus -->
+                </div>
 
             </div>
+            <!-- end bus -->
             </div>
         </main>
 

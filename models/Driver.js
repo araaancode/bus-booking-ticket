@@ -74,7 +74,7 @@ const driverSchema = new mongoose.Schema({
     bus: {
         type: mongoose.Schema.ObjectId,
         ref: 'Bus',
-        required: true,
+        // required: true,
         unique: true,
     },
 }, { timestamps: true});

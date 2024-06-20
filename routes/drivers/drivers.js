@@ -19,4 +19,5 @@ router.put('/cancel-travel',middleware.authDriver,driverController.cancelTravel)
 router.get('/get-income',middleware.authDriver,driverController.getIncome)
 router.get('/get-reservations',middleware.authDriver,driverController.getReservation)
 
+
 module.exports = router;
