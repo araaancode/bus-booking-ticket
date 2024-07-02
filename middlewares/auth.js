@@ -16,7 +16,7 @@ async function main() {
     await client.connect();
 
     // Specify the database and collection
-    const database = client.db('safir');
+    const database = client.db('safirdbb');
     const collection = database.collection('drivers');
 
     // Query the collection (fetch data)
@@ -141,7 +141,7 @@ exports.authDriver = async (req, res, next) => {
           res.locals.driver = findDriver
           next()
         } else {
-          res.status(403).json({ msg: "not authorized" })
+          res.status(403).json({ msg: "دسترسی غیرمجاز" })
         }
       }).catch((error) => {
         res.send(error)

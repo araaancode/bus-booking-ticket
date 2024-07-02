@@ -1,5 +1,7 @@
 const catchAsync = require('../../middlewares/catchAsync');
 const AppError = require('../../middlewares/appError');
+const { StatusCodes } = require("http-status-codes")
+
 
 // Bus model
 const Bus = require('../../models/Bus');
@@ -17,7 +19,7 @@ async function main() {
         await client.connect();
 
         // Specify the database and collection
-        const database = client.db('safir');
+        const database = client.db('safirdbb');
         const collection = database.collection('drivers');
 
         // Query the collection (fetch data)
@@ -71,26 +73,72 @@ async function udpateDoc(updateEntry, docData) {
 
 
 // # description -> HTTP VERB -> Accesss
-// # get bus for driver -> GET -> bus
-exports.getBus = catchAsync(async (req, res) => {
-    let bus = await Bus.findOne({ driver: req.driver.id })
-    if (bus) {
-        res.status(200).json({
-            status: 'success',
-            msg: 'bus fetched',
-            bus,
-        })
-    } else {
-        res.status(403).json({
-            msg: 'can not fetch bus',
-        })
+// # get all buses (active and deactive) -> GET -> admin
+exports.getAllBus = async (req, res) => {
+    try {
+        let buses = await Bus.find({})
+        if (buses.length > 0) {
+            return res.status(StatusCodes.OK).json({
+                status: 'success',
+                msg: "اتوبوس ها پیدا شدند",
+                count: buses.length,
+                buses: buses
+            })
+        } else {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                status: 'failure',
+                msg: "اتوبوسی پیدا نشد"
+            })
+        }
+    } catch (error) {
+        console.error(error.message);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: 'failure',
+            msg: "خطای داخلی سرور",
+            error
+        });
     }
-})
+}
+
+
+// # description -> HTTP VERB -> Accesss
+// # get single buse -> GET -> admin
+exports.getSingleBus = async (req, res) => {
+    try {
+        let bus = await Bus.findById(req.params.busId)
+        if (bus) {
+            return res.status(StatusCodes.OK).json({
+                status: 'success',
+                msg: "اتوبوس پیدا شدند",
+                bus: bus
+            })
+        } else {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                status: 'failure',
+                msg: "اتوبوسی پیدا نشد"
+            })
+        }
+    } catch (error) {
+        console.error(error.message);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: 'failure',
+            msg: "خطای داخلی سرور",
+            error
+        });
+    }
+}
+
 
 
 // # description -> HTTP VERB -> Accesss
 // # create bus for driver -> POST -> bus
 exports.createBus = catchAsync(async (req, res) => {
+    let images = [];
+    if (req.files.images) {
+        req.files.images.forEach((element) => {
+            images.push(element.filename);
+        });
+    }
 
     await Bus.create({
         driver: req.driver._id,
@@ -98,14 +146,15 @@ exports.createBus = catchAsync(async (req, res) => {
         model: req.body.model,
         color: req.body.color,
         features: req.body.features,
+        cover: req.files.cover[0].filename,
+        images,
     }).then((bus) => {
         if (bus) {
             main().then(async (drivers) => {
                 let findDriver = drivers.find((driver) => driver.id == req.driver.id)
-
                 udpateDoc(bus._id, findDriver.phone).then((data) => {
                     if (data) {
-                        res.status(201).json({
+                        res.status(StatusCodes.CREATED).json({
                             success: true,
                             msg: "اتوبوس شما ایجاد شد",
                             driver: data,
@@ -121,7 +170,7 @@ exports.createBus = catchAsync(async (req, res) => {
             })
 
         } else {
-            res.status(400).json({
+            res.status(StatusCodes.BAD_REQUEST).json({
                 success: true,
                 data: bus,
                 msg: "خطایی وجود دارد اتوبوس وجود دارد"
@@ -129,55 +178,125 @@ exports.createBus = catchAsync(async (req, res) => {
         }
     }).catch((error) => {
         console.log(error);
-        res.status(400).json({
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             msg: "خطایی وجود دارد."
         })
     })
-
-
 
 })
 
 
 // # description -> HTTP VERB -> Accesss
 // # update bus for driver -> PUT -> bus
-exports.updateBus = catchAsync(async (req, res) => {
-    await Bus.findByIdAndUpdate(
-        req.driver.bus,
-        {
-            name: req.body.name,
-            model: req.body.model,
-            color: req.body.color,
-            capicity: req.body.capicity,
-            seats: req.body.seats,
-            features: req.body.features,
-        },
-        { new: true }
-    ).then((bus) => {
-        if (bus) {
-            res.status(200).json({
-                msg: 'اتوبوس ویرایش شد',
-                bus,
+exports.updateBus = async (req, res) => {
+    try {
+
+        let bus = await Bus.findById(req.params.busId)
+
+        if (bus.driver.toString() == req.driver._id.toString()) {
+
+            await Bus.findByIdAndUpdate(req.params.busId, {
+                name: req.body.name,
+                model: req.body.model,
+                color: req.body.color,
+                capicity: req.body.capicity,
+                seats: req.body.seats,
+                features: req.body.features,
+            }, { new: true }).then((newData) => {
+                res.status(StatusCodes.OK).json({
+                    status: 'success',
+                    msg: "اتوبوس ویرایش شد",
+                    newBus: newData
+                });
+            }).catch((error) => {
+                console.log(error);
+                res.status(StatusCodes.BAD_REQUEST).json({
+                    status: 'failure',
+                    msg: "اتوبوس ویرایش نشد",
+                });
             })
+
+        } else {
+            res.status(StatusCodes.UNAUTHORIZED).json({
+                status: 'failure',
+                msg: "دسترسی غیرمجاز",
+            });
         }
-    }).catch((error) => {
-        console.log(error);
-        res.status(400).json({
-            msg: "اتوبوس ویرایش نشد",
-            error: error
-        })
-    })
-})
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: 'failure',
+            msg: "خطای داخلی سرور",
+            error
+        });
+    }
+}
 
 
 // # description -> HTTP VERB -> Accesss
 // # update bus cover for driver -> PUT -> bus
-exports.updateBusCover = catchAsync(async (req, res) => {
-    res.send("update bus cover")
-})
+exports.updateBusCover = async (req, res) => {
+    try {
+        await Bus.findByIdAndUpdate(req.params.busId, {
+            cover: req.file.filename,
+        }).then((newBus) => {
+            if (newBus) {
+                res.status(StatusCodes.OK).json({
+                    status: 'success',
+                    msg: "کاور اتوبوس ویرایش شد",
+                    newBus
+                });
+            } else {
+                res.status(StatusCodes.BAD_REQUEST).json({
+                    status: 'failure',
+                    msg: "کاور اتوبوس ویرایش نشد",
+                });
+            }
+        });
+    } catch (error) {
+        console.error(error.message);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: 'failure',
+            msg: "خطای داخلی سرور",
+            error
+        });
+    }
+}
 
 // # description -> HTTP VERB -> Accesss
 // # update bus images for driver -> PUT -> bus
-exports.updateBusImages = catchAsync(async (req, res) => {
-    res.send("update bus images")
-})
+exports.updateBusImages = async (req, res) => {
+    console.log(req.file.filename);
+    // try {
+    //     await Bus.findByIdAndUpdate(req.params.busId, {
+    //       $push: {
+    //         images: {
+    //           filename: req.file.filename,
+    //         },
+    //       },
+    //     }).then((newBus) => {
+    //       if (newBus) {
+    //         res.status(StatusCodes.OK).json({
+    //             status: 'success',
+    //             msg: "عکس های اتوبوس ویرایش شد",
+    //             newBus
+    //         });
+    //       }
+    //     }).catch((error)=>{
+    //         console.log(error);
+    //         res.status(StatusCodes.BAD_REQUEST).json({
+    //             status: 'success',
+    //             msg: "عکس های اتوبوس ویرایش نشد",
+    //             error
+    //         });
+    //     });
+    // } catch (error) {
+    //     console.error(error.message);
+    //     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    //         status: 'failure',
+    //         msg: "خطای داخلی سرور",
+    //         error
+    //     });
+    // }
+}

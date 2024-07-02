@@ -79,156 +79,119 @@ exports.updateAvatar = catchAsync(async (req, res) => {
     })
 })
 
-// # description -> HTTP VERB -> Accesss
-// # get all drivers -> GET -> admin
-exports.getDrivers = catchAsync(async (req, res) => {
-    let drivers = await Driver.find({})
-    console.log(drivers);
-    if (drivers) {
-        res.status(200).json({
-            status: 'success',
-            msg: 'drivers fetched',
-            count: drivers.length,
-            drivers,
-        })
-    } else {
-        res.status(403).json({
-            msg: 'can not fetch drivers',
-        })
-    }
-})
+// // # description -> HTTP VERB -> Accesss
+// // # get all drivers -> GET -> admin
+// exports.getDrivers = catchAsync(async (req, res) => {
+//     let drivers = await Driver.find({})
+//     console.log(drivers);
+//     if (drivers) {
+//         res.status(200).json({
+//             status: 'success',
+//             msg: 'drivers fetched',
+//             count: drivers.length,
+//             drivers,
+//         })
+//     } else {
+//         res.status(403).json({
+//             msg: 'can not fetch drivers',
+//         })
+//     }
+// })
 
-// # description -> HTTP VERB -> Accesss
-// # get single driver -> GET -> admin
-exports.getDriver = catchAsync(async (req, res) => {
-    let driver = await Driver.findById(req.params.driverId).select('-password -confirmPassword')
-    if (driver) {
-        res.status(200).json({
-            status: 'success',
-            msg: 'driver fetched',
-            driver,
-        })
-    } else {
-        res.status(403).json({
-            msg: 'can not fetch drivers',
-        })
-    }
-})
+// // # description -> HTTP VERB -> Accesss
+// // # get single driver -> GET -> admin
+// exports.getDriver = catchAsync(async (req, res) => {
+//     let driver = await Driver.findById(req.params.driverId).select('-password -confirmPassword')
+//     if (driver) {
+//         res.status(200).json({
+//             status: 'success',
+//             msg: 'driver fetched',
+//             driver,
+//         })
+//     } else {
+//         res.status(403).json({
+//             msg: 'can not fetch drivers',
+//         })
+//     }
+// })
 
-// # description -> HTTP VERB -> Accesss
-// # active driver -> GET -> admin
-exports.activeDriver = catchAsync(async (req, res) => {
-    let findDriver = await Driver.findById(req.params.driverId)
+// // # description -> HTTP VERB -> Accesss
+// // # active driver -> GET -> admin
+// exports.activeDriver = catchAsync(async (req, res) => {
+//     let findDriver = await Driver.findById(req.params.driverId)
 
-    if(findDriver && findDriver.active === false) {
-        res.send(findDriver)
-    }else{
-        res.send("operation failed")
-    }
+//     if(findDriver && findDriver.active === false) {
+//         res.send(findDriver)
+//     }else{
+//         res.send("operation failed")
+//     }
 
-    // await Driver.findByIdAndUpdate(
-    //     req.params.driverId,
-    //     {
-    //         name: req.body.name,
-    //         phone: req.body.phone,
-    //         email: req.body.email,
-    //     },
-    //     { new: true }
-    // ).then((driver) => {
-    //     if (driver) {
-    //         res.status(200).json({
-    //             msg: 'driver فعال شد',
-    //             driver,
-    //         })
-    //     }
-    // }).catch((error) => {
-    //     console.log(error);
-    //     res.status(400).json({
-    //         msg: "driver not update",
-    //         error: error
-    //     })
-    // })
-})
+//     // await Driver.findByIdAndUpdate(
+//     //     req.params.driverId,
+//     //     {
+//     //         name: req.body.name,
+//     //         phone: req.body.phone,
+//     //         email: req.body.email,
+//     //     },
+//     //     { new: true }
+//     // ).then((driver) => {
+//     //     if (driver) {
+//     //         res.status(200).json({
+//     //             msg: 'driver فعال شد',
+//     //             driver,
+//     //         })
+//     //     }
+//     // }).catch((error) => {
+//     //     console.log(error);
+//     //     res.status(400).json({
+//     //         msg: "driver not update",
+//     //         error: error
+//     //     })
+//     // })
+// })
 
-// # description -> HTTP VERB -> Accesss
-// # deActive driver -> GET -> admin
-exports.deActiveDriver = catchAsync(async (req, res) => {
-    let driver = await Driver.findById(req.params.driverId).select('-password -confirmPassword')
+// // # description -> HTTP VERB -> Accesss
+// // # deActive driver -> GET -> admin
+// exports.deActiveDriver = catchAsync(async (req, res) => {
+//     let driver = await Driver.findById(req.params.driverId).select('-password -confirmPassword')
 
-    res.send("deactive ")
+//     res.send("deactive ")
     
-})
+// })
 
 
 
-// # description -> HTTP VERB -> Accesss
-// # get all users -> GET -> admin
-exports.getUsers = catchAsync(async (req, res) => {
-    let users = await User.find({}).select('-password -confirmPassword')
-    if (users) {
-        res.status(200).json({
-            status: 'success',
-            msg: 'users fetched',
-            count: users.length,
-            users,
-        })
-    } else {
-        res.status(403).json({
-            msg: 'can not fetch users',
-        })
-    }
-})
+// // # description -> HTTP VERB -> Accesss
+// // # get all users -> GET -> admin
+// exports.getUsers = catchAsync(async (req, res) => {
+//     let users = await User.find({}).select('-password -confirmPassword')
+//     if (users) {
+//         res.status(200).json({
+//             status: 'success',
+//             msg: 'users fetched',
+//             count: users.length,
+//             users,
+//         })
+//     } else {
+//         res.status(403).json({
+//             msg: 'can not fetch users',
+//         })
+//     }
+// })
 
-// # description -> HTTP VERB -> Accesss
-// # get single user -> GET -> admin
-exports.getUser = catchAsync(async (req, res) => {
-    let user = await User.findById(req.params.userId).select('-password -confirmPassword')
-    if (user) {
-        res.status(200).json({
-            status: 'success',
-            msg: 'user fetched',
-            user,
-        })
-    } else {
-        res.status(403).json({
-            msg: 'can not fetch user',
-        })
-    }
-})
-
-
-
-// # description -> HTTP VERB -> Accesss
-// # get all buses -> GET -> admin
-exports.getBuses = catchAsync(async (req, res) => {
-    let buses = await Bus.find({})
-    if (buses) {
-        res.status(200).json({
-            status: 'success',
-            msg: 'buses fetched',
-            count: buses.length,
-            buses,
-        })
-    } else {
-        res.status(403).json({
-            msg: 'can not fetch buses',
-        })
-    }
-})
-
-// # description -> HTTP VERB -> Accesss
-// # get single bus -> GET -> admin
-exports.getBus = catchAsync(async (req, res) => {
-    let bus = await Bus.findById(req.params.busId)
-    if (bus) {
-        res.status(200).json({
-            status: 'success',
-            msg: 'bus fetched',
-            bus,
-        })
-    } else {
-        res.status(403).json({
-            msg: 'can not fetch bus',
-        })
-    }
-})
+// // # description -> HTTP VERB -> Accesss
+// // # get single user -> GET -> admin
+// exports.getUser = catchAsync(async (req, res) => {
+//     let user = await User.findById(req.params.userId).select('-password -confirmPassword')
+//     if (user) {
+//         res.status(200).json({
+//             status: 'success',
+//             msg: 'user fetched',
+//             user,
+//         })
+//     } else {
+//         res.status(403).json({
+//             msg: 'can not fetch user',
+//         })
+//     }
+// })

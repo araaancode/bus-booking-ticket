@@ -18,7 +18,7 @@ async function main() {
     await client.connect();
 
     // Specify the database and collection
-    const database = client.db('safir');
+    const database = client.db('safirdbb');
     const collection = database.collection('drivers');
 
     // Query the collection (fetch data)
@@ -103,13 +103,12 @@ exports.register = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
   const { phone, password } = req.body;
 
-
-
   // 1) Check if phone and password exist
   if (!phone || !password) {
     res.status(401).json({ msg: "همه فیلدها باید وارد شوند!" })
   } else {
     main().then(async (drivers) => {
+      console.log(drivers);
       let findDriver = drivers.find((driver) => driver.phone === phone)
       if (!findDriver) {
         res.status(401).json({ msg: "راننده با چنین مشخصاتی پیدا نشد. باید ثبت نام کنید" })
