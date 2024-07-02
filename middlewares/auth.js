@@ -3,6 +3,39 @@ const Driver = require('../models/Driver')
 const Admin = require('../models/Admin')
 const jwt = require('jsonwebtoken')
 
+
+const { MongoClient } = require('mongodb');
+
+async function main() {
+  const uri = process.env.MONGO_URI;
+
+  const client = new MongoClient(uri);
+
+  try {
+    // Connect to the MongoDB cluster
+    await client.connect();
+
+    // Specify the database and collection
+    const database = client.db('safir');
+    const collection = database.collection('drivers');
+
+    // Query the collection (fetch data)
+    const query = {}; // Define your query here
+    const options = {
+      // Optionally, you can add options like sort, limit, etc.
+    };
+
+    const results = await collection.find(query, options).toArray();
+
+    return results
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  } finally {
+    await client.close();
+  }
+}
+
+
 // auth user
 exports.authUser = async (req, res, next) => {
   let token = req.cookies.jwt
@@ -93,7 +126,7 @@ exports.forwardAuth = async (req, res, next) => {
   }
 }
 
-
+// ***** driver *****
 // auth driver
 exports.authDriver = async (req, res, next) => {
   let token = req.cookies.jwt
@@ -101,13 +134,26 @@ exports.authDriver = async (req, res, next) => {
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      let driver = await Driver.findById(decoded.id).select('-password')
-      if (driver.role === 'driver') {
-        req.driver = driver
-        res.locals.driver = driver
-        next()
-      }
+      main().then(async (drivers) => {
+        let findDriver = drivers.find((driver) => driver._id == decoded.id)
+        if (findDriver && findDriver.role === 'driver') {
+          req.driver = findDriver
+          res.locals.driver = findDriver
+          next()
+        } else {
+          res.status(403).json({ msg: "not authorized" })
+        }
+      }).catch((error) => {
+        res.send(error)
+      })
+
+      // if (driver.role === 'driver') {
+      //   req.driver = driver
+      //   res.locals.driver = driver
+      //   next()
+      // }
     } catch (error) {
+      console.log(error);
       res.status(403).json({
         msg: 'authorized has error',
         error,
@@ -161,6 +207,9 @@ exports.forwardAuthDriver = async (req, res, next) => {
     next()
   }
 }
+
+// ***** driver end *****
+
 
 // auth admin
 exports.authAdmin = async (req, res, next) => {

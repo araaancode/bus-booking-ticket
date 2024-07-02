@@ -4,12 +4,12 @@ const validator = require('validator');
 const { deflate } = require('zlib');
 
 const busSchema = new mongoose.Schema({
-    // driver: {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: 'Driver',
-    //     // required: true,
-    //     // unique: true,
-    // },
+    driver: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Driver',
+        required: true,
+        unique: true,
+    },
     name: {
         type: String,
         required: [true, 'Please tell bus name!'],

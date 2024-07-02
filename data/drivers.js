@@ -131,7 +131,7 @@ let drivers = []
 for (let i = 1; i <= 500; i++) {
     let newArrival = makeRandomArrival(cities)
     let newCities = makeRandomCities(cities)
-    if(!newCities.includes(newArrival)){
+    if (!newCities.includes(newArrival)) {
         newCities.pop()
         newCities.push(newArrival)
     }
@@ -144,6 +144,7 @@ for (let i = 1; i <= 500; i++) {
         "cities": newCities,
         "movingDate": moment().add(createRandomDay(), 'days').format(),
         "bus": new ObjectId().toString(),
+        "role": "driver",
         "price": makeRandomPrice()
     }
 

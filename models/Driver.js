@@ -1,4 +1,3 @@
-const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
@@ -26,6 +25,11 @@ const driverSchema = new mongoose.Schema({
         required: [true, 'Please provide a password'],
         minlength: 8,
         select: false
+    },
+
+    bus: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Bus',
     },
 
     passwordConfirm: {
@@ -71,13 +75,8 @@ const driverSchema = new mongoose.Schema({
     price: {
         type: Number,
     },
-    bus: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Bus',
-        // required: true,
-        unique: true,
-    },
-}, { timestamps: true});
+
+}, { timestamps: true, collection: 'drivers' });
 
 driverSchema.pre('save', async function (next) {
     // Only run this function if password was actually modified
@@ -110,7 +109,6 @@ driverSchema.methods.correctPassword = async function (
 ) {
     return await bcrypt.compare(candidatePassword, diverPassword);
 };
-
 
 
 const Driver = mongoose.model('Driver', driverSchema);

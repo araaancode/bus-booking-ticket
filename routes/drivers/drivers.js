@@ -9,11 +9,12 @@ const middleware = require("../../middlewares/auth")
 
 
 router.get('/me',middleware.authDriver,driverController.getMe)
-router.get('/see-my-bus',middleware.authDriver,driverController.seeBus)
+
+// driver bus crud
+router.get('/my-bus',middleware.authDriver,driverController.myBus)
+
+
 router.get('/my-travels',middleware.authDriver,driverController.myTravels)
-router.put('/update-bus',middleware.authDriver,driverController.updateBus)
-router.put('/update-bus-cover',middleware.authDriver,driverController.updateBusCover)
-router.put('/update-bus-images',middleware.authDriver,driverController.updateBusImages)
 router.get('/get-driver-passengers',middleware.authDriver,driverController.getDriverPassengers)
 router.put('/cancel-travel',middleware.authDriver,driverController.cancelTravel)
 router.get('/get-income',middleware.authDriver,driverController.getIncome)

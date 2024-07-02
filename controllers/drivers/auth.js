@@ -103,6 +103,8 @@ exports.register = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
   const { phone, password } = req.body;
 
+
+
   // 1) Check if phone and password exist
   if (!phone || !password) {
     res.status(401).json({ msg: "همه فیلدها باید وارد شوند!" })
@@ -124,6 +126,8 @@ exports.login = catchAsync(async (req, res, next) => {
       res.send(error)
     })
   }
+
+
   // // 2) Check if driver exists && password is correct
   // const driver = await Driver.findOne({ phone }).select('+password');
 

@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 const { promisify } = require('util');
-var randKey = require("random-key");
+const randKey = require("random-key");
 const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 const catchAsync = require('../../middlewares/catchAsync');
