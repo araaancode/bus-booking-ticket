@@ -11,15 +11,6 @@ const validateEmail = function (email) {
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'Please tell us your name!']
-    },
-    username: {
-        type: String,
-        required: [true, 'Please tell us your username!'],
-        unique: true,
-        min: 4,
-        max: 40,
-        trim: true
     },
     phone: {
         type: String,
@@ -36,8 +27,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
         lowercase: true,
-        unique: true,
-        required: 'Email address is required',
         validate: [validateEmail, 'Please fill a valid email address'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
@@ -46,17 +35,6 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please provide a password'],
         minlength: 8,
         select: false
-    },
-    passwordConfirm: {
-        type: String,
-        required: [true, 'Please confirm your password'],
-        validate: {
-            // This only works on CREATE and SAVE!!!
-            validator: function (el) {
-                return el === this.password;
-            },
-            message: 'Passwords are not the same!'
-        }
     },
     active: {
         type: Boolean,
@@ -67,7 +45,6 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         default: 'user',
-        required: true
     }
 }, { timestamps: true });
 
@@ -102,8 +79,6 @@ userSchema.methods.correctPassword = async function (
 ) {
     return await bcrypt.compare(candidatePassword, userPassword);
 };
-
-
 
 
 // models

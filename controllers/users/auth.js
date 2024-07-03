@@ -6,6 +6,7 @@ const User = require('../../models/User');
 const catchAsync = require('../../middlewares/catchAsync');
 const AppError = require('../../middlewares/appError');
 const OTP = require("../../models/OTP")
+const { StatusCodes } = require("http-status-codes")
 
 const signToken = id => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -26,20 +27,20 @@ const sendOTPCode = async (phone, req, res) => {
     }).catch((error) => {
       res.status(400).json(error)
     })
-  }else{
-   let newOtp= await OTP.create({
-      phone:phone,
+  } else {
+    let newOtp = await OTP.create({
+      phone: phone,
       code
     })
 
-    if(newOtp){
+    if (newOtp) {
       res.status(201).json({
-        msg:"otp code created",
-        code:newOtp
+        msg: "otp code created",
+        code: newOtp
       })
-    }else{
+    } else {
       res.status(400).json({
-        msg:"otp code not created"
+        msg: "otp code not created"
       })
     }
 
@@ -47,7 +48,7 @@ const sendOTPCode = async (phone, req, res) => {
 
 };
 
-const createSendToken = (user, statusCode, msg, req, res) => {
+const createSendToken = (user, statusCode, statusMsg, msg, req, res) => {
   const token = signToken(user._id);
 
   res.cookie('jwt', token, {
@@ -62,7 +63,7 @@ const createSendToken = (user, statusCode, msg, req, res) => {
   user.password = undefined;
 
   res.status(statusCode).json({
-    status: 'success',
+    status: statusMsg,
     msg,
     token,
     data: {
@@ -71,100 +72,64 @@ const createSendToken = (user, statusCode, msg, req, res) => {
   });
 };
 
-exports.register = catchAsync(async (req, res, next) => {
-  if (req.body.password !== req.body.passwordConfirm) {
-    return res.status(400).json({
-      status: "failure",
-      msg: "پسوردها مطابقت ندارند !"
-    })
-  }
+exports.register = async (req, res, next) => {
 
-  let findUser= await User.findOne({phone:req.body.phone }) || await User.findOne({email:req.body.email }) || await User.findOne({username:req.body.username })
+  try {
+    let findUser = await User.findOne({ phone: req.body.phone })
 
-  if(!findUser){
-    const newUser = await User.create({
-      name: req.body.name,
-      username: req.body.username,
-      email: req.body.email,
-      phone: req.body.phone,
-      password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm
-    });
-  
-    // createSendToken(newUser, 201, 'با موفقیت ثبت نام شدید!', req, res);
-  
-    if(newUser){
-      res.status(200).json({
-        status: 'success',
-        msg: "با موفقیت ثبت نام شدید!",
-        newUser
-      })
-    }else{
-      res.status(404).json({
+    if (findUser) {
+      res.status(StatusCodes.BAD_REQUEST).json({
         status: 'failure',
-        msg: "کاربر ثبت نام نشد!",
+        msg: "کاربر وجود دارد. وارد سایت شوید!",
       })
+    } else {
+      let newUser = await User.create({
+        phone: req.body.phone,
+        password: req.body.password,
+      })
+
+      if (newUser) {
+        createSendToken(newUser, StatusCodes.CREATED, 'success', 'کاربر با موفقیت ثبت نام شد', req, res)
+      }
     }
-  }else{
-    res.status(400).json({
+  } catch (error) {
+    console.error(error.message);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       status: 'failure',
-      msg: "کاربر وجود دارد! باید وارد سایت شوید",
-    })
+      msg: "خطای داخلی سرور",
+      error
+    });
   }
 
-});
+}
 
 exports.login = catchAsync(async (req, res, next) => {
-  // 1) Check if phone and password exist
-  if (!req.body.password) {
-    return res.status(400).json({
-      status: "failure",
-      msg: "پسورد را باید وارد کنید!"
-    })
-  }
 
-  if (!req.body.phone && !req.body.email) {
-    return res.status(400).json({
-      status: "failure",
-      msg: " همه فیلدها را باید وارد کنید!"
-    })
-  }
-
-  if (req.body.email) {
-    // 2) Check if user exists && password is correct
-    const user = await User.findOne({ email: req.body.email }).select('+password');
-    // createSendToken(user, 200, "با موفقیت وارد سایت شدید!", req, res);
-    if (user) {
-      res.status(200).json({
-        status: 'success',
-        msg: "با موفقیت وارد سایت شدید!",
-        user
-      })
-    } else {
-      res.status(404).json({
+  try {
+    let { phone, password } = req.body
+    if (!phone || !password) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
         status: 'failure',
-        msg: "کاربری با چنین مشخصاتی وجود ندارد!",
-      })
+        msg: "همه فیلدها باید وارد شوند!",
+      });
     }
-
-  } else if (req.body.phone) {
-    // 2) Check if user exists && password is correct
-    const user = await User.findOne({ phone: req.body.phone }).select('+password');
-    // createSendToken(user, 200, "با موفقیت وارد سایت شدید!", req, res);
-    if (user) {
-      res.status(200).json({
-        status: 'success',
-        msg: "با موفقیت وارد سایت شدید!",
-        user
-      })
+    let findUser = await User.findOne({ phone: req.body.phone })
+    if (findUser) {
+      createSendToken(findUser, StatusCodes.OK, 'success', 'کاربر با موفقیت وارد سایت شد', req, res)
     } else {
-      res.status(404).json({
+      res.status(StatusCodes.BAD_REQUEST).json({
         status: 'failure',
-        msg: "کاربری با چنین مشخصاتی وجود ندارد!",
-      })
+        msg: "کاربر وجود ندارد. باید ثبت نام کنید",
+      });
     }
+  } catch (error) {
+    console.error(error.message);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      status: 'failure',
+      msg: "خطای داخلی سرور",
+      error
+    });
   }
-
 });
 
 exports.logout = (req, res) => {
@@ -176,35 +141,48 @@ exports.logout = (req, res) => {
 };
 
 
-exports.sendOtp = catchAsync(async (req, res) => {
-  let { phone } = req.body
-  let user = await User.findOne({ phone })
+exports.sendOtp = async (req, res) => {
+  try {
+    let { phone } = req.body
+    let user = await User.findOne({ phone })
 
-  if (user) {
-    await sendOTPCode(phone, req, res)
-  } else {
-    res.status(404).json({
-      msg: "user not found",
-    })
+    if (user) {
+      await sendOTPCode(phone, req, res)
+    } else {
+      res.status(StatusCodes.NOT_FOUND).json({
+        msg: "کاربر یافت نشد",
+      })
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      status: 'failure',
+      msg: "خطای داخلی سرور",
+      error
+    });
   }
-})
+}
 
 exports.verifyOtp = catchAsync(async (req, res) => {
-  let { phone, code } = req.body
+  try {
+    let { phone, code } = req.body
 
-  let userOtp = await OTP.findOne({ phone })
-  let user = await User.findOne({phone})
-  if (userOtp.code === code) {
-    createSendToken(user,200,"کد تایید شد",req,res)
-    // res.status(200).json({
-    //   status: 'success',
-    //   msg: "کد وارد شده درست است!",
-    //   otp:userOtp,
-    //   user:user
-    // })
-  } else {
-    res.status(404).json({
-      msg: "کد وارد شده اشتباه است!"
-    })
+    let userOtp = await OTP.findOne({ phone })
+    let user = await User.findOne({ phone })
+
+    if (userOtp.code === code) {
+      createSendToken(user, StatusCodes.OK, 'success', "کد تایید شد", req, res)
+    } else {
+      res.status(StatusCodes.NOT_FOUND).json({
+        msg: "کد وارد شده اشتباه است!"
+      })
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      status: 'failure',
+      msg: "خطای داخلی سرور",
+      error
+    });
   }
 })

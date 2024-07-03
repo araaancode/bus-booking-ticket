@@ -19,7 +19,7 @@ async function main() {
         await client.connect();
 
         // Specify the database and collection
-        const database = client.db('safirdbb');
+        const database = client.db('bus_db');
         const collection = database.collection('drivers');
 
         // Query the collection (fetch data)
