@@ -25,7 +25,7 @@ router.post('/', driverMiddleware.authDriver, busUpload.fields([{
 
 router.put('/update-bus/:busId', driverMiddleware.authDriver, busControllers.updateBus)
 router.put('/update-bus-cover/:busId', driverMiddleware.authDriver, busUpload.single('cover'), busControllers.updateBusCover)
-router.put('/update-bus-images/:busId', driverMiddleware.authDriver, busUpload.single('images'), busControllers.updateBusImages)
+// router.put('/update-bus-images/:busId', driverMiddleware.authDriver, busUpload.single('images'), busControllers.updateBusImages)
 
 
 module.exports = router;

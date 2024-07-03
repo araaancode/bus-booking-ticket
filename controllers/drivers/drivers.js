@@ -1,5 +1,6 @@
 const catchAsync = require('../../middlewares/catchAsync');
 const AppError = require('../../middlewares/appError');
+const { StatusCodes } = require("http-status-codes")
 
 // Driver model
 const Driver = require('../../models/Driver');
@@ -19,7 +20,7 @@ async function main() {
         await client.connect();
 
         // Specify the database and collection
-        const database = client.db('safir');
+        const database = client.db('safirdbb');
         const collection = database.collection('drivers');
 
         // Query the collection (fetch data)
@@ -40,83 +41,112 @@ async function main() {
 
 // # description -> HTTP VERB -> Accesss
 // # get Driver profile -> GET -> Driver
-exports.getMe = catchAsync(async (req, res) => {
-    main().then(async (drivers) => {
-        let findDriver = drivers.find((driver) => driver.id == req.driver.id)
+exports.getMe = async (req, res) => {
+    try {
+        main().then(async (drivers) => {
+            let findDriver = drivers.find((driver) => driver.id == req.driver.id)
 
-        if (findDriver) {
-            console.log(findDriver);
-            res.status(200).json({
-                msg: "پروفایل راننده پیدا شد",
-                driver: findDriver
-            })
-        } else {
-            res.status(404).json({
-                msg: "پروفایل راننده پیدا نشد",
-            })
-        }
+            if (findDriver) {
+                res.status(StatusCodes.OK).json({
+                    msg: "پروفایل راننده پیدا شد",
+                    driver: findDriver
+                })
+            } else {
+                res.status(StatusCodes.NOT_FOUND).json({
+                    msg: "پروفایل راننده پیدا نشد",
+                })
+            }
 
-    }).catch((error) => {
-        console.log(error);
-        res.send(error)
-    })
+        }).catch((error) => {
+            console.error(error.message);
+            res.status(StatusCodes.BAD_REQUEST).json({
+                status: 'failure',
+                msg: "راننده پیدا نشد",
+                error
+            });
+        })
 
-})
+    } catch (error) {
+        console.error(error.message);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: 'failure',
+            msg: "خطای داخلی سرور",
+            error
+        });
+    }
+}
 
 // # description -> HTTP VERB -> Accesss
 // # see driver bus -> GET -> Driver
-exports.myBus = catchAsync(async (req, res) => {
-    main().then(async (drivers) => {
-        let findDriver = drivers.find((driver) => driver.id == req.driver.id)
+exports.myBus = async (req, res) => {
+    let buses = await Bus.find({})
+    let findBus;
 
-        if (findDriver.bus) {
-            let bus = await Bus.findById(findDriver.bus)
-            if (bus) {
-                res.status(200).json({
-                    msg: "اتوبوس راننده پیدا شد",
-                    bus: bus
-                })
-
-            } else {
-                res.status(404).json({
-                    msg: "اتوبوس راننده پیدا نشد",
-                })
-            }
-        } else {
-            res.status(404).json({
-                msg: " اتوبوس پیدا نشد. می توانید اتوبوس خود را اضافه کنید",
-            })
+    buses.forEach(bus => {
+        if (bus.driver.toString() === req.driver._id.toString()) {
+            findBus = bus
         }
+    });
 
-    }).catch((error) => {
-        console.log(error);
-        res.send(error)
-    })
-})
+    try {
+        if (findBus) {
+            res.status(StatusCodes.OK).json({
+                status: 'success',
+                msg: "اتوبوس راننده پیدا شد",
+                bus: findBus
+            });
+        } else {
+            res.status(StatusCodes.NOT_FOUND).json({
+                status: 'failure',
+                msg: "اتوبوس پیدا نشد",
+            });
+        }
+    } catch (error) {
+        console.error(error.message);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: 'failure',
+            msg: "خطای داخلی سرور",
+            error
+        });
+    }
+
+
+}
 
 // # description -> HTTP VERB -> Accesss
 // # driver travels -> GET -> Driver
-exports.myTravels = catchAsync(async (req, res) => {
-    let myTickets = await Ticket.find({}).populate('driver')
+exports.myTravels = async (req, res) => {
+    try {
+        let myTickets = await Ticket.find({}).populate('driver')
 
-    if(myTickets.length > 0){
-        res.status(200).json({
-            mag:"بلیط های راننده پیدا شد",
-            tickets:myTickets
-        })
-    }else{
-        res.status(404).json({
-            mag:"بلیطی ندارید!",
-        })
+        if (myTickets.length > 0) {
+            res.status(StatusCodes.OK).json({
+                status: 'success',
+                mag: "بلیط های راننده پیدا شد",
+                tickets: myTickets
+            })
+        } else {
+            res.status(StatusCodes.NOT_FOUND).json({
+                status: 'failure',
+                mag: "بلیطی ندارید!",
+            })
+        }
+    } catch (error) {
+        console.error(error.message);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: 'failure',
+            msg: "خطای داخلی سرور",
+            error
+        });
     }
 
-})
+}
 
 
 
 // # description -> HTTP VERB -> Accesss
 // # get driver passengers -> GET -> Driver
-exports.getDriverPassengers = catchAsync(async (req, res) => {
+exports.getDriverPassengers = (async (req, res) => {
     res.send('get driver passengers')
 })
 
@@ -143,30 +173,40 @@ exports.getReservation = catchAsync(async (req, res) => {
 
 // # description -> HTTP VERB -> Accesss
 // # update Driver profile -> PUT -> Driver
-exports.updateProfile = catchAsync(async (req, res) => {
-    await Driver.findByIdAndUpdate(
-        req.params.DriverId,
-        {
-            name: req.body.name,
-            phone: req.body.phone,
-        },
-        { new: true }
-    ).then((Driver) => {
-        if (Driver) {
-            res.status(200).json({
-                msg: 'کاربر ویرایش شد',
-                Driver,
+exports.updateProfile = async (req, res) => {
+    try {
+        await Driver.findByIdAndUpdate(
+            req.params.driverId,
+            {
+                name: req.body.name,
+                phone: req.body.phone,
+            },
+            { new: true }
+        ).then((driver) => {
+            if (driver) {
+                res.status(StatusCodes.OK).json({
+                    status: 'success',
+                    msg: 'راننده ویرایش شد',
+                    driver,
+                })
+            }
+        }).catch((error) => {
+            console.log(error);
+            res.status(StatusCodes.BAD_REQUEST).json({
+                status: 'failure',
+                msg: "راننده ویرایش نشد",
+                error: error
             })
-        }
-    }).catch((error) => {
-        console.log(error);
-        res.status(400).json({
-            msg: "Driver not update",
-            error: error
         })
-    })
-
-})
+    } catch (error) {
+        console.error(error.message);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: 'failure',
+            msg: "خطای داخلی سرور",
+            error
+        });
+    }
+}
 
 // # description -> HTTP VERB -> Accesss
 // # update Driver avatar -> PUT -> Driver
