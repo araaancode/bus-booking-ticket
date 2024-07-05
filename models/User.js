@@ -30,6 +30,13 @@ const userSchema = new mongoose.Schema({
         validate: [validateEmail, 'Please fill a valid email address'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
+    
+    nationalCode:{
+        type:String,
+        min:12,
+        max:12
+    },
+
     password: {
         type: String,
         required: [true, 'Please provide a password'],
