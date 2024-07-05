@@ -115,7 +115,7 @@ exports.login = catchAsync(async (req, res, next) => {
       } else {
         let findDriverPassword = findDriver.password
         if (await bcrypt.compare(password, findDriverPassword)) {
-          createSendToken(findDriver, 200,'راننده با موفقیت وارد سایت شد', req, res);
+          createSendToken(findDriver, 200, 'راننده با موفقیت وارد سایت شد', req, res);
         } else {
           res.status(401).json({ msg: "پسورد اشتباه است" })
         }
@@ -146,5 +146,5 @@ exports.logout = (req, res) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true
   });
-  res.status(200).json({ status: 'success' });
+  res.redirect('/login')
 };

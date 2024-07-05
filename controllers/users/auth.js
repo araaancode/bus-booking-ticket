@@ -15,17 +15,25 @@ const signToken = id => {
 };
 
 
-const sendOTPCode = async (phone, req, res) => {
+const sendOTPCode = async (phone, user, req, res) => {
   const code = randKey.generateDigits(5);
   let otp = await OTP.findOne({ phone })
-
 
   if (otp) {
     otp.code = code;
     otp.save().then((data) => {
-      res.status(200).json(data)
+      if (data) {
+        res.status(StatusCodes.CREATED).json({
+          msg: "کد تایید ارسال شد",
+          data
+        })
+      }
+
     }).catch((error) => {
-      res.status(400).json(error)
+      res.status(StatusCodes.BAD_REQUEST).json({
+        msg: "کد تایید ارسال نشد",
+        error
+      })
     })
   } else {
     let newOtp = await OTP.create({
@@ -34,13 +42,13 @@ const sendOTPCode = async (phone, req, res) => {
     })
 
     if (newOtp) {
-      res.status(201).json({
-        msg: "otp code created",
+      res.status(StatusCodes.CREATED).json({
+        msg: "کد تایید جدید ساخته شد",
         code: newOtp
       })
     } else {
-      res.status(400).json({
-        msg: "otp code not created"
+      res.status(StatusCodes.BAD_REQUEST).json({
+        msg: "کد تایید ساخته نشد"
       })
     }
 
@@ -89,7 +97,11 @@ exports.register = async (req, res, next) => {
       })
 
       if (newUser) {
-        createSendToken(newUser, StatusCodes.CREATED, 'success', 'کاربر با موفقیت ثبت نام شد', req, res)
+        res.status(StatusCodes.CREATED).json({
+          status: 'success',
+          msg: "کاربر با موفقیت ثبت نام شد",
+          newUser
+        })
       }
     }
   } catch (error) {
@@ -103,25 +115,45 @@ exports.register = async (req, res, next) => {
 
 }
 
-exports.login = catchAsync(async (req, res, next) => {
+exports.login = async (req, res, next) => {
 
   try {
-    let { phone, password } = req.body
+    const { phone, password } = req.body;
+
+    // 1) Check if phone and password exist
     if (!phone || !password) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
+      res.status(StatusCodes.UNAUTHORIZED).json({
         status: 'failure',
         msg: "همه فیلدها باید وارد شوند!",
       });
     }
-    let findUser = await User.findOne({ phone: req.body.phone })
-    if (findUser) {
-      createSendToken(findUser, StatusCodes.OK, 'success', 'کاربر با موفقیت وارد سایت شد', req, res)
-    } else {
-      res.status(StatusCodes.BAD_REQUEST).json({
+
+
+    // 2) Check if user exists && password is correct
+    const user = await User.findOne({ phone }).select('+password');
+
+    if (!user || !(await user.correctPassword(password, user.password))) {
+      res.status(StatusCodes.UNAUTHORIZED).json({
         status: 'failure',
-        msg: "کاربر وجود ندارد. باید ثبت نام کنید",
+        msg: "پسورد نادرست است",
       });
     }
+
+    // 3) If everything ok, send token to client
+    // createSendToken(user,StatusCodes.OK, 'success','با موفقیت وارد سایت شدید', req, res);
+    if (user) {
+      res.status(StatusCodes.OK).json({
+        status: 'success',
+        msg: "با موفقیت وارد سایت شدید",
+        user
+      });
+    } else {
+      res.status(StatusCodes.NOT_FOUND).json({
+        status: 'failure',
+        msg: "کاربر یافت نشد. باید ثبت نام کنید.",
+      });
+    }
+
   } catch (error) {
     console.error(error.message);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -130,7 +162,7 @@ exports.login = catchAsync(async (req, res, next) => {
       error
     });
   }
-});
+}
 
 exports.logout = (req, res) => {
   res.cookie('jwt', 'loggedout', {
@@ -147,7 +179,8 @@ exports.sendOtp = async (req, res) => {
     let user = await User.findOne({ phone })
 
     if (user) {
-      await sendOTPCode(phone, req, res)
+      await sendOTPCode(phone, user, req, res)
+
     } else {
       res.status(StatusCodes.NOT_FOUND).json({
         msg: "کاربر یافت نشد",
@@ -163,7 +196,7 @@ exports.sendOtp = async (req, res) => {
   }
 }
 
-exports.verifyOtp = catchAsync(async (req, res) => {
+exports.verifyOtp = async (req, res) => {
   try {
     let { phone, code } = req.body
 
@@ -171,7 +204,7 @@ exports.verifyOtp = catchAsync(async (req, res) => {
     let user = await User.findOne({ phone })
 
     if (userOtp.code === code) {
-      createSendToken(user, StatusCodes.OK, 'success', "کد تایید شد", req, res)
+      createSendToken(user, StatusCodes.OK, 'success', 'کد تایید با موفقیت ارسال شد', req, res)
     } else {
       res.status(StatusCodes.NOT_FOUND).json({
         msg: "کد وارد شده اشتباه است!"
@@ -185,4 +218,4 @@ exports.verifyOtp = catchAsync(async (req, res) => {
       error
     });
   }
-})
+}
