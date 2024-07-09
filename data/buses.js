@@ -30,7 +30,21 @@ async function main() {
 }
 
 
-let buses=[]
+let buses = []
+
+
+const colors = ["سفید", "سیاه", "قرمز", "آبی", "سبز"]
+
+
+function makeRandomColor(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) {
+        throw new Error('Input must be a non-empty array of strings');
+    }
+    const randomIndex = Math.floor(Math.random() * arr.length);
+    return arr[randomIndex];
+}
+
+
 
 try {
 
@@ -38,16 +52,16 @@ try {
         for (let i = 0; i < drivers.length; i++) {
             let driverId = drivers[i]._id
             let busId = drivers[i].bus
-            newBus={
-                _id:busId,
-                driver:driverId,
-                name:'Scania',
-                model:"1994",
-                color:"orange",
-                capicity:10,
-                seats:10,
-                cover:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/ETS_Bus_Not_in_Service.jpg/1024px-ETS_Bus_Not_in_Service.jpg",
-                images:["https://blog.payaneh.ir/wp-content/uploads/2022/07/WhatsApp-Image-2022-07-30-at-5.50.25-PM6655-1.jpeg","https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/LT_471_%28LTZ_1471%29_Arriva_London_New_Routemaster_%2819522859218%29.jpg/263px-LT_471_%28LTZ_1471%29_Arriva_London_New_Routemaster_%2819522859218%29.jpg"]
+            newBus = {
+                "_id": busId,
+                "driver": driverId,
+                "name": 'Scania',
+                "model": "1994",
+                "color": makeRandomColor(colors),
+                "capicity": 10,
+                "seats": 10,
+                "cover": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/ETS_Bus_Not_in_Service.jpg/1024px-ETS_Bus_Not_in_Service.jpg",
+                "images": ["https://blog.payaneh.ir/wp-content/uploads/2022/07/WhatsApp-Image-2022-07-30-at-5.50.25-PM6655-1.jpeg", "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/LT_471_%28LTZ_1471%29_Arriva_London_New_Routemaster_%2819522859218%29.jpg/263px-LT_471_%28LTZ_1471%29_Arriva_London_New_Routemaster_%2819522859218%29.jpg"]
             }
 
             buses.push(newBus)

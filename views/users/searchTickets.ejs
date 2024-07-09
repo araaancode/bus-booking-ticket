@@ -12,7 +12,11 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <script type="text/javascript"
         src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
-    <title>صفحه اصلی</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"></script>
+    <link rel="stylesheet" href="../../css/toastify.css">
+    <title>جستجوی بلیط</title>
 
 </head>
 
@@ -110,57 +114,38 @@
 
 
             <!-- start bus -->
-            <div id="bus" class="flex flex-col justify-center items-center m-6">
-                <div class="border rounded-md shadow shadow-md bus grid grid-cols-2 gap-4 m-4">
-                    <div style="width: 75%;">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">
-                                <img class="m-4 rounded-md w-50 h-20 inline"
-                                    src="https://plus.unsplash.com/premium_photo-1674823610129-64e6c712fbe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnVzfGVufDB8fDB8fHww"
-                                    alt="Card image">
-                                <span class="ml-4" id="bus-title"> Card Title 1</span>
-                                <span class="ml-4">first city</span>
-                                <span class="ml-4">last city</span>
-                                <span class="ml-4">arriavl</span>
-                                <span class="ml-4">count</span>
-                                <span class="ml-4">moving date</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width: 25%;" class="border-r border-solid border-gray-300 p-4">
-                        <p>12500</p>
-                        <button
-                            class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">رزرو
-                            بلیط</button>
-                    </div>
-                </div>
+            <div class="flex flex-col justify-center items-center m-6">
+                <div id="bus" class="max-w-2xl mx-auto mt-24">
+                    <!-- <div
+                        class="flex gap-3 bg-white border border-gray-300 rounded-xl overflow-hidden items-center justify-start">
 
-                <div class="border rounded-md shadow shadow-md bus grid grid-cols-2 gap-4 m-4">
-                    <div style="width: 75%;">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">
-                                <img class="m-4 rounded-md w-50 h-20 inline"
-                                    src="https://plus.unsplash.com/premium_photo-1674823610129-64e6c712fbe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnVzfGVufDB8fDB8fHww"
-                                    alt="Card image">
-                                <span class="ml-4" id="bus-title"> Card Title 1</span>
-                                <span class="ml-4">first city</span>
-                                <span class="ml-4">last city</span>
-                                <span class="ml-4">arriavl</span>
-                                <span class="ml-4">count</span>
-                                <span class="ml-4">moving date</span>
-                            </div>
+                        <div class="relative w-32 h-32 flex-shrink-0">
+                            <img class="absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50"
+                                loading="lazy" src="https://via.placeholder.com/150">
                         </div>
-                    </div>
-                    <div style="width: 25%;" class="border-r border-solid border-gray-300 p-4">
-                        <p>12500</p>
-                        <button
-                            class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">رزرو
-                            بلیط</button>
-                    </div>
-                </div>
 
+                        <div class="flex flex-col gap-2 py-2">
+
+                            <p class="text-xl font-bold">article</p>
+                            <span class="flex items-center justify-start text-gray-500">
+                                <svg class="w-4 h-4 mr-1 mt-1" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <a href="amitpachange.com" target="_blank">رزرو بلیط</a>
+                            </span>
+
+                        </div>
+
+                    </div> -->
+
+                </div>
             </div>
+
             <!-- end bus -->
+
             </div>
         </main>
 
@@ -183,56 +168,6 @@
 
 
 
-        <div id="modelConfirm"
-            class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full mb-10">
-            <div class="relative top-40 mx-auto rounded-md bg-white max-w-md" style="padding: 15px 50px;">
-                <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                    <div class="bg-white py-8 px-4 sm:rounded-lg sm:px-10 text-center">
-                        <span class="text-2xl block font-bold text-center"> ورود یا ثبت‌نام</span>
-                        <br>
-                        <span class="mt-12">برای ادامه شماره موبایل خود را وارد کنید.</span>
-                        <form>
-                            <div>
-                                <label for="email" class="block text-sm font-medium leading-5 mt-8 text-gray-700">
-                                    شماره همراه
-                                </label>
-                                <div class="mt-1 relative rounded-md shadow-sm mb-8">
-                                    <input id="email" name="email" placeholder="0938xxxxxxxx" type="email" required=""
-                                        value=""
-                                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-yellow focus:border-yellow-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                    <div
-                                        class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="text-warning">
-                                <i class="ri-error-warning-line text-xl"></i>
-                                استفاده از سفیر به معنی پذیرش قوانین و مقررات این سرویس است.
-                            </div>
-
-                            <div class="mt-12">
-                                <span class="block w-full rounded-md shadow-sm">
-                                    <button type="submit"
-                                        class="w-full flex justify-center py-2 px-4 border border-transparent text-white font-medium rounded-md text-black bg-blue-600 hover:bg-blue-800 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
-                                        ورود
-                                    </button>
-                                </span>
-                            </div>
-
-                        </form>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
 
         <script type="text/javascript">
             window.openModal = function (modalId) {
@@ -265,7 +200,6 @@
             /* Below is a js demo | you don't need to use */
             setTimeout(function () {
                 var elm = document.getElementsByTagName("input")[0];
-                console.log(elm);
                 elm.focus();
                 jalaliDatepicker.hide();
                 jalaliDatepicker.show(elm);
@@ -293,76 +227,13 @@
                     </button>`
             }
 
-            let firstCity = document.getElementById("firstCity")
-            let lastCity = document.getElementById("lastCity")
-            let count = document.getElementById("count")
-            var movingDate = document.getElementById("movingDate")
-            let bus = document.getElementById("bus")
-
-            // data
-
-            document.getElementById("search").addEventListener("click", search)
-
-            firstCity.addEventListener("change", (e) => {
-                firstCity = e.target.value
-            })
-
-
-            lastCity.addEventListener("change", (e) => {
-                lastCity = e.target.value
-            })
-
-
-            movingDate.addEventListener("change", (e) => {
-                movingDate = e.target.value
-            })
-
-
-
-            // function search() {
-            //     if (firstCity && lastCity && count && movingDate) {
-            //         for (let i = 0; i < drivers.length; i++) {
-            //             if (firstCity === drivers[i].cities[0] && lastCity === drivers[i].cities[1] && drivers[i].arrival === firstCity && drivers[i].bus.seats >= 1 && drivers[i].movingDate === movingDate) {
-            //                 console.log(drivers[i]);
-            //                 bus.innerHTML += `
-            //    <div class="border rounded-md shadow shadow-md bus grid grid-cols-2 gap-4 m-4">
-            //         <div style="width: 75%;">
-            //             <div class="px-6 py-4">
-            //                 <div class="font-bold text-xl mb-2">
-            //                     <img class="m-4 rounded-md w-50 h-20 inline"
-            //                         src="https://plus.unsplash.com/premium_photo-1674823610129-64e6c712fbe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnVzfGVufDB8fDB8fHww"
-            //                         alt="Card image">
-            //                     <span class="ml-4" id="bus-title"> Card Title 1</span>
-            //                     <span class="ml-4">first city</span>
-            //                     <span class="ml-4">last city</span>
-            //                     <span class="ml-4">arriavl</span>
-            //                     <span class="ml-4">count</span>
-            //                     <span class="ml-4">moving date</span>
-            //                 </div>
-            //             </div>
-            //         </div>
-            //         <div style="width: 25%;" class="border-r border-solid border-gray-300 p-4">
-            //             <p>12500</p>
-            //             <button
-            //                 class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">رزرو
-            //                 بلیط</button>
-            //         </div>
-            //     </div>
-            //    `
-            //             }
-            //         }
-
-            //         document.querySelectorAll('input').value = ""
-            //     } else {
-            //         alert("enter all fields")
-            //     }
-            // }
-
-
 
 
         </script>
 
+
+        <script src="../../javascripts/user/searchTickets.js"></script>
+        <script src="../../javascripts/utils/toast.js"></script>
 
 </body>
 

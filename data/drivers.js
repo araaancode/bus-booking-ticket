@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const { BSON } = require('bson');
 const { ObjectId, Long, Double, Int32, Decimal128, Timestamp } = BSON;
 
+const colors = ["سفید","سیاه","قرمز","آبی","سبز"]
+
 const cities = [
     "arak",
     "ardebil",
@@ -56,7 +58,7 @@ function makeRandomCities(arr) {
 }
 
 function createRandomDay() {
-    return Math.floor((Math.random() * 365) + 1)
+    return Math.floor((Math.random() * 180) + 1)
 }
 
 function makeRandomArrival(arr) {
@@ -66,6 +68,7 @@ function makeRandomArrival(arr) {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
 }
+
 
 
 function makeRandomPrice(min = 150000, max = 1000000) {
@@ -128,7 +131,7 @@ const randomBsonDocument = generateRandomBsonDocuments();
 
 let drivers = []
 
-for (let i = 1; i <= 500; i++) {
+for (let i = 1; i <= 1000; i++) {
     let newArrival = makeRandomArrival(cities)
     let newCities = makeRandomCities(cities)
     if (!newCities.includes(newArrival)) {

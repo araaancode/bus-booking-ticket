@@ -6,6 +6,7 @@ const Ticket = require('../../models/Ticket');
 const User = require('../../models/User');
 const Driver = require('../../models/Driver');
 const Bus = require('../../models/Bus');
+const { StatusCodes } = require("http-status-codes")
 
 const { MongoClient } = require('mongodb');
 
@@ -19,7 +20,7 @@ async function main() {
         await client.connect();
 
         // Specify the database and collection
-        const database = client.db('safir');
+        const database = client.db('bus_db');
         const collection = database.collection('drivers');
 
         // Query the collection (fetch data)
@@ -230,110 +231,140 @@ exports.cancelTicket = catchAsync(async (req, res) => {
 
 // # description -> HTTP VERB -> Accesss
 // # search ticket -> POST -> user
-exports.searchTickets = catchAsync(async (req, res) => {
-    // let buses = await Bus.find({}).populate('driver')
+exports.searchTickets = async (req, res) => {
 
-    let buses = await Bus.find({})
+    try {
+        let buses = await Bus.find({})
 
-    main().then(async (drivers) => {
-
-        let results = []
-        let day = ""
+        await main().then(async (drivers) => {
+            let { firstCity, lastCity, seats, movingDate } = req.body
 
 
-        console.log(drivers);
+            let results = []
+            //  convert moving date in body to milady 
+            let dateSplitted = movingDate.split("-"),
+                jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
+            convertMovingDate = jD[0] + "-" + jD[1] + "-" + jD[2];
 
-        // let { firstCity, lastCity, seats, movingDate } = req.body
-
-
-        // dateSplitted = movingDate.split("-"),
-        //     jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
-        // convertMovingDate = jD[0] + "-" + jD[1] + "-" + jD[2];
-
-
-        // for (let i = 0; i < drivers.length; i++) {
-        //     findBus = await Bus.findById(drivers[i].bus)
-        //     let driverFirstCity = drivers[i].cities[i]
-        //     let driverLastCity = drivers[i].cities[1]
-        //     let driverSeats = findBus.seats
-        //     let driverArrival = drivers[i].arrival
-        //     let driverMovingDate = drivers[i].movingDate.toISOString().split('T')[0]
-
-        //     if (firstCity === driverArrival && (lastCity === driverFirstCity || lastCity === driverLastCity) && driverSeats > 0 && driverSeats >= seats) {
-
-        //         results.push(drivers[i])
-        //     }
-
-        // }
-
-        // if (results.length > 0) {
-        //     res.json({
-        //         msg: "ticket find",
-        //         data: req.body,
-        //         countData: results.length,
-        //         drivers: results
-        //     })
-        // } else {
-        //     res.json({
-        //         msg: "بلیط پیدا نشد",
-        //     })
-        // }
-    })
+            let findBus;
 
 
+            for (let i = 0; i < drivers.length; i++) {
+                findBus = await Bus.findById(drivers[i].bus)
+                console.log(findBus);
+                let driverFirstCity = drivers[i].cities[0]
+                let driverLastCity = drivers[i].cities[1]
+                let driverSeats = findBus.seats
+                let driverArrival = drivers[i].arrival
+                let driverMovingDate = drivers[i].movingDate.toISOString().split('T')[0]
 
-})
+                // if (firstCity === driverArrival && (lastCity === driverFirstCity || lastCity === driverLastCity) && driverSeats > 0 && driverSeats >= seats ) {
+                //     results.push(drivers[i])
+                // }
+
+                if ((drivers[i].arrival === firstCity) && (lastCity === drivers[i].cities[0] || lastCity === drivers[i].cities[1])) {
+                    results.push({ driver: drivers[i], bus: findBus })
+                }
+            }
+
+            if (results.length > 0) {
+                res.status(StatusCodes.OK).json({
+                    msg: "بلیط پیدا شد",
+                    countData: results.length,
+                    data: results
+                })
+            } else {
+                res.json({
+                    msg: "بلیط پیدا نشد",
+                })
+            }
+        })
+
+    } catch (error) {
+        console.error(error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: 'failure',
+            msg: "خطای داخلی سرور",
+            error
+        });
+    }
+
+}
 
 // # description -> HTTP VERB -> Accesss
 // # book ticket -> POST -> user
-exports.bookTicket = catchAsync(async (req, res) => {
+exports.bookTicket = async (req, res) => {
     let { driver, passengers, movingDate, hour, firstCity, lastCity, seats } = req.body
-    let findDriver = await Driver.findById(req.body.driver).populate('bus')
     let price = 0
     let newSeatNumbers = []
-
     let user = await User.findById(req.user.id)
 
-    // calulate number seats
-    for (let i = 0; i < passengers.length; i++) {
-        newSeatNumbers.push(findDriver.bus.capicity >= findDriver.bus.seats ? (i + (findDriver.bus.capicity - findDriver.bus.seats) + 1) : (i + 1))
-    }
+    main().then(async(drivers) => {
+        if (drivers.length > 0) {
+            for (let i = 0; i < drivers.length; i++) {
+                if (req.body.driver == drivers[i]._id) {
+                    let findDriver = drivers[i];
+
+                    // calulate number seats
+                    for (let i = 0; i < passengers.length; i++) {
+                        newSeatNumbers.push(findDriver.bus.capicity >= findDriver.bus.seats ? (i + (findDriver.bus.capicity - findDriver.bus.seats) + 1) : (i + 1))
+                    }
+
+                    // calulate price 
+                    price = passengers.length * findDriver.price
+
+                    // handle bus ticket booking
+                    let findBus = await Bus.findById({ _id: findDriver.bus._id })
+
+                    findBus.seats = Number(findBus.seats)- Number(passengers.length)
+
+                    await findBus.save()
+
+                    // handle ticket booking
+                    dateSplitted = movingDate.split("-"),
+                        jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
+                    convertMovingDate = jD[0] + "-" + jD[1] + "-" + jD[2];
+
+                    let newTicket = await Ticket.create({
+                        driver,
+                        passengers,
+                        user: req.user.id,
+                        bus: findDriver.bus,
+                        movingDate: convertMovingDate,
+                        hour: new Date().now,
+                        firstCity,
+                        lastCity,
+                        seatNumbers: +newSeatNumbers,
+                        ticketPrice: price,
+
+                    })
 
 
-    // calulate price 
-    price = passengers.length * findDriver.price
+                    console.log(newTicket)
 
-    // handle bus ticket booking
-    let findBus = await Bus.findById({ _id: findDriver.bus._id })
-    findBus.seats = findDriver.bus.seats - (passengers.length)
-
-    await findBus.save()
-
-
-    // handle ticket booking
-    dateSplitted = movingDate.split("-"),
-        jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
-    convertMovingDate = jD[0] + "-" + jD[1] + "-" + jD[2];
-
-    let newTicket = await Ticket.create({
-        driver,
-        passengers,
-        user: req.user.id,
-        bus: findDriver.bus,
-        movingDate: convertMovingDate,
-        hour: new Date().now,
-        firstCity,
-        lastCity,
-        seatNumbers: newSeatNumbers,
-        ticketPrice: price,
-
+                    if (newTicket) {
+                        res.status(StatusCodes.CREATED).json({
+                            msg: "بلیط با موفقیت رزرو شد",
+                            ticket: newTicket,
+                        })
+                    }else{
+                        res.status(StatusCodes.BAD_REQUEST).json({
+                            msg: "بلیط رزرو نشد",
+                        }) 
+                    }
+                }
+            }
+        }
+    }).catch((error) => {
+        console.error(error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: 'failure',
+            msg: "خطای داخلی سرور",
+            error
+        });
     })
 
-    res.json({
-        msg: "ticket booked",
-        ticket: newTicket
-    })
-})
+}
 
 // # description -> HTTP VERB -> Accesss
 // # fetch all drivers  -> GET -> user
@@ -343,7 +374,7 @@ exports.getDrivers = catchAsync(async (req, res) => {
         if (drivers) {
             res.status(200).json({
                 msg: "راننده ها پیدا شدند",
-                count:drivers.length,
+                count: drivers.length,
                 drivers
             })
         } else {
