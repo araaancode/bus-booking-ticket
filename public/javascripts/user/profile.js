@@ -40,10 +40,6 @@ function UI() {
 
 
 function updateUser() {
-    console.log("phone: ", phone.value);
-    console.log("name: ", name.value);
-    console.log("email: ", email.value);
-    console.log("nationalCode: ", nationalCode.value);
 
     axios.put(`/api/v1/users/update-profile/${userId}`, {
         phone: phone.value,
@@ -72,8 +68,11 @@ function updateUser() {
 
             setTimeout(() => {
                 document.querySelector('.toast-notification').style.display = "none"
+                location.reload()
             }, 2000)
 
+
+           
 
         })
         .catch(function (error) {

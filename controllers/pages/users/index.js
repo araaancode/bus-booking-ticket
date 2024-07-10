@@ -22,3 +22,9 @@ exports.profile = (req, res) => {
 exports.searchTickets = (req, res) => {
     res.render("users/searchTickets", { title: "بلیط گرفتن" })
 }
+
+// searchTickets page
+exports.confirm = (req, res) => {
+    res.render("users/confirm", { title: "ثبت و تایید بلیط" })
+}
+

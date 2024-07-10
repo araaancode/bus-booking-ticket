@@ -48,7 +48,7 @@ const ticketSchema = new mongoose.Schema({
         required: true
     },
     seatNumbers: [{
-        type: Number
+        type: Number,
     }],
     isCanceled: {
         type: Boolean,

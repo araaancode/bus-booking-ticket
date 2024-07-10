@@ -168,15 +168,17 @@ function search() {
             seats: count.value,
             movingDate: movingDate,
         }).then((data) => {
-            let results = []
-            results = data.data.data
+            let results = data.data.data
             let newBuses = []
 
-            if (results.length > 0) {
+
+            if (results === undefined) {
+                bus.innerHTML = "<h2 class='text-2xl text-gray-500'>بلیطی پیدا نشد..!</h2>"
+            } else {
+                bus.innerHTML = ""
                 for (let i = 0; i < results.length; i++) {
                     newBuses.push({ ...results[i].bus, updateDriver: results[i].driver })
                 }
-
 
                 for (let i = 0; i < newBuses.length; i++) {
                     bus.innerHTML += `
@@ -194,19 +196,21 @@ function search() {
                                 <span class="ml-4 block">ظرفیت: ${newBuses[i].seats}</span>
                                 <span class="ml-4 block">تاریخ حرکت: ${newBuses[i].updateDriver.movingDate}</span>
                                 <p>هزینه به ازای هر نفر: ${newBuses[i].updateDriver.price}</p>
-                                
-                                <button
-                                    class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent mt-4 rounded">رزرو
-                                    بلیط</button>
+                                <a href="/confirm">
+                                    <button id=${newBuses[i]._id}" onclick='handleClick(${JSON.stringify(newBuses[i])})'
+                                        class="confirm-btn bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent mt-4 rounded">رزرو
+                                        بلیط    
+                                    </button>
+                                </a>
                             </div>
                         </div>
 
                    `
                 }
 
-            } else {
-                bus.innerHTML = "<h2>بلیطی پیدا نشد..!</h2>"
+
             }
+
         }).catch((error) => {
             console.log(error);
         })
@@ -214,6 +218,20 @@ function search() {
     } else {
         alert("enter all fields")
     }
+
+
 }
 
+// document.addEventListener("click", function (e) {
+//     if (e.target.classList.contains('confirm-btn')) {
+//         console.log(e.target.parentNode.id);
+//         let busId = e.target.id
+//         localStorage.setItem("bus", busId)
+//     }
+// })
 
+
+function handleClick(data) {
+    localStorage.setItem("bus",data._id)
+    localStorage.setItem("driver",data.driver)
+}

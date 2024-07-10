@@ -1,0 +1,136 @@
+<!doctype html>
+<html dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://majidh1.github.io/JalaliDatePicker/assets/demo.css">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/3304/3304749.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <script type="text/javascript"
+        src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"></script>
+    <link rel="stylesheet" href="../../css/toastify.css">
+    <title>
+        <%=title%>
+    </title>
+
+
+</head>
+
+<body>
+    <%-include("./const/header")%>
+
+        <!-- <div class="flex flex-col w-3/4 p-4 space-y-4 mx-auto my-8 justify-center">
+            <div class="bg-white rounded-lg shadow p-6 flex justify-between">
+
+         
+            </div>
+
+        </div> -->
+
+
+        <div class="text-2xl mt-20 text-center" id="msg"></div>
+
+        <div style="display: none;" id="confirm-section" class="max-w-6xl mx-auto bg-white mt-20 rounded-lg border">
+            <div class="flex">
+                <!-- First Column (75%) -->
+                <div class="w-3/4 p-8 h-50">
+                    <div class="flex items-center space-x-4 bg-white p-4 rounded">
+                        <img id="bus-image" style="width: 130px; height: 130px;" class="rounded-full ml-4" src=""
+                            alt="اتوبوس">
+                        <div>
+                            <h1 class="text-2xl">اطلاعات بلیط</h1>
+                            <p id="bus-name" class="text-xl text-gray-700 mt-6"></p>
+                            <p id="bus-model" class="text-xl text-gray-700"></p>
+                            <p id="bus-color" class="text-xl text-gray-700"></p>
+                            <p id="first-city" class="text-xl text-gray-700"></p>
+                            <p id="last-city" class="text-xl text-gray-700"></p>
+                            <p id="driver-name" class="text-xl text-gray-700"></p>
+                            <p id="moving-date" class="text-xl text-gray-700"></p>
+                            <p id="moving-hour" class="text-xl text-gray-700"></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Separator Line -->
+                <div class="w-px bg-gray-300"></div>
+                <!-- Second Column (25%) -->
+                <div class="w-1/4 p-8 h-50">
+                    <button id="confirm-ticket"
+                        class="w-full bg-transparent mt-2 mb-6 hover:bg-blue-500 mx-auto text-blue-700 text-xl font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded p-4">تایید
+                        و ثبت بلیط</button>
+                    <p id="seats" class="text-gray-700 font-semibold text-xl"></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="user-information" style="display: none;" class="max-w-6xl mx-auto bg-white my-12 rounded-lg border">
+            <div class="flex">
+                <!-- First Column (75%) -->
+                <div class="w-3/4 p-8 h-50">
+                    <div class="flex items-center space-x-4 bg-white p-4 rounded">
+                        <div class="">
+                            <h1 class="text-2xl">اطلاعات صاحب بلیط</h1>
+                            <p id="name" class="text-xl text-gray-700 mt-6"></p>
+                            <p id="phone" class="text-xl text-gray-700"></p>
+                            <p id="email" class="text-xl text-gray-700"></p>
+                            <p id="national-code" class="text-xl text-gray-700"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 
+        <h1 style="text-align:center">jalali datePicker - دیت پیکر شمسی</h1>
+        <input type="text" data-jdp placeholder="لطفا یک تاریخ وارد نمایید" />
+        <input type="text" data-jdp data-jdp-min-date="today" placeholder="نمایش تاریخ از امروز" />
+        <input type="text" data-jdp data-jdp-max-date="today" placeholder="نمایش تاریخ تا امروز" />
+        <input type="text" data-jdp data-jdp-max-date="1401/10/08" placeholder="نمایش تاریخ تا 1401/10/08" />
+
+        <div class="settings" dir="rtl">
+            <a target="_blank" href="https://github.com/majidh1/JalaliDatePicker">
+                Github
+            </a>
+        </div>
+        <p>این پلاگین تنظیمات زیادی دارد که می توانید از لینک github مستندات کاملش رو مشاهده کنید.</p>
+        <p> با انتخاب کنترل input پلاگین date picker فعال شده و می توانید تاریخ مورد نظر خود را انتخاب نمایید</p>
+
+        <h1>persian date picker</h1> -->
+
+
+
+        <script>
+            let authMsg = document.getElementById("user-auth-msg")
+            let userStorageInfo = localStorage.getItem("user")
+
+
+            if (userStorageInfo) {
+                authMsg.innerHTML = `<div class="px-4 py-2 flex flex-row text-gray-700 items-center">
+                    <i class="ri-user-follow-line  ml-2 text-xl"></i>
+                    <a href="/profile">
+                        حساب کاربری
+                    </a>
+                </div>`
+            } else {
+                authMsg.innerHTML = `<button class="rounded-md px-4 py-2 transition flex flex-row text-gray-700 items-center"
+                        id="auth-user-button">
+                        <i class="ri-user-line ml-2 text-xl"></i>
+                        <a href="/login">
+                            ورود یا ثبت نام
+                        </a>
+                    </button>`
+            }
+
+        </script>
+        <script src="../../javascripts/user/confirm.js"></script>
+        <script src="../../javascripts/utils/toast.js"></script>
+
+</body>
+
+</html>

@@ -19,6 +19,8 @@ router.put('/cancel-ticket/:ticketId', middleware.authUser, userControllers.canc
 router.post('/search-ticket',  userControllers.searchTickets)
 router.post('/book-ticket', middleware.authUser, userControllers.bookTicket)
 
+router.get('/drivers/:driverId',middleware.authUser, userControllers.getDriver)
+
 
 
 module.exports = router;

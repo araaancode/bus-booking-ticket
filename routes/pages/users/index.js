@@ -11,5 +11,6 @@ router.get('/login', forwardAuth, indexPageControllers.login)
 router.get('/register', forwardAuth, indexPageControllers.register)
 router.get('/profile', isLogin, indexPageControllers.profile)
 router.get('/search-tickets', isLogin, indexPageControllers.searchTickets)
+router.get('/confirm', isLogin, indexPageControllers.confirm)
 
 module.exports = router;

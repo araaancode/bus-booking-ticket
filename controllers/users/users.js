@@ -40,8 +40,6 @@ async function main() {
 }
 
 
-
-
 // covert persian date to gregorian
 JalaliDate = {
     g_days_in_month: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
@@ -299,7 +297,7 @@ exports.bookTicket = async (req, res) => {
     let newSeatNumbers = []
     let user = await User.findById(req.user.id)
 
-    main().then(async(drivers) => {
+    main().then(async (drivers) => {
         if (drivers.length > 0) {
             for (let i = 0; i < drivers.length; i++) {
                 if (req.body.driver == drivers[i]._id) {
@@ -316,7 +314,9 @@ exports.bookTicket = async (req, res) => {
                     // handle bus ticket booking
                     let findBus = await Bus.findById({ _id: findDriver.bus._id })
 
-                    findBus.seats = Number(findBus.seats)- Number(passengers.length)
+                    console.log(findBus);
+                    findBus.seats = Number(findBus.seats) - Number(passengers.length)
+                    console.log(findBus);
 
                     await findBus.save()
 
@@ -334,23 +334,20 @@ exports.bookTicket = async (req, res) => {
                         hour: new Date().now,
                         firstCity,
                         lastCity,
-                        seatNumbers: +newSeatNumbers,
+                        seatNumbers: newSeatNumbers,
                         ticketPrice: price,
 
                     })
-
-
-                    console.log(newTicket)
 
                     if (newTicket) {
                         res.status(StatusCodes.CREATED).json({
                             msg: "بلیط با موفقیت رزرو شد",
                             ticket: newTicket,
                         })
-                    }else{
+                    } else {
                         res.status(StatusCodes.BAD_REQUEST).json({
                             msg: "بلیط رزرو نشد",
-                        }) 
+                        })
                     }
                 }
             }
@@ -384,7 +381,59 @@ exports.getDrivers = catchAsync(async (req, res) => {
         }
 
     })
-
-
 })
+
+
+// # description -> HTTP VERB -> Accesss
+// # fetch all drivers  -> GET -> user
+exports.getDrivers = catchAsync(async (req, res) => {
+
+    await main().then(async (drivers) => {
+        if (drivers) {
+            res.status(200).json({
+                msg: "راننده ها پیدا شدند",
+                count: drivers.length,
+                drivers
+            })
+        } else {
+            res.status(401).json({
+                msg: "راننده ها پیدا شدند",
+            })
+        }
+
+    })
+})
+
+// # description -> HTTP VERB -> Accesss
+// # fetch single driver  -> GET -> user
+exports.getDriver = async (req, res) => {
+
+    try {
+        await main().then(async (drivers) => {
+            if (drivers) {
+                for (let i = 0; i < drivers.length; i++) {
+                    if (drivers[i]._id == req.params.driverId) {
+                        res.status(StatusCodes.OK).json({
+                            msg: "راننده پیدا شد",
+                            driver: drivers[i]
+                        })
+                    }
+                }
+
+            } else {
+                res.status(StatusCodes.BAD_REQUEST).json({
+                    msg: "راننده پیدا نشد",
+                })
+            }
+
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            status: 'failure',
+            msg: "خطای داخلی سرور",
+            error
+        });
+    }
+}
 
