@@ -29,7 +29,7 @@ const driverRoutes = require("./routes/drivers/drivers")
 
 const busRoutes = require("./routes/buses/buses")
 
-// const authAdminRoutes = require("./routes/admins/auth")
+const authAdminRoutes = require("./routes/admins/auth")
 // const adminRoutes = require("./routes/admins/admins")
 
 const userIndexPages = require("./routes/pages/users/index")
@@ -47,7 +47,7 @@ app.use(cookieParser())
 
 
 // mount admins routes
-// app.use('/api/v1/admins/auth', authAdminRoutes)
+app.use('/api/v1/admins/auth', authAdminRoutes)
 // app.use('/api/v1/admins', adminRoutes)
 
 // mount drivers and bus routes
