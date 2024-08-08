@@ -156,11 +156,11 @@ exports.login = async (req, res, next) => {
 
   } catch (error) {
     console.error(error.message);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      status: 'failure',
-      msg: "خطای داخلی سرور",
-      error
-    });
+    // res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    //   status: 'failure',
+    //   msg: "خطای داخلی سرور",
+    //   error
+    // });
   }
 }
 
