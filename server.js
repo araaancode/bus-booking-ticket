@@ -33,6 +33,7 @@ const authAdminRoutes = require("./routes/admins/auth")
 // const adminRoutes = require("./routes/admins/admins")
 
 const userIndexPages = require("./routes/pages/users/index")
+const adminIndexPages = require("./routes/pages/admins/index")
 
 // middlewares
 app.use(express.json())
@@ -61,6 +62,7 @@ app.use('/api/v1/users', userRoutes)
 
 // pages routes
 app.use('/', userIndexPages)
+app.use('/admins', adminIndexPages)
 
 // error middlewares
 app.use(errorMiddleware.handler404)
