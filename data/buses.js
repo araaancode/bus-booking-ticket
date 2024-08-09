@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 
 async function main() {
-    const uri = "mongodb://localhost:27017/bus_db";
+    const uri = "mongodb://localhost:27017/busdb";
 
     const client = new MongoClient(uri);
 
@@ -10,7 +10,7 @@ async function main() {
         await client.connect();
 
         // Specify the database and collection
-        const database = client.db('bus_db');
+        const database = client.db('busdb');
         const collection = database.collection('drivers');
 
         // Query the collection (fetch data)

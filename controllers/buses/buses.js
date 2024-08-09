@@ -19,7 +19,7 @@ async function main() {
         await client.connect();
 
         // Specify the database and collection
-        const database = client.db('bus_db');
+        const database = client.db('busdb');
         const collection = database.collection('drivers');
 
         // Query the collection (fetch data)

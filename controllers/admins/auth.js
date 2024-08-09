@@ -57,7 +57,6 @@ exports.register = async (req, res, next) => {
       })
 
       if (newAdmin) {
-        console.log(newAdmin);
         createSendToken(newAdmin, StatusCodes.OK, 'success', ' با موفقیت ثبت نام شدید', req, res)
       }
     }
