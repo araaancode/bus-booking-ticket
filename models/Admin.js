@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
+const validateEmail = function (email) {
+    const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email)
+};
+
 const adminSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -18,12 +23,20 @@ const adminSchema = new mongoose.Schema({
         required: [true, "admin phone number required"],
         unique: true,
     },
-    email:{
+    email: {
         type: String,
-        unique: true,
+        trim: true,
         lowercase: true,
-        validate: [validator.isEmail, 'Please provide a valid email']
+        validate: [validateEmail, 'Please fill a valid email address'],
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
+    
+    nationalCode:{
+        type:String,
+        min:12,
+        max:12
+    },
+
     password: {
         type: String,
         required: [true, 'Please provide a password'],
@@ -35,13 +48,12 @@ const adminSchema = new mongoose.Schema({
         default: true,
         select: false
     },
-    role:{
-        type:String,
-        enum: ['admin','assistant'],
-        default:'assistant',
-        required:true
+    avatar: String,
+    role: {
+        type: String,
+        default: 'admin',
     }
-},{ timestamps: true });
+}, { timestamps: true });
 
 adminSchema.pre('save', async function (next) {
     // Only run this function if password was actually modified
@@ -76,7 +88,7 @@ adminSchema.methods.correctPassword = async function (
 };
 
 
-
+// models
 const Admin = mongoose.model('Admin', adminSchema);
 
 module.exports = Admin;

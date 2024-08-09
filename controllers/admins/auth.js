@@ -15,47 +15,6 @@ const signToken = id => {
 };
 
 
-const sendOTPCode = async (phone, admin, req, res) => {
-  const code = randKey.generateDigits(5);
-  let otp = await OTP.findOne({ phone })
-
-  if (otp) {
-    otp.code = code;
-    otp.save().then((data) => {
-      if (data) {
-        res.status(StatusCodes.CREATED).json({
-          msg: "کد تایید ارسال شد",
-          data
-        })
-      }
-
-    }).catch((error) => {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        msg: "کد تایید ارسال نشد",
-        error
-      })
-    })
-  } else {
-    let newOtp = await OTP.create({
-      phone: phone,
-      code
-    })
-
-    if (newOtp) {
-      res.status(StatusCodes.CREATED).json({
-        msg: "کد تایید جدید ساخته شد",
-        code: newOtp
-      })
-    } else {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        msg: "کد تایید ساخته نشد"
-      })
-    }
-
-  }
-
-};
-
 const createSendToken = (admin, statusCode, statusMsg, msg, req, res) => {
   const token = signToken(admin._id);
 
@@ -91,17 +50,15 @@ exports.register = async (req, res, next) => {
         msg: "ادمین وجود دارد. وارد سایت شوید!",
       })
     } else {
+
       let newAdmin = await Admin.create({
         phone: req.body.phone,
         password: req.body.password,
       })
 
       if (newAdmin) {
-        res.status(StatusCodes.CREATED).json({
-          status: 'success',
-          msg: "ادمین با موفقیت ثبت نام شد",
-          newAdmin
-        })
+        console.log(newAdmin);
+        createSendToken(newAdmin, StatusCodes.OK, 'success', ' با موفقیت ثبت نام شدید', req, res)
       }
     }
   } catch (error) {
@@ -142,11 +99,7 @@ exports.login = async (req, res, next) => {
     // 3) If everything ok, send token to client
     // createSendToken(admin,StatusCodes.OK, 'success','با موفقیت وارد سایت شدید', req, res);
     if (admin) {
-      res.status(StatusCodes.OK).json({
-        status: 'success',
-        msg: "با موفقیت وارد سایت شدید",
-        admin
-      });
+      createSendToken(admin, StatusCodes.OK, 'success', ' با موفقیت وارد سایت شدید', req, res)
     } else {
       res.status(StatusCodes.NOT_FOUND).json({
         status: 'failure',
@@ -172,50 +125,3 @@ exports.logout = (req, res) => {
   res.status(200).json({ status: 'success' });
 };
 
-
-exports.sendOtp = async (req, res) => {
-  try {
-    let { phone } = req.body
-    let admin = await Admin.findOne({ phone })
-
-    if (admin) {
-      await sendOTPCode(phone, admin, req, res)
-
-    } else {
-      res.status(StatusCodes.NOT_FOUND).json({
-        msg: "ادمین یافت نشد",
-      })
-    }
-  } catch (error) {
-    console.error(error.message);
-    // res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    //   status: 'failure',
-    //   msg: "خطای داخلی سرور",
-    //   error
-    // });
-  }
-}
-
-exports.verifyOtp = async (req, res) => {
-  try {
-    let { phone, code } = req.body
-
-    let adminOtp = await OTP.findOne({ phone })
-    let admin = await Admin.findOne({ phone })
-
-    if (adminOtp.code === code) {
-      createSendToken(admin, StatusCodes.OK, 'success', 'کد تایید با موفقیت ارسال شد', req, res)
-    } else {
-      res.status(StatusCodes.NOT_FOUND).json({
-        msg: "کد وارد شده اشتباه است!"
-      })
-    }
-  } catch (error) {
-    console.error(error.message);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      status: 'failure',
-      msg: "خطای داخلی سرور",
-      error
-    });
-  }
-}
